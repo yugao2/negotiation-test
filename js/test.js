@@ -10,6 +10,15 @@ let userAnswers = [];
 
 // 初始化测试页
 document.addEventListener('DOMContentLoaded', function() {
+    // 检查 questions 是否已加载
+    if (typeof questions === 'undefined') {
+        console.error('questions 未定义！检查 questions.js 是否正确加载');
+        document.getElementById('questionText').textContent = '题目加载失败，请刷新页面';
+        return;
+    }
+    
+    console.log('测试页初始化，题目数量:', questions.length);
+    
     // 检查是否有未完成的答案
     const savedAnswers = getSavedAnswers();
     const savedIndex = localStorage.getItem('currentQuestionIndex');
