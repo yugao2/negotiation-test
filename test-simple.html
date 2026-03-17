@@ -138,8 +138,35 @@
                 renderQuestion();
                 updateProgress();
             } else {
-                alert('测试完成！结果页开发中...');
+                // 完成测试，计算结果
+                calculateResult();
             }
+        }
+
+        // 计算结果
+        function calculateResult() {
+            // 统计各维度得分
+            let scores = {A:0, I:0, R:0, T:0, C:0, B:0, D:0, P:0};
+            
+            questions.forEach((q, i) => {
+                const answer = answers[i];
+                if (answer) scores[answer]++;
+            });
+            
+            // 确定各维度类型
+            const dim1 = scores.A >= 4 ? 'A' : 'I';
+            const dim2 = scores.R >= 4 ? 'R' : 'T';
+            const dim3 = scores.C >= 4 ? 'C' : 'B';
+            const dim4 = scores.D >= 4 ? 'D' : 'P';
+            
+            const code = dim1 + dim2 + dim3 + dim4;
+            
+            // 保存结果
+            localStorage.setItem('testResult', code);
+            localStorage.setItem('testScores', JSON.stringify(scores));
+            
+            // 跳转到结果页
+            window.location.href = 'result-simple.html';
         }
 
         // 更新进度
