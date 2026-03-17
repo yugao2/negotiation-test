@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测测你的采购谈判风格</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <h1>🎯 测测你的采购谈判风格</h1>
+            <p class="subtitle">28 道题，3 分钟，发现你的谈判超能力</p>
+        </header>
+
+        <!-- 主视觉区域 -->
+        <main class="main-content">
+            <div class="hero-section">
+                <div class="illustration">
+                    <span class="emoji-hero">🤝</span>
+                </div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">10,000+</span>
+                        <span class="stat-label">采购人已参与测试</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">16</span>
+                        <span class="stat-label">种谈判风格类型</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">分钟完成测试</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA 按钮 -->
+            <div class="cta-section">
+                <button class="btn-primary" onclick="startTest()">
+                    <span>🚀 开始测试</span>
+                </button>
+                <p class="hint">完全免费 · 匿名测试 · 即刻获取结果</p>
+            </div>
+
+            <!-- 风格预览 -->
+            <div class="preview-section">
+                <h3>你将发现什么？</h3>
+                <div class="preview-cards">
+                    <div class="preview-card">
+                        <span class="card-emoji">🦉</span>
+                        <span class="card-text">你的谈判风格代码</span>
+                    </div>
+                    <div class="preview-card">
+                        <span class="card-emoji">📊</span>
+                        <span class="card-text">四维度能力雷达图</span>
+                    </div>
+                    <div class="preview-card">
+                        <span class="card-emoji">💰</span>
+                        <span class="card-text">年度降本潜力评估</span>
+                    </div>
+                    <div class="preview-card">
+                        <span class="card-emoji">🔮</span>
+                        <span class="card-text">专属谈判运势分析</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>© 2024 采购谈判风格测试 | 优链学堂出品</p>
+        </footer>
+    </div>
+
+    <script>
+        function startTest() {
+            // 保存测试开始时间
+            localStorage.setItem('testStartTime', Date.now());
+            // 跳转到测试页
+            window.location.href = 'test.html';
+        }
+    </script>
+</body>
+</html>
