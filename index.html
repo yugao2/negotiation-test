@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>采购谈判风格测试 v2</title>
+    <title>采购谈判风格测试 v3 - 海报分享版</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
@@ -15,6 +15,10 @@
         .hero { text-align: center; padding: 40px 0; }
         .hero h1 { font-size: 28px; font-weight: 700; color: #333; margin-bottom: 10px; }
         .hero p { font-size: 16px; color: #666; margin-bottom: 30px; }
+        .hero-stats { display: flex; justify-content: center; gap: 30px; margin: 30px 0; }
+        .stat-item { text-align: center; }
+        .stat-num { font-size: 32px; font-weight: bold; color: #667eea; }
+        .stat-label { font-size: 12px; color: #999; }
         .btn-start { display: block; width: 100%; padding: 18px; background: linear-gradient(90deg, #667eea, #764ba2); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; margin-top: 30px; }
         .progress { background: #e0e0e0; border-radius: 10px; height: 8px; margin-bottom: 20px; overflow: hidden; }
         .progress-bar { background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 3.57%; transition: width 0.3s; }
@@ -48,6 +52,12 @@
         .btn-share, .btn-retake { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; }
         .btn-share { background: linear-gradient(90deg, #667eea, #764ba2); color: white; }
         .btn-retake { background: #f0f0f0; color: #666; }
+        .result-stats { display: flex; justify-content: space-around; margin: 20px 0; }
+        .result-stat { text-align: center; }
+        .result-stat-value { font-size: 20px; font-weight: bold; color: #667eea; }
+        .result-stat-label { font-size: 12px; color: #999; }
+        .radar-container { width: 100%; height: 250px; margin: 20px 0; background: #fafafa; border-radius: 8px; }
+        .poster-canvas { display: none; }
     </style>
 </head>
 <body>
@@ -56,6 +66,20 @@
             <div class="hero">
                 <h1>🎯 采购谈判风格测试</h1>
                 <p>28 道题，3 分钟，发现你的谈判超能力</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-num">28</div>
+                        <div class="stat-label">测试题目</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">16</div>
+                        <div class="stat-label">谈判风格</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">10000+</div>
+                        <div class="stat-label">已参与测试</div>
+                    </div>
+                </div>
                 <button class="btn-start" onclick="startTest()">🚀 开始测试</button>
             </div>
         </div>
@@ -78,28 +102,58 @@
                 <div class="code" id="code">ARCD</div>
                 <div class="name" id="name">战略架构师</div>
                 <div class="role" id="role">战略策划者</div>
+                <div class="result-stats">
+                    <div class="result-stat">
+                        <div class="result-stat-value" id="saving">15-25%</div>
+                        <div class="result-stat-label">年省潜力</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-stat-value" id="rarity">约 5%</div>
+                        <div class="result-stat-label">稀有度</div>
+                    </div>
+                </div>
             </div>
+            
+            <div class="section">
+                <div class="section-title">📊 能力雷达图</div>
+                <canvas id="radarChart" class="radar-container" width="300" height="250"></canvas>
+            </div>
+            
             <div class="section">
                 <div class="section-title">🎯 谈判运势</div>
                 <div class="item"><div class="item-text" id="fortune"></div></div>
             </div>
+            
             <div class="section">
                 <div class="section-title">💰 财运指数</div>
                 <div class="item"><div class="item-text" id="money"></div></div>
             </div>
+            
+            <div class="section">
+                <div class="section-title">❤️ 配对指数</div>
+                <div class="item">
+                    <div class="item-label">最佳搭档</div>
+                    <div class="item-text" id="partner"></div>
+                </div>
+            </div>
+            
             <div class="section">
                 <div class="section-title">🏷️ 神秘标签</div>
                 <div class="tags" id="tags"></div>
             </div>
+            
             <div class="section">
                 <div class="section-title">💼 职业建议</div>
                 <div class="item"><div class="item-text" id="career"></div></div>
             </div>
+            
             <div class="btn-group">
-                <button class="btn-share" onclick="shareResult()">📤 分享</button>
+                <button class="btn-share" onclick="generateAndShare()">📸 生成海报分享</button>
                 <button class="btn-retake" onclick="retakeTest()">🔄 重测</button>
             </div>
         </div>
+        
+        <canvas id="posterCanvas" class="poster-canvas"></canvas>
     </div>
 
     <script>
@@ -135,22 +189,22 @@
         ];
 
         var styles = {
-            ARCD: {animal:'🦉',name:'战略架构师',role:'战略策划者',saving:'15-25%',fortune:'本周宜制定长期战略，适合分析供应商成本结构，找出隐藏利润空间',money:'年省潜力 15-25%，擅长从数据中发现降本机会',tags:['人形审计仪','合同找茬专家','老板最放心的守门员'],career:'供应商准入审核、成本结构分析、战略采购规划'},
-            ARCP: {animal:'🐬',name:'关系建筑师',role:'信任建立者',saving:'10-18%',fortune:'本周宜维护核心供应商关系，一次深度沟通胜过十次讨价还价',money:'年省潜力 10-18%，关系溢价是你的隐形武器',tags:['供应商知己','人情账户管理员','长期主义代言人'],career:'战略供应商管理、联合开发项目、长期协议谈判'},
-            ARBD: {animal:'🐢',name:'谨慎守护者',role:'风险管控者',saving:'8-15%',fortune:'本周宜审查合同条款，细节里藏着魔鬼也藏着钱',money:'年省潜力 8-15%，避免一次大坑胜过十次小省',tags:['条款显微镜','最坏情况预演师','合规守门员'],career:'合同审核、风险评估、供应商资质认证'},
-            ARBP: {animal:'🐑',name:'温和协调者',role:'共识促成者',saving:'5-12%',fortune:'本周宜寻找共同利益点，和气生财是真的',money:'年省潜力 5-12%，双赢比零和更可持续',tags:['和事佬专业户','情绪稳定器','双赢设计师'],career:'跨部门协调、供应商纠纷调解、联合降本项目管理'},
-            ATCD: {animal:'🐜',name:'效率优化师',role:'流程专家',saving:'12-20%',fortune:'本周宜优化采购流程，效率提升就是成本下降',money:'年省潜力 12-20%，标准化是你的印钞机',tags:['SOP 狂魔','效率计算器','流程改造师'],career:'采购流程优化、标准化建设、数字化系统实施'},
-            ATCP: {animal:'🦎',name:'数据驱动者',role:'量化分析师',saving:'10-18%',fortune:'本周宜深挖历史数据，数字会告诉你该砍哪里',money:'年省潜力 10-18%，每一个小数点都是钱',tags:['Excel 魔法师','KPI 猎人','仪表盘控'],career:'采购数据分析、支出分析、成本建模'},
-            ATBD: {animal:'🦅',name:'果断执行者',role:'结果导向者',saving:'15-22%',fortune:'本周宜速战速决，犹豫就会败北',money:'年省潜力 15-22%，时间就是金钱在你身上是真的',tags:['deadline 杀手','说一不二','目标粉碎机'],career:'紧急采购项目、竞标谈判、价格战应对'},
-            ATBP: {animal:'🐴',name:'团队推动者',role:'项目管理者',saving:'10-16%',fortune:'本周宜召开供应商大会，集体力量大于个人',money:'年省潜力 10-16%，团队作战能谈下更大折扣',tags:['进度条管家','会议组织者','任务分配大师'],career:'采购项目统筹、跨部门协作、供应商大会组织'},
-            IRCD: {animal:'🦊',name:'创新探索者',role:'变革推动者',saving:'12-20%',fortune:'本周宜尝试新供应商，老树不一定开新花',money:'年省潜力 12-20%，创新是最大降本空间',tags:['破局者','新物种猎手','传统挑战者'],career:'新供应商开发、替代方案研究、创新采购模式'},
-            IRCP: {animal:'🐕',name:'社交联结者',role:'人脉拓展者',saving:'8-15%',fortune:'本周宜参加行业聚会，饭局上能听到真话',money:'年省潜力 8-15%，人脉就是你的情报网',tags:['行业百事通','饭局之王','消息灵通人士'],career:'供应商关系拓展、行业资源整合、信息收集分析'},
-            IRBD: {animal:'🦁',name:'风险投资者',role:'机会赌手',saving:'15-30%',fortune:'本周宜押注新供应商，富贵险中求',money:'年省潜力 15-30%，敢赌才能赢大的',tags:['赌桌高手','all in 先生','要么赢要么输'],career:'战略投资型采购、新市场开拓、颠覆性供应商引入'},
-            IRBP: {animal:'🦜',name:'魅力影响者',role:'说服艺术家',saving:'10-18%',fortune:'本周宜面对面谈判，你的气场能压价',money:'年省潜力 10-18%，会说话就是会赚钱',tags:['谈判桌明星','嘴炮王者','气场两米八'],career:'核心谈判代表、高层对接、关键合同签署'},
-            ITCD: {animal:'🦈',name:'市场洞察者',role:'趋势分析师',saving:'12-22%',fortune:'本周宜研究市场趋势，风口来了猪都能飞',money:'年省潜力 12-22%，预判正确能省大钱',tags:['行情预言家','周期把握者','抄底高手'],career:'市场价格预测、大宗商品采购、战略储备决策'},
-            ITCP: {animal:'🐆',name:'机会捕捉者',role:'敏捷反应者',saving:'10-20%',fortune:'本周宜关注突发机会，手慢无是真的',money:'年省潜力 10-20%，机会窗口转瞬即逝',tags:['机会雷达','闪电侠','捡漏王'],career:'临时采购需求、市场波动应对、紧急议价'},
-            ITBD: {animal:'🐲',name:'快速决策者',role:'直觉行动派',saving:'12-18%',fortune:'本周宜相信第一直觉，想太多会错过',money:'年省潜力 12-18%，果断比完美更重要',tags:['拍板侠','不纠结星人','先干再说'],career:'快速采购项目、应急响应、临时决策'},
-            ITBP: {animal:'🐙',name:'灵活适应者',role:'变通专家',saving:'8-15%',fortune:'本周宜随机应变，计划赶不上变化',money:'年省潜力 8-15%，灵活就是省钱',tags:['墙头草高手','见招拆招','没有固定套路'],career:'多变环境采购、多供应商管理、应急方案制定'}
+            ARCD: {animal:'🦉',name:'战略架构师',role:'战略策划者',saving:'15-25%',rarity:'约 5%',fortune:'本周宜制定长期战略，适合分析供应商成本结构，找出隐藏利润空间',money:'年省潜力 15-25%，擅长从数据中发现降本机会',partner:'ARTD(关系协调者)，你出战略他铺路，天作之合',tags:['人形审计仪','合同找茬专家','老板最放心的守门员'],career:'供应商准入审核、成本结构分析、战略采购规划'},
+            ARCP: {animal:'🐬',name:'关系建筑师',role:'信任建立者',saving:'10-18%',rarity:'约 8%',fortune:'本周宜维护核心供应商关系，一次深度沟通胜过十次讨价还价',money:'年省潜力 10-18%，关系溢价是你的隐形武器',partner:'ARCD(战略架构师)，你维系关系他提供弹药',tags:['供应商知己','人情账户管理员','长期主义代言人'],career:'战略供应商管理、联合开发项目、长期协议谈判'},
+            ARBD: {animal:'🐢',name:'谨慎守护者',role:'风险管控者',saving:'8-15%',rarity:'约 7%',fortune:'本周宜审查合同条款，细节里藏着魔鬼也藏着钱',money:'年省潜力 8-15%，避免一次大坑胜过十次小省',partner:'ATBD(果断执行者)，你踩刹车他踩油门',tags:['条款显微镜','最坏情况预演师','合规守门员'],career:'合同审核、风险评估、供应商资质认证'},
+            ARBP: {animal:'🐑',name:'温和协调者',role:'共识促成者',saving:'5-12%',rarity:'约 10%',fortune:'本周宜寻找共同利益点，和气生财是真的',money:'年省潜力 5-12%，双赢比零和更可持续',partner:'ITBD(快速决策者)，你缓和气氛他推进进度',tags:['和事佬专业户','情绪稳定器','双赢设计师'],career:'跨部门协调、供应商纠纷调解、联合降本项目管理'},
+            ATCD: {animal:'🐜',name:'效率优化师',role:'流程专家',saving:'12-20%',rarity:'约 12%',fortune:'本周宜优化采购流程，效率提升就是成本下降',money:'年省潜力 12-20%，标准化是你的印钞机',partner:'ARCP(关系建筑师)，你管流程他管人情',tags:['SOP 狂魔','效率计算器','流程改造师'],career:'采购流程优化、标准化建设、数字化系统实施'},
+            ATCP: {animal:'🦎',name:'数据驱动者',role:'量化分析师',saving:'10-18%',rarity:'约 9%',fortune:'本周宜深挖历史数据，数字会告诉你该砍哪里',money:'年省潜力 10-18%，每一个小数点都是钱',partner:'IRBP(魅力影响者)，你出数据他出嘴',tags:['Excel 魔法师','KPI 猎人','仪表盘控'],career:'采购数据分析、支出分析、成本建模'},
+            ATBD: {animal:'🦅',name:'果断执行者',role:'结果导向者',saving:'15-22%',rarity:'约 8%',fortune:'本周宜速战速决，犹豫就会败北',money:'年省潜力 15-22%，时间就是金钱在你身上是真的',partner:'ARBD(谨慎守护者)，你冲锋他断后',tags:['deadline 杀手','说一不二','目标粉碎机'],career:'紧急采购项目、竞标谈判、价格战应对'},
+            ATBP: {animal:'🐴',name:'团队推动者',role:'项目管理者',saving:'10-16%',rarity:'约 11%',fortune:'本周宜召开供应商大会，集体力量大于个人',money:'年省潜力 10-16%，团队作战能谈下更大折扣',partner:'ARCD(战略架构师)，你带团队他定方向',tags:['进度条管家','会议组织者','任务分配大师'],career:'采购项目统筹、跨部门协作、供应商大会组织'},
+            IRCD: {animal:'🦊',name:'创新探索者',role:'变革推动者',saving:'12-20%',rarity:'约 6%',fortune:'本周宜尝试新供应商，老树不一定开新花',money:'年省潜力 12-20%，创新是最大降本空间',partner:'ATCD(效率优化师)，你创新他落地',tags:['破局者','新物种猎手','传统挑战者'],career:'新供应商开发、替代方案研究、创新采购模式'},
+            IRCP: {animal:'🐕',name:'社交联结者',role:'人脉拓展者',saving:'8-15%',rarity:'约 10%',fortune:'本周宜参加行业聚会，饭局上能听到真话',money:'年省潜力 8-15%，人脉就是你的情报网',partner:'ATCP(数据驱动者)，你搞关系他验证',tags:['行业百事通','饭局之王','消息灵通人士'],career:'供应商关系拓展、行业资源整合、信息收集分析'},
+            IRBD: {animal:'🦁',name:'风险投资者',role:'机会赌手',saving:'15-30%',rarity:'约 4%',fortune:'本周宜押注新供应商，富贵险中求',money:'年省潜力 15-30%，敢赌才能赢大的',partner:'ARBD(谨慎守护者)，你冒险他风控',tags:['赌桌高手','all in 先生','要么赢要么输'],career:'战略投资型采购、新市场开拓、颠覆性供应商引入'},
+            IRBP: {animal:'🦜',name:'魅力影响者',role:'说服艺术家',saving:'10-18%',rarity:'约 7%',fortune:'本周宜面对面谈判，你的气场能压价',money:'年省潜力 10-18%，会说话就是会赚钱',partner:'ATCP(数据驱动者)，你输出他背书',tags:['谈判桌明星','嘴炮王者','气场两米八'],career:'核心谈判代表、高层对接、关键合同签署'},
+            ITCD: {animal:'🦈',name:'市场洞察者',role:'趋势分析师',saving:'12-22%',rarity:'约 6%',fortune:'本周宜研究市场趋势，风口来了猪都能飞',money:'年省潜力 12-22%，预判正确能省大钱',partner:'ARCP(关系建筑师)，你看趋势他稳关系',tags:['行情预言家','周期把握者','抄底高手'],career:'市场价格预测、大宗商品采购、战略储备决策'},
+            ITCP: {animal:'🐆',name:'机会捕捉者',role:'敏捷反应者',saving:'10-20%',rarity:'约 7%',fortune:'本周宜关注突发机会，手慢无是真的',money:'年省潜力 10-20%，机会窗口转瞬即逝',partner:'ARCD(战略架构师)，你抓机会他把方向',tags:['机会雷达','闪电侠','捡漏王'],career:'临时采购需求、市场波动应对、紧急议价'},
+            ITBD: {animal:'🐲',name:'快速决策者',role:'直觉行动派',saving:'12-18%',rarity:'约 5%',fortune:'本周宜相信第一直觉，想太多会错过',money:'年省潜力 12-18%，果断比完美更重要',partner:'ARBP(温和协调者)，你决策他善后',tags:['拍板侠','不纠结星人','先干再说'],career:'快速采购项目、应急响应、临时决策'},
+            ITBP: {animal:'🐙',name:'灵活适应者',role:'变通专家',saving:'8-15%',rarity:'约 9%',fortune:'本周宜随机应变，计划赶不上变化',money:'年省潜力 8-15%，灵活就是省钱',partner:'ATCD(效率优化师)，你变通他稳定',tags:['墙头草高手','见招拆招','没有固定套路'],career:'多变环境采购、多供应商管理、应急方案制定'}
         };
 
         var currentIndex = 0;
@@ -236,8 +290,11 @@
             document.getElementById('code').textContent = code;
             document.getElementById('name').textContent = style.name;
             document.getElementById('role').textContent = style.role;
+            document.getElementById('saving').textContent = style.saving;
+            document.getElementById('rarity').textContent = style.rarity;
             document.getElementById('fortune').textContent = style.fortune;
             document.getElementById('money').textContent = style.money;
+            document.getElementById('partner').textContent = style.partner;
             document.getElementById('career').textContent = style.career;
             var tagsContainer = document.getElementById('tags');
             tagsContainer.innerHTML = '';
@@ -247,19 +304,243 @@
                 span.textContent = style.tags[i];
                 tagsContainer.appendChild(span);
             }
+            drawRadarChart(code);
         }
 
-        function shareResult() {
-            var code = document.getElementById('code').textContent;
-            var name = document.getElementById('name').textContent;
-            var animal = document.getElementById('animal').textContent;
-            var text = '我是' + animal + name + '（' + code + '）！测测你是什么谈判风格？';
-            if (navigator.share) {
-                navigator.share({title:'我的谈判风格',text:text,url:window.location.href});
-            } else {
-                navigator.clipboard.writeText(text + ' ' + window.location.href);
-                alert('已复制到剪贴板！');
+        function drawRadarChart(code) {
+            var canvas = document.getElementById('radarChart');
+            var ctx = canvas.getContext('2d');
+            var width = canvas.width;
+            var height = canvas.height;
+            var centerX = width / 2;
+            var centerY = height / 2;
+            var radius = Math.min(width, height) / 2 - 30;
+            
+            ctx.clearRect(0, 0, width, height);
+            
+            var dimensions = [
+                {name:'分析型',score:0,color:'#4CAF50'},
+                {name:'直觉型',score:0,color:'#2196F3'},
+                {name:'关系型',score:0,color:'#FF9800'},
+                {name:'任务型',score:0,color:'#E91E63'},
+                {name:'谨慎型',score:0,color:'#9C27B0'},
+                {name:'冒险型',score:0,color:'#FF5722'},
+                {name:'直接型',score:0,color:'#00BCD4'},
+                {name:'温和型',score:0,color:'#8BC34A'}
+            ];
+            
+            var scores = {A:0, I:0, R:0, T:0, C:0, B:0, D:0, P:0};
+            for (var i = 0; i < questions.length; i++) {
+                var answer = answers[i];
+                if (answer) scores[answer]++;
             }
+            
+            dimensions[0].score = Math.min(100, (scores.A / 7) * 100);
+            dimensions[1].score = Math.min(100, (scores.I / 7) * 100);
+            dimensions[2].score = Math.min(100, (scores.R / 7) * 100);
+            dimensions[3].score = Math.min(100, (scores.T / 7) * 100);
+            dimensions[4].score = Math.min(100, (scores.C / 7) * 100);
+            dimensions[5].score = Math.min(100, (scores.B / 7) * 100);
+            dimensions[6].score = Math.min(100, (scores.D / 7) * 100);
+            dimensions[7].score = Math.min(100, (scores.P / 7) * 100);
+            
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+            for (var level = 1; level <= 4; level++) {
+                var r = (radius / 4) * level;
+                ctx.beginPath();
+                for (var i = 0; i < 8; i++) {
+                    var angle = (Math.PI * 2 / 8) * i - Math.PI / 2;
+                    var x = centerX + Math.cos(angle) * r;
+                    var y = centerY + Math.sin(angle) * r;
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.stroke();
+            }
+            
+            for (var i = 0; i < 8; i++) {
+                var angle = (Math.PI * 2 / 8) * i - Math.PI / 2;
+                var x = centerX + Math.cos(angle) * radius;
+                var y = centerY + Math.sin(angle) * radius;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(x, y);
+                ctx.strokeStyle = '#e0e0e0';
+                ctx.stroke();
+            }
+            
+            ctx.beginPath();
+            for (var i = 0; i < 8; i++) {
+                var angle = (Math.PI * 2 / 8) * i - Math.PI / 2;
+                var r = (dimensions[i].score / 100) * radius;
+                var x = centerX + Math.cos(angle) * r;
+                var y = centerY + Math.sin(angle) * r;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(102, 126, 234, 0.3)';
+            ctx.fill();
+            ctx.strokeStyle = '#667eea';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            for (var i = 0; i < 8; i++) {
+                var angle = (Math.PI * 2 / 8) * i - Math.PI / 2;
+                var r = radius + 15;
+                var x = centerX + Math.cos(angle) * r;
+                var y = centerY + Math.sin(angle) * r;
+                ctx.fillStyle = '#666';
+                ctx.font = '10px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(dimensions[i].name, x, y);
+            }
+        }
+
+        function generateAndShare() {
+            var code = document.getElementById('code').textContent;
+            var style = styles[code];
+            var canvas = document.getElementById('posterCanvas');
+            var ctx = canvas.getContext('2d');
+            
+            canvas.width = 600;
+            canvas.height = 800;
+            
+            var gradient = ctx.createLinearGradient(0, 0, 0, 800);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 600, 800);
+            
+            ctx.fillStyle = 'rgba(255,255,255,0.1)';
+            ctx.beginPath();
+            ctx.arc(500, -50, 200, 0, Math.PI*2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(-50, 150, 150, 0, Math.PI*2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 24px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('我的采购谈判风格', 300, 60);
+            
+            ctx.font = 'bold 80px sans-serif';
+            var codeGrad = ctx.createLinearGradient(0,100,600,100);
+            codeGrad.addColorStop(0,'#ffffff');
+            codeGrad.addColorStop(1,'#e0e7ff');
+            ctx.fillStyle = codeGrad;
+            ctx.fillText(code, 300, 160);
+            
+            ctx.font = 'bold 32px sans-serif';
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(style.name, 300, 210);
+            
+            ctx.font = '18px sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.8)';
+            ctx.fillText(style.role, 300, 240);
+            
+            ctx.font = '60px sans-serif';
+            ctx.fillText(style.animal, 300, 310);
+            
+            var cardY = 380;
+            var cardW = 240;
+            var cardH = 90;
+            var gap = 30;
+            
+            ctx.fillStyle = 'rgba(255,255,255,0.95)';
+            ctx.roundRect((600-cardW*2-gap)/2, cardY, cardW, cardH, 12);
+            ctx.fill();
+            ctx.fillStyle = '#10b981';
+            ctx.font = '24px sans-serif';
+            ctx.fillText('💰', (600-cardW*2-gap)/2+30, cardY+35);
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 20px sans-serif';
+            ctx.fillText(style.saving, (600-cardW*2-gap)/2+70, cardY+35);
+            ctx.fillStyle = '#999';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('年省潜力', (600-cardW*2-gap)/2+30, cardY+65);
+            
+            ctx.fillStyle = 'rgba(255,255,255,0.95)';
+            ctx.roundRect((600-cardW*2-gap)/2+cardW+gap, cardY, cardW, cardH, 12);
+            ctx.fill();
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = '24px sans-serif';
+            ctx.fillText('⭐', (600-cardW*2-gap)/2+cardW+gap+30, cardY+35);
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 20px sans-serif';
+            ctx.fillText(style.rarity, (600-cardW*2-gap)/2+cardW+gap+70, cardY+35);
+            ctx.fillStyle = '#999';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('稀有度', (600-cardW*2-gap)/2+cardW+gap+30, cardY+65);
+            
+            ctx.fillStyle = 'rgba(255,255,255,0.9)';
+            ctx.roundRect(50, 500, 500, 200, 12);
+            ctx.fill();
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 16px sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText('🎯 '+style.fortune.substring(0,3), 70, 535);
+            ctx.font = '14px sans-serif';
+            ctx.fillStyle = '#666';
+            wrapText(ctx, style.fortune.substring(3), 70, 560, 460, 22);
+            
+            ctx.fillStyle = 'rgba(255,255,255,0.9)';
+            ctx.roundRect(50, 720, 500, 60, 12);
+            ctx.fill();
+            ctx.fillStyle = '#666';
+            ctx.font = '12px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('扫码测测你的谈判风格', 300, 755);
+            
+            var dataUrl = canvas.toDataURL('image/png');
+            var link = document.createElement('a');
+            link.download = '我的谈判风格-'+code+'.png';
+            link.href = dataUrl;
+            link.click();
+            
+            setTimeout(function() {
+                var text = '我是'+style.animal+style.name+'（'+code+'）！年省潜力'+style.saving+'！测测你是什么谈判风格？';
+                if (navigator.share) {
+                    navigator.share({title:'我的谈判风格',text:text,url:window.location.href});
+                } else {
+                    navigator.clipboard.writeText(text+' '+window.location.href);
+                    alert('海报已下载！分享文案已复制！');
+                }
+            }, 500);
+        }
+
+        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+            var words = text.split('');
+            var line = '';
+            for(var i = 0; i < words.length; i++) {
+                var testLine = line + words[i];
+                var metrics = ctx.measureText(testLine);
+                if (metrics.width > maxWidth && i > 0) {
+                    ctx.fillText(line, x, y);
+                    line = words[i];
+                    y += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, x, y);
+        }
+
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+                if (w < 2 * r) r = w / 2;
+                if (h < 2 * r) r = h / 2;
+                this.moveTo(x + r, y);
+                this.arcTo(x + w, y, x + w, y + h, r);
+                this.arcTo(x + w, y + h, x, y + h, r);
+                this.arcTo(x, y + h, x, y, r);
+                this.arcTo(x, y, x + w, y, r);
+                return this;
+            };
         }
 
         function retakeTest() {
