@@ -496,21 +496,33 @@
             ctx.textAlign = 'center';
             ctx.fillText('扫码测测你的谈判风格', 300, 755);
             
-            var dataUrl = canvas.toDataURL('image/png');
-            var link = document.createElement('a');
-            link.download = '我的谈判风格-'+code+'.png';
-            link.href = dataUrl;
-            link.click();
-            
-            setTimeout(function() {
+            try {
+                var dataUrl = canvas.toDataURL('image/png');
+                var link = document.createElement('a');
+                link.download = '我的谈判风格-'+code+'.png';
+                link.href = dataUrl;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                setTimeout(function() {
+                    var text = '我是'+style.animal+style.name+'（'+code+'）！年省潜力'+style.saving+'！测测你是什么谈判风格？';
+                    if (navigator.share) {
+                        navigator.share({title:'我的谈判风格',text:text,url:window.location.href}).catch(function(e){console.log('分享取消');});
+                    } else {
+                        navigator.clipboard.writeText(text+' '+window.location.href).then(function(){
+                            alert('🎉 海报已下载到相册！\n分享文案已复制，快去朋友圈炫耀吧！');
+                        }).catch(function(){
+                            alert('🎉 海报已下载到相册！\n长按图片即可分享～');
+                        });
+                    }
+                }, 800);
+            } catch(e) {
+                console.error('海报生成失败:', e);
                 var text = '我是'+style.animal+style.name+'（'+code+'）！年省潜力'+style.saving+'！测测你是什么谈判风格？';
-                if (navigator.share) {
-                    navigator.share({title:'我的谈判风格',text:text,url:window.location.href});
-                } else {
-                    navigator.clipboard.writeText(text+' '+window.location.href);
-                    alert('海报已下载！分享文案已复制！');
-                }
-            }, 500);
+                navigator.clipboard.writeText(text+' '+window.location.href);
+                alert('海报生成失败，已复制分享文案。\n请截图分享结果页面～');
+            }
         }
 
         function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
