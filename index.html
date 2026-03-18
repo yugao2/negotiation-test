@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>采购谈判风格测试 v3 - 海报分享版</title>
+    <title>采购谈判风格测试 2.0 - 发现你的谈判超能力</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
@@ -23,6 +23,9 @@
         .progress { background: #e0e0e0; border-radius: 10px; height: 8px; margin-bottom: 20px; overflow: hidden; }
         .progress-bar { background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 3.57%; transition: width 0.3s; }
         .progress-text { text-align: center; color: #666; font-size: 14px; margin-bottom: 20px; }
+        .milestone-feedback { background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center; font-weight: 600; animation: slideIn 0.5s; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .question-scene { font-size: 14px; color: #667eea; background: #f0f4ff; padding: 10px 15px; border-radius: 8px; margin-bottom: 15px; font-weight: 600; }
         .question { font-size: 18px; font-weight: 600; color: #333; margin-bottom: 25px; line-height: 1.6; }
         .options { display: flex; flex-direction: column; gap: 12px; }
         .option { padding: 15px 20px; border: 2px solid #e0e0e0; border-radius: 12px; cursor: pointer; transition: all 0.2s; }
@@ -41,35 +44,79 @@
         .code { font-size: 36px; font-weight: bold; color: #667eea; margin-bottom: 5px; }
         .name { font-size: 24px; font-weight: 600; color: #333; margin-bottom: 5px; }
         .role { font-size: 16px; color: #666; margin-bottom: 10px; }
-        .section { margin: 25px 0; padding: 20px; background: #f8f9ff; border-radius: 12px; }
-        .section-title { font-size: 18px; font-weight: 600; color: #333; margin-bottom: 15px; }
-        .item { margin: 12px 0; padding: 12px; background: white; border-radius: 8px; }
-        .item-label { font-size: 14px; font-weight: 600; color: #667eea; margin-bottom: 5px; }
-        .item-text { font-size: 14px; color: #666; line-height: 1.6; }
-        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-        .tag { padding: 6px 12px; background: #667eea; color: white; border-radius: 20px; font-size: 12px; }
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        .btn-share, .btn-retake { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; }
-        .btn-share { background: linear-gradient(90deg, #667eea, #764ba2); color: white; }
-        .btn-retake { background: #f0f0f0; color: #666; }
         .result-stats { display: flex; justify-content: space-around; margin: 20px 0; }
         .result-stat { text-align: center; }
         .result-stat-value { font-size: 20px; font-weight: bold; color: #667eea; }
         .result-stat-label { font-size: 12px; color: #999; }
+        .section { margin: 25px 0; padding: 20px; background: #f8f9ff; border-radius: 12px; }
+        .section-title { font-size: 18px; font-weight: 600; color: #333; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .section-title .icon { font-size: 20px; }
+        .item { margin: 12px 0; padding: 12px; background: white; border-radius: 8px; }
+        .item-label { font-size: 14px; font-weight: 600; color: #667eea; margin-bottom: 5px; }
+        .item-text { font-size: 14px; color: #666; line-height: 1.8; }
+        .strength-item { padding: 10px 12px; margin: 8px 0; background: #f0fdf4; border-left: 4px solid #10b981; border-radius: 6px; font-size: 14px; color: #333; }
+        .weakness-item { padding: 10px 12px; margin: 8px 0; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 6px; font-size: 14px; color: #333; }
+        .action-item { padding: 10px 12px; margin: 8px 0; background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 6px; font-size: 14px; color: #333; }
+        .quote-item { padding: 12px; margin: 8px 0; background: #fff; border-radius: 8px; border-left: 4px solid #667eea; }
+        .quote-text { font-size: 14px; color: #333; font-weight: 600; margin-bottom: 4px; }
+        .quote-scene { font-size: 12px; color: #999; }
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .tag { padding: 6px 12px; background: #667eea; color: white; border-radius: 20px; font-size: 12px; }
         .radar-container { width: 100%; height: 250px; margin: 20px 0; background: #fafafa; border-radius: 8px; }
+        .course-card { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 12px; margin-top: 15px; }
+        .course-name { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+        .course-teacher { font-size: 14px; opacity: 0.9; margin-bottom: 12px; }
+        .course-price { font-size: 18px; font-weight: 700; color: #fbbf24; }
+        .btn-course { display: block; width: 100%; padding: 12px; background: #fbbf24; color: #333; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 12px; text-align: center; text-decoration: none; }
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-share, .btn-retake { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; }
+        .btn-share { background: linear-gradient(90deg, #667eea, #764ba2); color: white; }
+        .btn-retake { background: #f0f0f0; color: #666; }
         .poster-canvas { display: none; }
+        .social-proof { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; padding: 15px; border-radius: 12px; margin: 20px 0; text-align: center; font-weight: 600; }
+        
+        /* 团队功能样式 */
+        .team-nav { display: flex; gap: 10px; margin-bottom: 20px; }
+        .team-nav-btn { flex: 1; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; background: white; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .team-nav-btn.active { border-color: #667eea; background: #667eea; color: white; }
+        .team-card { background: white; border-radius: 12px; padding: 20px; margin: 15px 0; border: 2px solid #e0e0e0; }
+        .team-card h3 { font-size: 18px; color: #333; margin-bottom: 10px; }
+        .team-card p { font-size: 14px; color: #666; line-height: 1.6; }
+        .invite-code { background: #f0f4ff; padding: 15px; border-radius: 8px; text-align: center; margin: 15px 0; }
+        .invite-code .code { font-size: 28px; font-weight: bold; color: #667eea; letter-spacing: 4px; }
+        .member-list { display: flex; flex-direction: column; gap: 10px; margin: 15px 0; }
+        .member-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9ff; border-radius: 8px; }
+        .member-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .member-info { flex: 1; }
+        .member-name { font-weight: 600; color: #333; }
+        .member-style { font-size: 12px; color: #666; }
+        .team-distribution { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0; }
+        .dist-item { text-align: center; padding: 15px 10px; background: #f8f9ff; border-radius: 8px; }
+        .dist-count { font-size: 24px; font-weight: bold; color: #667eea; }
+        .dist-label { font-size: 12px; color: #999; margin-top: 5px; }
+        .btn-team { background: linear-gradient(90deg, #667eea, #764ba2); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 15px; }
+        .btn-compare { background: #f0f0f0; color: #666; border: none; padding: 8px 16px; border-radius: 6px; font-size: 14px; cursor: pointer; }
+        .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 15px 0; }
+        .compare-item { padding: 15px; background: #f8f9ff; border-radius: 8px; }
+        .compare-label { font-size: 12px; color: #999; margin-bottom: 5px; }
+        .compare-value { font-size: 16px; font-weight: 600; color: #333; }
+        .team-report-section { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 12px; margin: 15px 0; }
+        .team-report-section h3 { font-size: 18px; margin-bottom: 10px; }
+        .team-report-section ul { padding-left: 20px; }
+        .team-report-section li { margin: 8px 0; font-size: 14px; }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- 首页 -->
         <div id="homePage">
             <div class="hero">
                 <h1>🎯 采购谈判风格测试</h1>
-                <p>28 道题，3 分钟，发现你的谈判超能力</p>
+                <p>28 道真实场景题，5 分钟，发现你的谈判超能力</p>
                 <div class="hero-stats">
                     <div class="stat-item">
                         <div class="stat-num">28</div>
-                        <div class="stat-label">测试题目</div>
+                        <div class="stat-label">场景题目</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-num">16</div>
@@ -81,12 +128,16 @@
                     </div>
                 </div>
                 <button class="btn-start" onclick="startTest()">🚀 开始测试</button>
+                <button class="btn-start" style="background:linear-gradient(90deg,#10b981,#059669);margin-top:15px;" onclick="goToTeam()">👥 团队功能</button>
             </div>
         </div>
 
+        <!-- 测试页 -->
         <div id="testPage" class="hidden">
             <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
             <div class="progress-text" id="progressText">1 / 28</div>
+            <div id="milestoneFeedback" class="milestone-feedback hidden"></div>
+            <div class="question-scene" id="questionScene">场景描述</div>
             <div class="question" id="questionText">加载中...</div>
             <div class="options" id="optionsContainer"></div>
             <div class="nav-buttons">
@@ -96,6 +147,232 @@
             <div class="footer">请根据第一反应选择</div>
         </div>
 
+        <!-- 团队页面 -->
+        <div id="teamPage" class="hidden">
+            <div class="team-nav">
+                <button class="team-nav-btn active" onclick="switchTeamTab('create')">创建团队</button>
+                <button class="team-nav-btn" onclick="switchTeamTab('dashboard')">团队仪表盘</button>
+                <button class="team-nav-btn" onclick="switchTeamTab('compare')">成员对比</button>
+                <button class="team-nav-btn" onclick="switchTeamTab('report')">团队报告</button>
+            </div>
+            
+            <!-- 创建团队 -->
+            <div id="teamCreate" class="team-section">
+                <div class="hero">
+                    <h1>👥 创建你的团队</h1>
+                    <p>邀请同事一起测试，发现团队谈判风格分布</p>
+                </div>
+                <div class="team-card">
+                    <h3>团队信息</h3>
+                    <input type="text" id="teamNameInput" placeholder="输入团队名称（如：采购部、供应链团队）" style="width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:8px;margin:10px 0;font-size:16px;">
+                    <input type="text" id="teamLeaderInput" placeholder="你的姓名" style="width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:8px;margin:10px 0;font-size:16px;">
+                    <button class="btn-team" onclick="createTeam()">🚀 创建团队并生成邀请码</button>
+                </div>
+                <div id="inviteCodeSection" class="hidden">
+                    <div class="invite-code">
+                        <div style="font-size:14px;color:#666;margin-bottom:8px;">团队邀请码</div>
+                        <div class="code" id="inviteCodeDisplay">ABCD1234</div>
+                    </div>
+                    <div class="team-card">
+                        <p>📋 分享方式：</p>
+                        <ul style="padding-left:20px;color:#666;line-height:1.8;">
+                            <li>复制邀请码，微信/钉钉发送给同事</li>
+                            <li>同事在首页输入邀请码加入团队</li>
+                            <li>3 人即可生成团队分析报告</li>
+                        </ul>
+                        <button class="btn-team" onclick="copyInviteCode()">📋 复制邀请码</button>
+                        <button class="btn-team" style="background:#f0f0f0;color:#666;margin-top:10px;" onclick="viewTeamDashboard()">📊 查看团队仪表盘</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 团队仪表盘 -->
+            <div id="teamDashboard" class="team-section hidden">
+                <h2 style="text-align:center;margin-bottom:20px;">📊 团队仪表盘</h2>
+                <div class="team-card">
+                    <h3>团队概况</h3>
+                    <div style="display:flex;justify-content:space-around;margin:20px 0;">
+                        <div style="text-align:center;">
+                            <div style="font-size:32px;font-weight:bold;color:#667eea;" id="teamMemberCount">5</div>
+                            <div style="font-size:12px;color:#999;">团队成员</div>
+                        </div>
+                        <div style="text-align:center;">
+                            <div style="font-size:32px;font-weight:bold;color:#10b981;" id="teamCompletedCount">3</div>
+                            <div style="font-size:12px;color:#999;">已完成测试</div>
+                        </div>
+                        <div style="text-align:center;">
+                            <div style="font-size:32px;font-weight:bold;color:#f59e0b;" id="teamPendingCount">2</div>
+                            <div style="font-size:12px;color:#999;">待完成</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <h3>🎯 风格分布</h3>
+                    <div class="team-distribution" id="styleDistribution">
+                        <div class="dist-item"><div class="dist-count">2</div><div class="dist-label">关系型</div></div>
+                        <div class="dist-item"><div class="dist-count">2</div><div class="dist-label">任务型</div></div>
+                        <div class="dist-item"><div class="dist-count">1</div><div class="dist-label">谨慎型</div></div>
+                        <div class="dist-item"><div class="dist-count">0</div><div class="dist-label">冒险型</div></div>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <h3>👥 成员列表</h3>
+                    <div class="member-list" id="memberList">
+                        <div class="member-item">
+                            <div class="member-avatar">张</div>
+                            <div class="member-info">
+                                <div class="member-name">张三</div>
+                                <div class="member-style">🦉 战略架构师 (ARCD) - 已完成</div>
+                            </div>
+                            <button class="btn-compare" onclick="compareMember('张三')">对比</button>
+                        </div>
+                        <div class="member-item">
+                            <div class="member-avatar">李</div>
+                            <div class="member-info">
+                                <div class="member-name">李四</div>
+                                <div class="member-style">🦅 果断执行者 (ATBD) - 已完成</div>
+                            </div>
+                            <button class="btn-compare" onclick="compareMember('李四')">对比</button>
+                        </div>
+                        <div class="member-item">
+                            <div class="member-avatar">王</div>
+                            <div class="member-info">
+                                <div class="member-name">王五</div>
+                                <div class="member-style">🐬 关系建筑师 (ARCP) - 已完成</div>
+                            </div>
+                            <button class="btn-compare" onclick="compareMember('王五')">对比</button>
+                        </div>
+                        <div class="member-item">
+                            <div class="member-avatar">赵</div>
+                            <div class="member-info">
+                                <div class="member-name">赵六</div>
+                                <div class="member-style">⏳ 待测试</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 成员对比 -->
+            <div id="teamCompare" class="team-section hidden">
+                <h2 style="text-align:center;margin-bottom:20px;">⚔️ 成员对比</h2>
+                <div class="team-card">
+                    <h3>选择对比成员</h3>
+                    <select id="compareMember1" style="width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:8px;margin:10px 0;font-size:16px;">
+                        <option value="张三">张三 - 🦉 战略架构师 (ARCD)</option>
+                        <option value="李四">李四 - 🦅 果断执行者 (ATBD)</option>
+                        <option value="王五">王五 - 🐬 关系建筑师 (ARCP)</option>
+                    </select>
+                    <select id="compareMember2" style="width:100%;padding:12px;border:2px solid #e0e0e0;border-radius:8px;margin:10px 0;font-size:16px;">
+                        <option value="李四">李四 - 🦅 果断执行者 (ATBD)</option>
+                        <option value="张三">张三 - 🦉 战略架构师 (ARCD)</option>
+                        <option value="王五">王五 - 🐬 关系建筑师 (ARCP)</option>
+                    </select>
+                    <button class="btn-team" onclick="runComparison()">🔍 开始对比</button>
+                </div>
+                
+                <div id="compareResult" class="hidden">
+                    <div class="compare-grid">
+                        <div class="compare-item">
+                            <div class="compare-label">决策风格</div>
+                            <div class="compare-value">
+                                <span id="compareDecision1" style="color:#667eea;">分析型 71%</span>
+                                <br>vs<br>
+                                <span id="compareDecision2" style="color:#764ba2;">直觉型 64%</span>
+                            </div>
+                        </div>
+                        <div class="compare-item">
+                            <div class="compare-label">关系导向</div>
+                            <div class="compare-value">
+                                <span id="compareRelation1">关系型 57%</span>
+                                <br>vs<br>
+                                <span id="compareRelation2">任务型 71%</span>
+                            </div>
+                        </div>
+                        <div class="compare-item">
+                            <div class="compare-label">风险态度</div>
+                            <div class="compare-value">
+                                <span id="compareRisk1">谨慎型 86%</span>
+                                <br>vs<br>
+                                <span id="compareRisk2">冒险型 57%</span>
+                            </div>
+                        </div>
+                        <div class="compare-item">
+                            <div class="compare-label">沟通方式</div>
+                            <div class="compare-value">
+                                <span id="compareComm1">直接型 64%</span>
+                                <br>vs<br>
+                                <span id="compareComm2">说服型 71%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card" style="margin-top:20px;">
+                        <h3>💡 协作建议</h3>
+                        <ul style="padding-left:20px;color:#666;line-height:1.8;">
+                            <li><strong>互补优势：</strong>张三擅长数据分析，李四擅长快速决策，可以互补</li>
+                            <li><strong>潜在冲突：</strong>张三谨慎保守，李四敢于冒险，重大决策需充分沟通</li>
+                            <li><strong>合作建议：</strong>前期由张三做数据分析，后期由李四推动决策执行</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 团队报告 -->
+            <div id="teamReport" class="team-section hidden">
+                <h2 style="text-align:center;margin-bottom:20px;">📈 团队报告</h2>
+                
+                <div class="team-report-section">
+                    <h3>🎯 团队整体风格</h3>
+                    <p style="font-size:16px;margin:10px 0;">你的团队以<strong>关系型</strong>和<strong>任务型</strong>为主，兼具<strong>谨慎型</strong>特质，是一支平衡型团队。</p>
+                </div>
+                
+                <div class="team-card">
+                    <h3>💪 团队优势</h3>
+                    <ul style="padding-left:20px;color:#666;line-height:1.8;">
+                        <li>✅ 关系导向强，善于维护供应商关系</li>
+                        <li>✅ 任务执行力强，能够推动项目落地</li>
+                        <li>✅ 风险意识强，决策谨慎</li>
+                        <li>✅ 风格多元，能够应对不同谈判场景</li>
+                    </ul>
+                </div>
+                
+                <div class="team-card">
+                    <h3>⚠️ 团队缺口</h3>
+                    <ul style="padding-left:20px;color:#666;line-height:1.8;">
+                        <li>⚠️ 缺少冒险型成员，可能错失创新机会</li>
+                        <li>⚠️ 直觉型成员较少，过度依赖数据</li>
+                        <li>⚠️ 说服型成员不足，谈判中可能缺乏灵活性</li>
+                    </ul>
+                </div>
+                
+                <div class="team-card">
+                    <h3>📚 团队发展建议</h3>
+                    <ul style="padding-left:20px;color:#666;line-height:1.8;">
+                        <li>📖 组织《创新思维与风险承担》培训</li>
+                        <li>📖 引入直觉决策工作坊</li>
+                        <li>📖 安排说服技巧演练</li>
+                        <li>📖 建立多元化谈判小组，优势互补</li>
+                    </ul>
+                </div>
+                
+                <div class="team-card">
+                    <h3>🎓 推荐团队学习</h3>
+                    <div class="course-card">
+                        <div class="course-name">《打造高绩效采购团队》</div>
+                        <div class="course-teacher">讲师：姜宏锋</div>
+                        <div class="course-price">团队价：¥4999/5 人</div>
+                        <a href="#" class="btn-course">立即报名 →</a>
+                    </div>
+                </div>
+                
+                <button class="btn-team" onclick="exportTeamReport()">📥 导出 PDF 报告</button>
+            </div>
+        </div>
+
+        <!-- 结果页 -->
         <div id="resultPage" class="hidden">
             <div class="result-header">
                 <div class="animal" id="animal">🦉</div>
@@ -114,37 +391,64 @@
                 </div>
             </div>
             
-            <div class="section">
-                <div class="section-title">📊 能力雷达图</div>
-                <canvas id="radarChart" class="radar-container" width="300" height="250"></canvas>
+            <div class="social-proof">
+                🏆 你击败了 <span id="beatPercent">87</span>% 的采购同行 | 
+                👤 全国第 <span id="rank">3,247</span> 位<span id="rankName">战略架构师</span>
             </div>
             
             <div class="section">
-                <div class="section-title">🎯 谈判运势</div>
-                <div class="item"><div class="item-text" id="fortune"></div></div>
+                <div class="section-title"><span class="icon">💪</span> 核心优势</div>
+                <div id="strengths"></div>
             </div>
             
             <div class="section">
-                <div class="section-title">💰 财运指数</div>
-                <div class="item"><div class="item-text" id="money"></div></div>
+                <div class="section-title"><span class="icon">⚠️</span> 致命弱点</div>
+                <div id="weaknesses"></div>
             </div>
             
             <div class="section">
-                <div class="section-title">❤️ 配对指数</div>
+                <div class="section-title"><span class="icon">💡</span> 行动建议</div>
+                <div id="actions"></div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title"><span class="icon">📚</span> 推荐学习</div>
                 <div class="item">
-                    <div class="item-label">最佳搭档</div>
-                    <div class="item-text" id="partner"></div>
+                    <div class="item-label">推荐课程</div>
+                    <div class="course-card">
+                        <div class="course-name" id="courseName">《成本结构分析与高级谈判策略》</div>
+                        <div class="course-teacher">讲师：<span id="courseTeacher">姜宏锋</span></div>
+                        <div class="course-price" id="coursePrice">1999 元</div>
+                        <a href="#" class="btn-course" id="courseLink">立即学习 →</a>
+                    </div>
+                </div>
+                <div class="item" style="margin-top:12px;">
+                    <div class="item-label">推荐书籍</div>
+                    <div class="item-text" id="book"></div>
                 </div>
             </div>
             
             <div class="section">
-                <div class="section-title">🏷️ 神秘标签</div>
-                <div class="tags" id="tags"></div>
+                <div class="section-title"><span class="icon">💬</span> 谈判金句</div>
+                <div id="quotes"></div>
             </div>
             
             <div class="section">
-                <div class="section-title">💼 职业建议</div>
-                <div class="item"><div class="item-text" id="career"></div></div>
+                <div class="section-title"><span class="icon">📊</span> 能力雷达图</div>
+                <canvas id="radarChart" class="radar-container" width="300" height="250"></canvas>
+            </div>
+            
+            <div class="section">
+                <div class="section-title"><span class="icon">🏆</span> 名人对标</div>
+                <div class="item">
+                    <div class="item-label" id="celebrity"></div>
+                    <div class="item-text" id="celebrityDesc"></div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title"><span class="icon">🏷️</span> 神秘标签</div>
+                <div class="tags" id="tags"></div>
             </div>
             
             <div class="btn-group">
@@ -156,59 +460,173 @@
         <canvas id="posterCanvas" class="poster-canvas"></canvas>
     </div>
 
+    <script src="questions-v2.js"></script>
+    <script src="styles-v2.js"></script>
     <script>
-        var questions = [
-            {text:"在供应商选择时，你更倾向于：",options:[{label:'A',text:'详细分析所有数据，对比多家供应商的优劣势',score:'A'},{label:'B',text:'相信自己的行业经验和直觉判断',score:'I'},{label:'C',text:'参考同行推荐和口碑评价',score:'I'},{label:'D',text:'建立评估模型，量化各项指标后决策',score:'A'}]},
-            {text:"面对新的采购品类，你会：",options:[{label:'A',text:'先做充分的市场调研和技术分析',score:'A'},{label:'B',text:'快速尝试，在实践中学习和调整',score:'I'},{label:'C',text:'找专家咨询，听取专业意见',score:'I'},{label:'D',text:'制定详细的评估标准和流程',score:'A'}]},
-            {text:"谈判前准备，你通常会：",options:[{label:'A',text:'收集大量数据，做详尽的准备工作',score:'A'},{label:'B',text:'把握大方向，细节随机应变',score:'I'},{label:'C',text:'依靠过往经验，快速制定策略',score:'I'},{label:'D',text:'列出所有可能的情况和应对方案',score:'A'}]},
-            {text:"当供应商报价超出预算时，你首先：",options:[{label:'A',text:'分析成本结构，找出可优化的部分',score:'A'},{label:'B',text:'凭经验判断是否有水分，直接砍价',score:'I'},{label:'C',text:'询问市场行情，对比其他供应商',score:'I'},{label:'D',text:'要求对方提供详细的成本 breakdown',score:'A'}]},
-            {text:"做采购决策时，你最看重：",options:[{label:'A',text:'客观数据和事实依据',score:'A'},{label:'B',text:'整体感觉和大方向正确',score:'I'},{label:'C',text:'业内专家的意见建议',score:'I'},{label:'D',text:'系统化的评估结果',score:'A'}]},
-            {text:"面对复杂的采购项目，你会：",options:[{label:'A',text:'分解成多个子项目，逐一分析',score:'A'},{label:'B',text:'把握核心关键点，其他灵活处理',score:'I'},{label:'C',text:'找有经验的同事一起讨论',score:'I'},{label:'D',text:'建立完整的项目管理框架',score:'A'}]},
-            {text:"当数据与直觉冲突时，你更相信：",options:[{label:'A',text:'数据，它不会说谎',score:'A'},{label:'B',text:'直觉，多年经验积累的判断',score:'I'},{label:'C',text:'综合考量，但直觉权重更大',score:'I'},{label:'D',text:'重新验证数据，确保准确性',score:'A'}]},
-            {text:"与供应商合作，你认为最重要的是：",options:[{label:'A',text:'建立长期信任的伙伴关系',score:'R'},{label:'B',text:'确保每次交易都获得最优条件',score:'T'},{label:'C',text:'保持良好沟通，互利共赢',score:'R'},{label:'D',text:'严格按合同执行，结果导向',score:'T'}]},
-            {text:"当供应商出现交付问题时，你会：",options:[{label:'A',text:'先了解原因，一起想办法解决',score:'R'},{label:'B',text:'按合同条款追究责任',score:'T'},{label:'C',text:'考虑长期合作，适度宽容',score:'R'},{label:'D',text:'评估影响，启动备选方案',score:'T'}]},
-            {text:"选择供应商时，关系因素占多大权重：",options:[{label:'A',text:'很重要，关系好合作更顺畅',score:'R'},{label:'B',text:'不重要，只看能力和价格',score:'T'},{label:'C',text:'比较重要，但非决定因素',score:'R'},{label:'D',text:'次要因素，业绩才是关键',score:'T'}]},
-            {text:"谈判中，你更倾向于：",options:[{label:'A',text:'营造友好氛围，寻求双赢',score:'R'},{label:'B',text:'直奔主题，高效解决问题',score:'T'},{label:'C',text:'先建立关系，再谈业务',score:'R'},{label:'D',text:'聚焦目标，不被情感影响',score:'T'}]},
-            {text:"对于老供应商，你会：",options:[{label:'A',text:'给予一定优先权和信任',score:'R'},{label:'B',text:'每次都要重新评估竞争力',score:'T'},{label:'C',text:'维护关系，但保持适度竞争',score:'R'},{label:'D',text:'用绩效说话，优胜劣汰',score:'T'}]},
-            {text:"与供应商的沟通频率，你倾向于：",options:[{label:'A',text:'经常沟通，保持紧密联系',score:'R'},{label:'B',text:'有事说事，不必频繁打扰',score:'T'},{label:'C',text:'定期沟通，维护关系',score:'R'},{label:'D',text:'按需要沟通，效率优先',score:'T'}]},
-            {text:"当价格与关系冲突时，你会：",options:[{label:'A',text:'适当让步，维护长期关系',score:'R'},{label:'B',text:'坚持价格，商业归商业',score:'T'},{label:'C',text:'寻找平衡点，兼顾双方',score:'R'},{label:'D',text:'用数据说服对方调整',score:'T'}]},
-            {text:"面对新的供应商，你的态度是：",options:[{label:'A',text:'谨慎评估，充分验证后再合作',score:'C'},{label:'B',text:'大胆尝试，快速建立合作',score:'B'},{label:'C',text:'小批量试单，逐步扩大',score:'C'},{label:'D',text:'抓住机会，抢先建立优势',score:'B'}]},
-            {text:"对于创新技术方案，你会：",options:[{label:'A',text:'充分验证成熟度后再采用',score:'C'},{label:'B',text:'积极尝试，抢占先机',score:'B'},{label:'C',text:'观望一段时间，看市场反馈',score:'C'},{label:'D',text:'快速试点，迭代优化',score:'B'}]},
-            {text:"谈判中遇到不确定因素，你会：",options:[{label:'A',text:'暂停谈判，先搞清楚再说',score:'C'},{label:'B',text:'边谈边调整，灵活应对',score:'B'},{label:'C',text:'设置保护条款，降低风险',score:'C'},{label:'D',text:'相信直觉，果断决策',score:'B'}]},
-            {text:"对于单一供应商依赖，你的看法是：",options:[{label:'A',text:'风险太大，必须开发备选',score:'C'},{label:'B',text:'深度绑定，换取更好条件',score:'B'},{label:'C',text:'保持警惕，逐步降低依赖',score:'C'},{label:'D',text:'看情况，有时集中更优',score:'B'}]},
-            {text:"市场波动时，你的采购策略是：",options:[{label:'A',text:'保守观望，等待趋势明朗',score:'C'},{label:'B',text:'逆势操作，抓住机会',score:'B'},{label:'C',text:'分批采购，分散风险',score:'C'},{label:'D',text:'快速决策，灵活调整',score:'B'}]},
-            {text:"签订长期合同时，你会：",options:[{label:'A',text:'详细约定各种情况和条款',score:'C'},{label:'B',text:'把握大框架，细节可调整',score:'B'},{label:'C',text:'加入退出机制，保留灵活性',score:'C'},{label:'D',text:'快速签约，抢占资源',score:'B'}]},
-            {text:"面对高风险高回报的项目，你会：",options:[{label:'A',text:'谨慎评估，可能放弃',score:'C'},{label:'B',text:'愿意冒险，博取高回报',score:'B'},{label:'C',text:'控制投入，限制风险敞口',score:'C'},{label:'D',text:'快速决策，全力投入',score:'B'}]},
-            {text:"谈判开场，你通常会：",options:[{label:'A',text:'直接表明立场和要求',score:'D'},{label:'B',text:'先寒暄，营造轻松氛围',score:'P'},{label:'C',text:'简明扼要说明来意',score:'D'},{label:'D',text:'从共同话题切入，拉近距离',score:'P'}]},
-            {text:"表达不同意见时，你会：",options:[{label:'A',text:'直接指出，不绕弯子',score:'D'},{label:'B',text:'委婉表达，照顾对方感受',score:'P'},{label:'C',text:'清晰说明，但注意语气',score:'D'},{label:'D',text:'先肯定，再提出建议',score:'P'}]},
-            {text:"谈判陷入僵局时，你会：",options:[{label:'A',text:'直接提出解决方案',score:'D'},{label:'B',text:'缓和气氛，换个角度沟通',score:'P'},{label:'C',text:'明确底线，推动决策',score:'D'},{label:'D',text:'寻找共同点，重建共识',score:'P'}]},
-            {text:"与供应商讨价还价，你的风格是：",options:[{label:'A',text:'直接给出目标价，不浪费时间',score:'D'},{label:'B',text:'逐步引导，让对方主动让步',score:'P'},{label:'C',text:'明确表达期望，坚持立场',score:'D'},{label:'D',text:'用数据和逻辑说服对方',score:'P'}]},
-            {text:"反馈供应商表现时，你会：",options:[{label:'A',text:'直接指出问题和不足',score:'D'},{label:'B',text:'先表扬，再提改进建议',score:'P'},{label:'C',text:'坦诚沟通，对事不对人',score:'D'},{label:'D',text:'用建设性方式表达',score:'P'}]},
-            {text:"团队内部讨论采购策略，你倾向于：",options:[{label:'A',text:'直接表达观点，快速决策',score:'D'},{label:'B',text:'倾听大家意见，协调共识',score:'P'},{label:'C',text:'明确表达自己的立场',score:'D'},{label:'D',text:'用影响力说服团队成员',score:'P'}]},
-            {text:"结束谈判时，你会：",options:[{label:'A',text:'明确总结达成的共识和下一步',score:'D'},{label:'B',text:'感谢对方，保持良好关系',score:'P'},{label:'C',text:'确认关键条款，避免误解',score:'D'},{label:'D',text:'表达合作期待，展望未来',score:'P'}]}
-        ];
+        // 团队功能数据
+        var currentTeam = null;
+        var teamMembers = [];
 
-        var styles = {
-            ARCD: {animal:'🦉',name:'战略架构师',role:'战略策划者',saving:'15-25%',rarity:'约 5%',fortune:'本周宜制定长期战略，适合分析供应商成本结构，找出隐藏利润空间',money:'年省潜力 15-25%，擅长从数据中发现降本机会',partner:'ARTD(关系协调者)，你出战略他铺路，天作之合',tags:['人形审计仪','合同找茬专家','老板最放心的守门员'],career:'供应商准入审核、成本结构分析、战略采购规划'},
-            ARCP: {animal:'🐬',name:'关系建筑师',role:'信任建立者',saving:'10-18%',rarity:'约 8%',fortune:'本周宜维护核心供应商关系，一次深度沟通胜过十次讨价还价',money:'年省潜力 10-18%，关系溢价是你的隐形武器',partner:'ARCD(战略架构师)，你维系关系他提供弹药',tags:['供应商知己','人情账户管理员','长期主义代言人'],career:'战略供应商管理、联合开发项目、长期协议谈判'},
-            ARBD: {animal:'🐢',name:'谨慎守护者',role:'风险管控者',saving:'8-15%',rarity:'约 7%',fortune:'本周宜审查合同条款，细节里藏着魔鬼也藏着钱',money:'年省潜力 8-15%，避免一次大坑胜过十次小省',partner:'ATBD(果断执行者)，你踩刹车他踩油门',tags:['条款显微镜','最坏情况预演师','合规守门员'],career:'合同审核、风险评估、供应商资质认证'},
-            ARBP: {animal:'🐑',name:'温和协调者',role:'共识促成者',saving:'5-12%',rarity:'约 10%',fortune:'本周宜寻找共同利益点，和气生财是真的',money:'年省潜力 5-12%，双赢比零和更可持续',partner:'ITBD(快速决策者)，你缓和气氛他推进进度',tags:['和事佬专业户','情绪稳定器','双赢设计师'],career:'跨部门协调、供应商纠纷调解、联合降本项目管理'},
-            ATCD: {animal:'🐜',name:'效率优化师',role:'流程专家',saving:'12-20%',rarity:'约 12%',fortune:'本周宜优化采购流程，效率提升就是成本下降',money:'年省潜力 12-20%，标准化是你的印钞机',partner:'ARCP(关系建筑师)，你管流程他管人情',tags:['SOP 狂魔','效率计算器','流程改造师'],career:'采购流程优化、标准化建设、数字化系统实施'},
-            ATCP: {animal:'🦎',name:'数据驱动者',role:'量化分析师',saving:'10-18%',rarity:'约 9%',fortune:'本周宜深挖历史数据，数字会告诉你该砍哪里',money:'年省潜力 10-18%，每一个小数点都是钱',partner:'IRBP(魅力影响者)，你出数据他出嘴',tags:['Excel 魔法师','KPI 猎人','仪表盘控'],career:'采购数据分析、支出分析、成本建模'},
-            ATBD: {animal:'🦅',name:'果断执行者',role:'结果导向者',saving:'15-22%',rarity:'约 8%',fortune:'本周宜速战速决，犹豫就会败北',money:'年省潜力 15-22%，时间就是金钱在你身上是真的',partner:'ARBD(谨慎守护者)，你冲锋他断后',tags:['deadline 杀手','说一不二','目标粉碎机'],career:'紧急采购项目、竞标谈判、价格战应对'},
-            ATBP: {animal:'🐴',name:'团队推动者',role:'项目管理者',saving:'10-16%',rarity:'约 11%',fortune:'本周宜召开供应商大会，集体力量大于个人',money:'年省潜力 10-16%，团队作战能谈下更大折扣',partner:'ARCD(战略架构师)，你带团队他定方向',tags:['进度条管家','会议组织者','任务分配大师'],career:'采购项目统筹、跨部门协作、供应商大会组织'},
-            IRCD: {animal:'🦊',name:'创新探索者',role:'变革推动者',saving:'12-20%',rarity:'约 6%',fortune:'本周宜尝试新供应商，老树不一定开新花',money:'年省潜力 12-20%，创新是最大降本空间',partner:'ATCD(效率优化师)，你创新他落地',tags:['破局者','新物种猎手','传统挑战者'],career:'新供应商开发、替代方案研究、创新采购模式'},
-            IRCP: {animal:'🐕',name:'社交联结者',role:'人脉拓展者',saving:'8-15%',rarity:'约 10%',fortune:'本周宜参加行业聚会，饭局上能听到真话',money:'年省潜力 8-15%，人脉就是你的情报网',partner:'ATCP(数据驱动者)，你搞关系他验证',tags:['行业百事通','饭局之王','消息灵通人士'],career:'供应商关系拓展、行业资源整合、信息收集分析'},
-            IRBD: {animal:'🦁',name:'风险投资者',role:'机会赌手',saving:'15-30%',rarity:'约 4%',fortune:'本周宜押注新供应商，富贵险中求',money:'年省潜力 15-30%，敢赌才能赢大的',partner:'ARBD(谨慎守护者)，你冒险他风控',tags:['赌桌高手','all in 先生','要么赢要么输'],career:'战略投资型采购、新市场开拓、颠覆性供应商引入'},
-            IRBP: {animal:'🦜',name:'魅力影响者',role:'说服艺术家',saving:'10-18%',rarity:'约 7%',fortune:'本周宜面对面谈判，你的气场能压价',money:'年省潜力 10-18%，会说话就是会赚钱',partner:'ATCP(数据驱动者)，你输出他背书',tags:['谈判桌明星','嘴炮王者','气场两米八'],career:'核心谈判代表、高层对接、关键合同签署'},
-            ITCD: {animal:'🦈',name:'市场洞察者',role:'趋势分析师',saving:'12-22%',rarity:'约 6%',fortune:'本周宜研究市场趋势，风口来了猪都能飞',money:'年省潜力 12-22%，预判正确能省大钱',partner:'ARCP(关系建筑师)，你看趋势他稳关系',tags:['行情预言家','周期把握者','抄底高手'],career:'市场价格预测、大宗商品采购、战略储备决策'},
-            ITCP: {animal:'🐆',name:'机会捕捉者',role:'敏捷反应者',saving:'10-20%',rarity:'约 7%',fortune:'本周宜关注突发机会，手慢无是真的',money:'年省潜力 10-20%，机会窗口转瞬即逝',partner:'ARCD(战略架构师)，你抓机会他把方向',tags:['机会雷达','闪电侠','捡漏王'],career:'临时采购需求、市场波动应对、紧急议价'},
-            ITBD: {animal:'🐲',name:'快速决策者',role:'直觉行动派',saving:'12-18%',rarity:'约 5%',fortune:'本周宜相信第一直觉，想太多会错过',money:'年省潜力 12-18%，果断比完美更重要',partner:'ARBP(温和协调者)，你决策他善后',tags:['拍板侠','不纠结星人','先干再说'],career:'快速采购项目、应急响应、临时决策'},
-            ITBP: {animal:'🐙',name:'灵活适应者',role:'变通专家',saving:'8-15%',rarity:'约 9%',fortune:'本周宜随机应变，计划赶不上变化',money:'年省潜力 8-15%，灵活就是省钱',partner:'ATCD(效率优化师)，你变通他稳定',tags:['墙头草高手','见招拆招','没有固定套路'],career:'多变环境采购、多供应商管理、应急方案制定'}
+        // 团队功能函数
+        function goToTeam() {
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('teamPage').classList.remove('hidden');
+        }
+
+        function switchTeamTab(tab) {
+            // 隐藏所有 section
+            document.querySelectorAll('.team-section').forEach(function(el) {
+                el.classList.add('hidden');
+            });
+            // 移除所有按钮 active 状态
+            document.querySelectorAll('.team-nav-btn').forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+            
+            // 显示目标 section
+            document.getElementById('team' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
+            // 设置按钮 active
+            event.target.classList.add('active');
+        }
+
+        function createTeam() {
+            var teamName = document.getElementById('teamNameInput').value.trim();
+            var leaderName = document.getElementById('teamLeaderInput').value.trim();
+            
+            if (!teamName || !leaderName) {
+                alert('请填写团队名称和你的姓名');
+                return;
+            }
+            
+            // 生成邀请码（8 位随机）
+            var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            var code = '';
+            for (var i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            currentTeam = {
+                name: teamName,
+                leader: leaderName,
+                inviteCode: code,
+                createdAt: new Date().toISOString()
+            };
+            
+            // 保存到 localStorage
+            localStorage.setItem('currentTeam', JSON.stringify(currentTeam));
+            
+            // 显示邀请码
+            document.getElementById('inviteCodeDisplay').textContent = code;
+            document.getElementById('inviteCodeSection').classList.remove('hidden');
+            
+            // 模拟添加成员
+            teamMembers = [
+                { name: leaderName, style: 'ARCD', styleName: '战略架构师', animal: '🦉', completed: true },
+                { name: '张三', style: 'ATBD', styleName: '果断执行者', animal: '🦅', completed: true },
+                { name: '李四', style: 'ARCP', styleName: '关系建筑师', animal: '🐬', completed: true },
+                { name: '王五', style: '', styleName: '', animal: '', completed: false },
+                { name: '赵六', style: '', styleName: '', animal: '', completed: false }
+            ];
+            
+            updateTeamDashboard();
+        }
+
+        function copyInviteCode() {
+            var code = document.getElementById('inviteCodeDisplay').textContent;
+            navigator.clipboard.writeText(code).then(function() {
+                alert('✅ 邀请码已复制：' + code);
+            }).catch(function() {
+                alert('邀请码：' + code);
+            });
+        }
+
+        function viewTeamDashboard() {
+            switchTeamTab('dashboard');
+        }
+
+        function updateTeamDashboard() {
+            var completed = teamMembers.filter(function(m) { return m.completed; }).length;
+            var pending = teamMembers.length - completed;
+            
+            document.getElementById('teamMemberCount').textContent = teamMembers.length;
+            document.getElementById('teamCompletedCount').textContent = completed;
+            document.getElementById('teamPendingCount').textContent = pending;
+            
+            // 更新成员列表
+            var listHtml = '';
+            for (var i = 0; i < teamMembers.length; i++) {
+                var m = teamMembers[i];
+                if (m.completed) {
+                    listHtml += '<div class="member-item">' +
+                        '<div class="member-avatar">' + m.name.charAt(0) + '</div>' +
+                        '<div class="member-info">' +
+                        '<div class="member-name">' + m.name + '</div>' +
+                        '<div class="member-style">' + m.animal + ' ' + m.styleName + ' (' + m.style + ') - 已完成</div>' +
+                        '</div>' +
+                        '<button class="btn-compare" onclick="compareMember(\'' + m.name + '\')">对比</button>' +
+                        '</div>';
+                } else {
+                    listHtml += '<div class="member-item">' +
+                        '<div class="member-avatar">' + m.name.charAt(0) + '</div>' +
+                        '<div class="member-info">' +
+                        '<div class="member-name">' + m.name + '</div>' +
+                        '<div class="member-style">⏳ 待测试</div>' +
+                        '</div>' +
+                        '</div>';
+                }
+            }
+            document.getElementById('memberList').innerHTML = listHtml;
+        }
+
+        function compareMember(name) {
+            switchTeamTab('compare');
+            document.getElementById('compareMember1').value = name;
+        }
+
+        function runComparison() {
+            var member1 = document.getElementById('compareMember1').value;
+            var member2 = document.getElementById('compareMember2').value;
+            
+            if (member1 === member2) {
+                alert('请选择不同的成员进行对比');
+                return;
+            }
+            
+            // 模拟对比数据
+            var data = {
+                '张三': { decision: '分析型 71%', relation: '关系型 57%', risk: '谨慎型 86%', comm: '直接型 64%' },
+                '李四': { decision: '直觉型 64%', relation: '任务型 71%', risk: '冒险型 57%', comm: '说服型 71%' },
+                '王五': { decision: '分析型 50%', relation: '关系型 86%', risk: '谨慎型 57%', comm: '说服型 64%' }
+            };
+            
+            document.getElementById('compareDecision1').textContent = data[member1].decision;
+            document.getElementById('compareDecision2').textContent = data[member2].decision;
+            document.getElementById('compareRelation1').textContent = data[member1].relation;
+            document.getElementById('compareRelation2').textContent = data[member2].relation;
+            document.getElementById('compareRisk1').textContent = data[member1].risk;
+            document.getElementById('compareRisk2').textContent = data[member2].risk;
+            document.getElementById('compareComm1').textContent = data[member1].comm;
+            document.getElementById('compareComm2').textContent = data[member2].comm;
+            
+            document.getElementById('compareResult').classList.remove('hidden');
+        }
+
+        function exportTeamReport() {
+            alert('📥 PDF 报告生成中...\n\n（此功能需要后端支持，当前为演示版本）');
+        }
+
+        // 页面加载时检查是否有团队
+        window.onload = function() {
+            console.log('采购谈判风格测试 2.0 已加载');
+            var savedTeam = localStorage.getItem('currentTeam');
+            if (savedTeam) {
+                currentTeam = JSON.parse(savedTeam);
+                console.log('已加载团队：', currentTeam.name);
+            }
         };
-
         var currentIndex = 0;
         var answers = [];
+        var dimensionScores = { A: 0, I: 0, R: 0, T: 0, C: 0, B: 0, D: 0, P: 0 };
 
         function startTest() {
             document.getElementById('homePage').classList.add('hidden');
@@ -219,6 +637,7 @@
 
         function renderQuestion() {
             var q = questions[currentIndex];
+            document.getElementById('questionScene').textContent = q.scene;
             document.getElementById('questionText').textContent = q.text;
             var container = document.getElementById('optionsContainer');
             container.innerHTML = '';
@@ -241,9 +660,47 @@
                 options[i].classList.remove('selected');
             }
             event.currentTarget.classList.add('selected');
+            
+            // 统计维度得分
+            var q = questions[currentIndex];
+            if (q.options.find(o => o.score === score)) {
+                dimensionScores[score] = (dimensionScores[score] || 0) + 1;
+            }
+            
+            // 里程碑反馈（每 7 题）
+            if ((currentIndex + 1) % 7 === 0 && currentIndex < 27) {
+                showMilestoneFeedback(currentIndex + 1);
+            } else {
+                setTimeout(function() {
+                    if (currentIndex < 27) nextQuestion();
+                }, 300);
+            }
+        }
+        
+        function showMilestoneFeedback(questionNum) {
+            var feedbackEl = document.getElementById('milestoneFeedback');
+            var dimension = '';
+            var percentage = 0;
+            
+            if (questionNum === 7) {
+                var total = dimensionScores.A + dimensionScores.I;
+                percentage = total > 0 ? Math.round((dimensionScores.A / total) * 100) : 50;
+                feedbackEl.textContent = '✓ 决策风格维度完成！你的分析型倾向：' + percentage + '%';
+            } else if (questionNum === 14) {
+                var total = dimensionScores.R + dimensionScores.T;
+                percentage = total > 0 ? Math.round((dimensionScores.R / total) * 100) : 50;
+                feedbackEl.textContent = '✓ 关系导向维度完成！你的关系型倾向：' + percentage + '%';
+            } else if (questionNum === 21) {
+                var total = dimensionScores.C + dimensionScores.B;
+                percentage = total > 0 ? Math.round((dimensionScores.C / total) * 100) : 50;
+                feedbackEl.textContent = '✓ 风险态度维度完成！你的谨慎型倾向：' + percentage + '%';
+            }
+            
+            feedbackEl.classList.remove('hidden');
             setTimeout(function() {
+                feedbackEl.classList.add('hidden');
                 if (currentIndex < 27) nextQuestion();
-            }, 300);
+            }, 2000);
         }
 
         function prevQuestion() {
@@ -286,24 +743,70 @@
             document.getElementById('testPage').classList.add('hidden');
             document.getElementById('resultPage').classList.remove('hidden');
             var style = styles[code];
+            
+            // 基本信息
             document.getElementById('animal').textContent = style.animal;
             document.getElementById('code').textContent = code;
             document.getElementById('name').textContent = style.name;
             document.getElementById('role').textContent = style.role;
             document.getElementById('saving').textContent = style.saving;
             document.getElementById('rarity').textContent = style.rarity;
-            document.getElementById('fortune').textContent = style.fortune;
-            document.getElementById('money').textContent = style.money;
-            document.getElementById('partner').textContent = style.partner;
-            document.getElementById('career').textContent = style.career;
-            var tagsContainer = document.getElementById('tags');
-            tagsContainer.innerHTML = '';
-            for (var i = 0; i < style.tags.length; i++) {
-                var span = document.createElement('span');
-                span.className = 'tag';
-                span.textContent = style.tags[i];
-                tagsContainer.appendChild(span);
+            document.getElementById('beatPercent').textContent = style.beatPercent;
+            document.getElementById('rank').textContent = style.rank.toLocaleString();
+            document.getElementById('rankName').textContent = style.name;
+            
+            // 核心优势
+            var strengthsContainer = document.getElementById('strengths');
+            strengthsContainer.innerHTML = '';
+            for (var i = 0; i < style.strengths.length; i++) {
+                var div = document.createElement('div');
+                div.className = 'strength-item';
+                div.textContent = '✓ ' + style.strengths[i];
+                strengthsContainer.appendChild(div);
             }
+            
+            // 致命弱点
+            var weaknessesContainer = document.getElementById('weaknesses');
+            weaknessesContainer.innerHTML = '';
+            for (var i = 0; i < style.weaknesses.length; i++) {
+                var div = document.createElement('div');
+                div.className = 'weakness-item';
+                div.textContent = '⚠️ ' + style.weaknesses[i];
+                weaknessesContainer.appendChild(div);
+            }
+            
+            // 行动建议
+            var actionsContainer = document.getElementById('actions');
+            actionsContainer.innerHTML = '';
+            for (var i = 0; i < style.actions.length; i++) {
+                var div = document.createElement('div');
+                div.className = 'action-item';
+                div.textContent = '→ ' + style.actions[i];
+                actionsContainer.appendChild(div);
+            }
+            
+            // 推荐课程
+            document.getElementById('courseName').textContent = '《' + style.course.name + '》';
+            document.getElementById('courseTeacher').textContent = style.course.teacher;
+            document.getElementById('coursePrice').textContent = style.course.price;
+            document.getElementById('courseLink').href = style.course.link;
+            document.getElementById('book').textContent = style.book;
+            
+            // 谈判金句
+            var quotesContainer = document.getElementById('quotes');
+            quotesContainer.innerHTML = '';
+            for (var i = 0; i < style.quotes.length; i++) {
+                var quote = style.quotes[i];
+                var div = document.createElement('div');
+                div.className = 'quote-item';
+                div.innerHTML = '<div class="quote-text">"' + quote.text + '"</div><div class="quote-scene">📍 ' + quote.scene + '</div>';
+                quotesContainer.appendChild(div);
+            }
+            
+            // 名人对标
+            document.getElementById('celebrity').textContent = style.celebrity + ' · ' + style.celebrityDesc;
+            
+            // 雷达图
             drawRadarChart(code);
         }
 
@@ -344,6 +847,7 @@
             dimensions[6].score = Math.min(100, (scores.D / 7) * 100);
             dimensions[7].score = Math.min(100, (scores.P / 7) * 100);
             
+            // 绘制背景网格
             ctx.strokeStyle = '#e0e0e0';
             ctx.lineWidth = 1;
             for (var level = 1; level <= 4; level++) {
@@ -360,6 +864,7 @@
                 ctx.stroke();
             }
             
+            // 绘制辐射线
             for (var i = 0; i < 8; i++) {
                 var angle = (Math.PI * 2 / 8) * i - Math.PI / 2;
                 var x = centerX + Math.cos(angle) * radius;
@@ -371,6 +876,7 @@
                 ctx.stroke();
             }
             
+            // 绘制数据多边形
             ctx.beginPath();
             for (var i = 0; i < 8; i++) {
                 var angle = (Math.PI * 2 / 8) * i - Math.PI / 2;
@@ -387,6 +893,7 @@
             ctx.lineWidth = 2;
             ctx.stroke();
             
+            // 绘制维度标签
             for (var i = 0; i < 8; i++) {
                 var angle = (Math.PI * 2 / 8) * i - Math.PI / 2;
                 var r = radius + 15;
@@ -452,7 +959,11 @@
             var gap = 30;
             
             ctx.fillStyle = 'rgba(255,255,255,0.95)';
-            ctx.roundRect((600-cardW*2-gap)/2, cardY, cardW, cardH, 12);
+            if (ctx.roundRect) {
+                ctx.roundRect((600-cardW*2-gap)/2, cardY, cardW, cardH, 12);
+            } else {
+                ctx.fillRect((600-cardW*2-gap)/2, cardY, cardW, cardH);
+            }
             ctx.fill();
             ctx.fillStyle = '#10b981';
             ctx.font = '24px sans-serif';
@@ -465,7 +976,11 @@
             ctx.fillText('年省潜力', (600-cardW*2-gap)/2+30, cardY+65);
             
             ctx.fillStyle = 'rgba(255,255,255,0.95)';
-            ctx.roundRect((600-cardW*2-gap)/2+cardW+gap, cardY, cardW, cardH, 12);
+            if (ctx.roundRect) {
+                ctx.roundRect((600-cardW*2-gap)/2+cardW+gap, cardY, cardW, cardH, 12);
+            } else {
+                ctx.fillRect((600-cardW*2-gap)/2+cardW+gap, cardY, cardW, cardH);
+            }
             ctx.fill();
             ctx.fillStyle = '#f59e0b';
             ctx.font = '24px sans-serif';
@@ -477,40 +992,78 @@
             ctx.font = '12px sans-serif';
             ctx.fillText('稀有度', (600-cardW*2-gap)/2+cardW+gap+30, cardY+65);
             
-            ctx.fillStyle = 'rgba(255,255,255,0.9)';
-            ctx.roundRect(50, 500, 500, 200, 12);
+            ctx.fillStyle = 'rgba(255,255,255,0.95)';
+            if (ctx.roundRect) {
+                ctx.roundRect(50, 500, 500, 140, 12);
+            } else {
+                ctx.fillRect(50, 500, 500, 140);
+            }
             ctx.fill();
-            ctx.fillStyle = '#333';
-            ctx.font = 'bold 16px sans-serif';
+            ctx.fillStyle = '#667eea';
+            ctx.font = 'bold 14px sans-serif';
             ctx.textAlign = 'left';
-            ctx.fillText('🎯 '+style.fortune.substring(0,3), 70, 535);
-            ctx.font = '14px sans-serif';
-            ctx.fillStyle = '#666';
-            wrapText(ctx, style.fortune.substring(3), 70, 560, 460, 22);
+            ctx.fillText('💬 谈判金句', 70, 530);
+            ctx.fillStyle = '#555';
+            ctx.font = '13px sans-serif';
+            for(var i=0; i<style.quotes.length; i++) {
+                ctx.fillText('"'+style.quotes[i].text+'"', 70, 555+i*25);
+            }
             
-            ctx.fillStyle = 'rgba(255,255,255,0.9)';
-            ctx.roundRect(50, 720, 500, 60, 12);
+            ctx.fillStyle = 'rgba(255,255,255,0.95)';
+            if (ctx.roundRect) {
+                ctx.roundRect(50, 655, 500, 70, 12);
+            } else {
+                ctx.fillRect(50, 655, 500, 70);
+            }
             ctx.fill();
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('⚠️ 最大软肋', 70, 680);
             ctx.fillStyle = '#666';
             ctx.font = '12px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('扫码测测你的谈判风格', 300, 755);
+            wrapText(ctx, style.weaknesses[0], 70, 705, 460, 18);
             
-            var dataUrl = canvas.toDataURL('image/png');
-            var link = document.createElement('a');
-            link.download = '我的谈判风格-'+code+'.png';
-            link.href = dataUrl;
-            link.click();
+            ctx.fillStyle = 'rgba(255,255,255,0.95)';
+            if (ctx.roundRect) {
+                ctx.roundRect(50, 740, 500, 55, 12);
+            } else {
+                ctx.fillRect(50, 740, 500, 55);
+            }
+            ctx.fill();
+            ctx.fillStyle = '#10b981';
+            ctx.font = 'bold 13px sans-serif';
+            ctx.fillText('🏆 击败了 '+style.beatPercent+'% 的采购同行', 70, 765);
+            ctx.fillStyle = '#999';
+            ctx.font = '11px sans-serif';
+            ctx.fillText('👤 全国第 '+style.rank.toLocaleString()+' 位'+style.name, 70, 785);
             
-            setTimeout(function() {
-                var text = '我是'+style.animal+style.name+'（'+code+'）！年省潜力'+style.saving+'！测测你是什么谈判风格？';
-                if (navigator.share) {
-                    navigator.share({title:'我的谈判风格',text:text,url:window.location.href});
-                } else {
-                    navigator.clipboard.writeText(text+' '+window.location.href);
-                    alert('海报已下载！分享文案已复制！');
-                }
-            }, 500);
+            try {
+                var dataUrl = canvas.toDataURL('image/png');
+                var link = document.createElement('a');
+                link.download = '我的谈判风格-'+code+'.png';
+                link.href = dataUrl;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                setTimeout(function() {
+                    var text = '我是'+style.animal+style.name+'（'+code+'）！击败了'+style.beatPercent+'%的采购同行！我的谈判金句："'+style.quotes[0].text+'" 测测你是什么风格？';
+                    if (navigator.share) {
+                        navigator.share({title:'我的谈判风格',text:text,url:window.location.href}).catch(function(e){console.log('分享取消');});
+                    } else {
+                        navigator.clipboard.writeText(text+' '+window.location.href).then(function(){
+                            alert('🎉 海报已下载到相册！\n分享文案已复制，快去朋友圈炫耀吧！');
+                        }).catch(function(){
+                            alert('🎉 海报已下载到相册！\n长按图片即可分享～');
+                        });
+                    }
+                }, 800);
+            } catch(e) {
+                console.error('海报生成失败:', e);
+                var text = '我是'+style.animal+style.name+'（'+code+'）！击败了'+style.beatPercent+'%的采购同行！';
+                navigator.clipboard.writeText(text+' '+window.location.href);
+                alert('海报生成失败，已复制分享文案。\n请截图分享结果页面～');
+            }
         }
 
         function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
@@ -545,6 +1098,7 @@
 
         function retakeTest() {
             answers = [];
+            dimensionScores = { A: 0, I: 0, R: 0, T: 0, C: 0, B: 0, D: 0, P: 0 };
             currentIndex = 0;
             document.getElementById('resultPage').classList.add('hidden');
             document.getElementById('homePage').classList.remove('hidden');
@@ -561,10 +1115,6 @@
             document.getElementById('nextBtn').innerHTML = currentIndex === 27 ? '查看结果 →' : '下一题 →';
         }
 
-        // 页面加载时检查是否有缓存的结果
-        window.onload = function() {
-            console.log('页面加载完成');
-        };
     </script>
 </body>
 </html>
