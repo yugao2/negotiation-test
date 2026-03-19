@@ -477,7 +477,8 @@
             
             <div class="section">
                 <div class="section-title"><span class="icon">🏷️</span> 神秘标签</div>
-                <div class="tags" id="tags"></div>
+                <div style="font-size:13px;color:#999;margin-bottom:10px;">每次测试随机显示，看看你今天抽到什么</div>
+                <div class="tags" id="tags" style="display:flex;flex-wrap:wrap;gap:10px;"></div>
             </div>
             
             <div class="btn-group">
@@ -559,6 +560,7 @@
     <script src="styles-v2.js"></script>
     <script src="personalized-interpretation.js"></script>
     <script src="celebrity-stories.js"></script>
+    <script src="mystery-tags.js"></script>
     <script>
         // 团队功能数据
         var currentTeam = null;
@@ -1090,6 +1092,48 @@
             document.getElementById('coursePrice').textContent = style.course.price;
             document.getElementById('courseLink').href = style.course.link;
             document.getElementById('book').textContent = style.book;
+            
+            // 神秘标签（随机生成）
+            if (typeof getMysteryTags !== 'undefined') {
+                var mysteryTags = getMysteryTags(code);
+                var tagsContainer = document.getElementById('tags');
+                tagsContainer.innerHTML = '';
+                for (var i = 0; i < mysteryTags.length; i++) {
+                    var tagWrapper = document.createElement('div');
+                    tagWrapper.style.display = 'flex';
+                    tagWrapper.style.flexDirection = 'column';
+                    tagWrapper.style.alignItems = 'center';
+                    
+                    var tag = document.createElement('div');
+                    tag.className = 'tag';
+                    tag.textContent = mysteryTags[i];
+                    tag.style.padding = '8px 16px';
+                    tag.style.borderRadius = '20px';
+                    tag.style.fontSize = '14px';
+                    tag.style.fontWeight = '600';
+                    
+                    // 检查稀有度
+                    if (typeof getTagRarity !== 'undefined') {
+                        var rarity = getTagRarity(mysteryTags[i]);
+                        if (rarity) {
+                            tag.style.background = 'linear-gradient(135deg, #fbbf24, #f59e0b)';
+                            tag.style.color = 'white';
+                            var rarityLabel = document.createElement('div');
+                            rarityLabel.style.fontSize = '10px';
+                            rarityLabel.style.color = '#f59e0b';
+                            rarityLabel.style.marginTop = '4px';
+                            rarityLabel.textContent = rarity;
+                            tagWrapper.appendChild(tag);
+                            tagWrapper.appendChild(rarityLabel);
+                            tagsContainer.appendChild(tagWrapper);
+                            continue;
+                        }
+                    }
+                    
+                    tagWrapper.appendChild(tag);
+                    tagsContainer.appendChild(tagWrapper);
+                }
+            }
             
             // 谈判金句
             var quotesContainer = document.getElementById('quotes');
