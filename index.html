@@ -47,7 +47,8 @@
         .milestone-feedback { background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 12px; border-radius: 10px; margin-bottom: 15px; text-align: center; font-weight: 600; font-size: 14px; animation: slideIn 0.5s; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .question-scene { font-size: 13px; color: #667eea; background: #f0f4ff; padding: 8px 12px; border-radius: 6px; margin-bottom: 12px; font-weight: 600; }
-        .question { font-size: 16px; font-weight: 600; color: #333; margin-bottom: 20px; line-height: 1.5; }
+        .question { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 20px; line-height: 1.4; }
+        .question strong { font-weight: 700; color: #667eea; }
         .options { display: flex; flex-direction: column; gap: 10px; }
         .option { padding: 13px 16px; border: 2px solid #e0e0e0; border-radius: 10px; cursor: pointer; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
         .option:hover { border-color: #667eea; background: #f5f6ff; }
@@ -571,7 +572,7 @@
         <canvas id="posterCanvas" class="poster-canvas"></canvas>
     </div>
 
-    <script src="questions-v2.js"></script>
+    <script src="questions-v3.js"></script>
     <script src="styles-v2.js"></script>
     <script src="personalized-interpretation-v2.js"></script>
     <script src="celebrity-stories.js"></script>
@@ -1101,6 +1102,7 @@
                         weaknessDiv.innerHTML = '<div style="font-size:14px;color:#333;margin-bottom:10px;"><strong>⚠️ ' + w.weakness + '</strong></div>' +
                             '<div style="font-size:13px;color:#666;margin-bottom:8px;">' + w.scenario + '</div>' +
                             '<div style="font-size:13px;color:#10b981;margin-bottom:8px;">' + w.improvement + '</div>' +
+                            (w.example ? '<div style="font-size:12px;color:#667eea;margin-bottom:8px;">' + w.example + '</div>' : '') +
                             '<div style="font-size:12px;color:#999;">' + w.positive + '</div>';
                         
                         weaknessesContainer.appendChild(weaknessDiv);
