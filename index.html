@@ -423,6 +423,12 @@
             </div>
             
             <div class="section">
+                <div class="section-title"><span class="icon">📊</span> 个性化解读</div>
+                <div id="personalizedInterpretation" style="padding:15px;background:#f8f9ff;border-radius:8px;margin:10px 0;"></div>
+                <div id="overallComment" style="padding:15px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border-radius:8px;margin-top:10px;font-size:14px;line-height:1.6;"></div>
+            </div>
+            
+            <div class="section">
                 <div class="section-title"><span class="icon">💪</span> 核心优势</div>
                 <div id="strengths"></div>
             </div>
@@ -554,6 +560,7 @@
 
     <script src="questions-v2.js"></script>
     <script src="styles-v2.js"></script>
+    <script src="personalized-interpretation.js"></script>
     <script>
         // 团队功能数据
         var currentTeam = null;
@@ -1099,6 +1106,23 @@
             
             // 名人对标
             document.getElementById('celebrity').textContent = style.celebrity + ' · ' + style.celebrityDesc;
+            
+            // 个性化解读
+            if (typeof generatePersonalizedInterpretation !== 'undefined') {
+                var interpretation = generatePersonalizedInterpretation(dimensionScores, code);
+                var interpHtml = '<div style="font-size:13px;line-height:1.8;">' +
+                    '<div style="margin-bottom:10px;"><strong>🎯 决策风格：</strong>' + interpretation.decision + '</div>' +
+                    '<div style="margin-bottom:10px;"><strong>🤝 关系导向：</strong>' + interpretation.relation + '</div>' +
+                    '<div style="margin-bottom:10px;"><strong>⚖️ 风险态度：</strong>' + interpretation.risk + '</div>' +
+                    '<div><strong>💬 沟通方式：</strong>' + interpretation.comm + '</div>' +
+                    '</div>';
+                document.getElementById('personalizedInterpretation').innerHTML = interpHtml;
+                
+                // 综合评语
+                if (typeof generateOverallComment !== 'undefined') {
+                    document.getElementById('overallComment').innerHTML = '<strong>💡 给你的建议：</strong><br>' + generateOverallComment(code, dimensionScores);
+                }
+            }
             
             // 雷达图
             drawRadarChart(code);
