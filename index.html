@@ -420,20 +420,31 @@
                 <div class="name" id="name">战略架构师</div>
                 <div class="role" id="role">战略策划者</div>
                 <div class="result-stats">
-                    <div class="result-stat">
-                        <div class="result-stat-value" id="saving">15-25%</div>
-                        <div class="result-stat-label">年省潜力</div>
-                    </div>
-                    <div class="result-stat">
-                        <div class="result-stat-value" id="rarity">约 5%</div>
-                        <div class="result-stat-label">稀有度</div>
+                    <div class="result-stat" style="width:100%;">
+                        <div class="result-stat-label" style="margin-bottom:8px;">💰 年省潜力</div>
+                        <div class="result-stat-value" id="saving" style="font-size:16px;">15-25%</div>
                     </div>
                 </div>
             </div>
             
-            <div class="social-proof">
-                🏆 你击败了 <span id="beatPercent">87</span>% 的采购同行 | 
-                👤 全国第 <span id="rank">3,247</span> 位<span id="rankName">战略架构师</span>
+            <div class="social-proof" id="raritySection" style="background:linear-gradient(135deg,#f59e0b,#d97706);">
+                <div style="font-size:14px;margin-bottom:5px;">🏆 稀有度：<strong id="rarity" style="font-size:16px;">约 5%</strong></div>
+                <div style="font-size:13px;">击败 <strong id="beatPercent">87</strong>% 的采购同行 | 全国排名 <strong id="rank">3,247</strong> | <span id="rankName">战略架构师</span></div>
+                <div id="rarityReason" style="font-size:12px;opacity:0.9;margin-top:5px;"></div>
+            </div>
+            
+            <div class="section" id="fitScenesSection" style="display:none;">
+                <div class="section-title"><span class="icon">🎪</span> 适配场景</div>
+                <div style="display:flex;gap:15px;flex-wrap:wrap;">
+                    <div style="flex:1;min-width:200px;">
+                        <div style="font-size:13px;font-weight:600;color:#10b981;margin-bottom:8px;">✓ 擅长场景</div>
+                        <div id="fitScenesGood"></div>
+                    </div>
+                    <div style="flex:1;min-width:200px;">
+                        <div style="font-size:13px;font-weight:600;color:#f59e0b;margin-bottom:8px;">✗ 避免场景</div>
+                        <div id="fitScenesAvoid"></div>
+                    </div>
+                </div>
             </div>
             
             <div class="section">
@@ -576,6 +587,7 @@
     <script src="celebrity-stories.js"></script>
     <script src="mystery-tags.js"></script>
     <script src="enhanced-weaknesses.js"></script>
+    <script src="result-enhanced.js"></script>
     <script>
         // 团队功能数据
         var currentTeam = null;
@@ -1018,10 +1030,49 @@
             document.getElementById('code').textContent = code;
             document.getElementById('name').textContent = style.name;
             document.getElementById('role').textContent = style.role;
-            document.getElementById('saving').textContent = style.saving;
-            document.getElementById('rarity').textContent = style.rarity;
-            document.getElementById('beatPercent').textContent = style.beatPercent;
-            document.getElementById('rank').textContent = style.rank.toLocaleString();
+            
+            // 核心价值（替换年省潜力）
+            if (typeof getCoreValue !== 'undefined') {
+                var coreValue = getCoreValue(code);
+                document.getElementById('coreValue').innerHTML = '<div style="font-size:16px;font-weight:600;color:#667eea;margin-bottom:5px;">' + coreValue.title + '</div><div style="font-size:13px;color:#666;">' + coreValue.desc + '</div>';
+                document.getElementById('saving').textContent = coreValue.value;
+            }
+            
+            // 稀有度（仅真正稀有时显示）
+            if (typeof calculateRarity !== 'undefined') {
+                var rarity = calculateRarity(dimensionScores);
+                if (rarity.show) {
+                    document.getElementById('raritySection').style.display = 'block';
+                    document.getElementById('rarity').textContent = rarity.text + '（' + rarity.percent + '）';
+                    document.getElementById('beatPercent').textContent = rarity.beatPercent + '%';
+                    document.getElementById('rank').textContent = rarity.rank;
+                    document.getElementById('rarityReason').textContent = rarity.reason;
+                } else {
+                    document.getElementById('raritySection').style.display = 'none';
+                }
+            }
+            
+            // 适配场景
+            if (typeof getFitScenes !== 'undefined') {
+                var fitScenes = getFitScenes(code, dimensionScores);
+                if (fitScenes.good.length > 0) {
+                    document.getElementById('fitScenesSection').style.display = 'block';
+                    var goodHtml = '';
+                    for (var i = 0; i < fitScenes.good.length; i++) {
+                        goodHtml += '<div style="font-size:13px;color:#10b981;margin:5px 0;">✓ ' + fitScenes.good[i] + '</div>';
+                    }
+                    document.getElementById('fitScenesGood').innerHTML = goodHtml;
+                    
+                    var avoidHtml = '';
+                    for (var i = 0; i < fitScenes.avoid.length; i++) {
+                        avoidHtml += '<div style="font-size:13px;color:#f59e0b;margin:5px 0;">✗ ' + fitScenes.avoid[i] + '</div>';
+                    }
+                    document.getElementById('fitScenesAvoid').innerHTML = avoidHtml;
+                } else {
+                    document.getElementById('fitScenesSection').style.display = 'none';
+                }
+            }
+            
             document.getElementById('rankName').textContent = style.name;
             
             // 核心优势
