@@ -936,8 +936,8 @@
                 var div = document.createElement('div');
                 div.className = 'option';
                 if (answers[currentIndex] === opt.score) div.classList.add('selected');
-                div.onclick = (function(o) { return function() { selectOption(o.score); }; })(opt);
-                div.innerHTML = '<div class="option-label">' + opt.label + '</div><div class="option-text">' + opt.text + '</div>';
+                div.onclick = (function(o) { return function() { selectOption(o.dim); }; })(opt);
+                div.innerHTML = '<div class="option-text">' + opt.text + '</div>';
                 container.appendChild(div);
             }
             updateNav();
@@ -953,8 +953,9 @@
             
             // 统计维度得分
             var q = questions[currentIndex];
-            if (q.options.find(o => o.score === score)) {
-                dimensionScores[score] = (dimensionScores[score] || 0) + 1;
+            var selectedOpt = q.options.find(o => o.text === event.currentTarget.querySelector('.option-text').textContent);
+            if (selectedOpt && selectedOpt.dim) {
+                dimensionScores[selectedOpt.dim] = (dimensionScores[selectedOpt.dim] || 0) + 1;
             }
             
             // 里程碑反馈（每 7 题）
