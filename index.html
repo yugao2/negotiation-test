@@ -1326,7 +1326,7 @@
             var ctx = canvas.getContext('2d');
             
             canvas.width = 600;
-            canvas.height = 900;
+            canvas.height = 800;
             
             var gradient = ctx.createLinearGradient(0, 0, 0, 800);
             gradient.addColorStop(0, '#667eea');
@@ -1342,136 +1342,120 @@
             ctx.arc(-50, 150, 150, 0, Math.PI*2);
             ctx.fill();
             
+            // 标题
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 24px sans-serif';
+            ctx.font = '20px sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('我的采购谈判风格', 300, 60);
+            ctx.fillText('我的采购谈判风格', 300, 50);
             
-            ctx.font = 'bold 80px sans-serif';
-            var codeGrad = ctx.createLinearGradient(0,100,600,100);
+            // 风格代码（超大）
+            ctx.font = 'bold 90px sans-serif';
+            var codeGrad = ctx.createLinearGradient(0,80,600,80);
             codeGrad.addColorStop(0,'#ffffff');
             codeGrad.addColorStop(1,'#e0e7ff');
             ctx.fillStyle = codeGrad;
-            ctx.fillText(code, 300, 160);
+            ctx.fillText(code, 300, 150);
             
-            ctx.font = 'bold 32px sans-serif';
+            // 风格名
+            ctx.font = 'bold 36px sans-serif';
             ctx.fillStyle = '#ffffff';
-            ctx.fillText(style.name, 300, 210);
+            ctx.fillText(style.name, 300, 200);
             
-            ctx.font = '18px sans-serif';
-            ctx.fillStyle = 'rgba(255,255,255,0.8)';
-            ctx.fillText(style.role, 300, 240);
+            // 角色定位
+            ctx.font = '16px sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.9)';
+            ctx.fillText(style.role, 300, 230);
             
-            ctx.font = '60px sans-serif';
+            // 动物图标
+            ctx.font = '70px sans-serif';
             ctx.fillText(style.animal, 300, 310);
             
-            var cardY = 380;
-            var cardW = 240;
-            var cardH = 90;
-            var gap = 30;
+            // 稀有度徽章（仅稀有时显示）
+            var rarityEl = document.getElementById('rarity');
+            if (rarityEl && rarityEl.textContent && rarityEl.textContent !== '约 5%') {
+                ctx.fillStyle = 'rgba(255,255,255,0.95)';
+                if (ctx.roundRect) {
+                    ctx.roundRect(150, 350, 300, 60, 30);
+                } else {
+                    ctx.fillRect(150, 350, 300, 60);
+                }
+                ctx.fill();
+                ctx.fillStyle = '#f59e0b';
+                ctx.font = 'bold 20px sans-serif';
+                ctx.fillText('🏆 ' + rarityEl.textContent, 300, 388);
+            }
             
+            // 排名信息
+            var beatEl = document.getElementById('beatPercent');
+            ctx.fillStyle = 'rgba(255,255,255,0.9)';
+            ctx.font = '16px sans-serif';
+            ctx.fillText('击败了 ' + beatEl.textContent + '% 的采购同行', 300, 430);
+            
+            // 独特价值
+            var coreEl = document.getElementById('coreValueDesc');
+            if (coreEl && coreEl.textContent) {
+                ctx.fillStyle = 'rgba(255,255,255,0.85)';
+                ctx.font = '14px sans-serif';
+                wrapText(ctx, coreEl.textContent, 50, 470, 500, 22);
+            }
+            
+            // 行动号召区域
             ctx.fillStyle = 'rgba(255,255,255,0.95)';
             if (ctx.roundRect) {
-                ctx.roundRect((600-cardW*2-gap)/2, cardY, cardW, cardH, 12);
+                ctx.roundRect(50, 550, 500, 180, 16);
             } else {
-                ctx.fillRect((600-cardW*2-gap)/2, cardY, cardW, cardH);
+                ctx.fillRect(50, 550, 500, 180);
             }
             ctx.fill();
-            ctx.fillStyle = '#10b981';
-            ctx.font = '24px sans-serif';
-            ctx.fillText('💰', (600-cardW*2-gap)/2+30, cardY+35);
-            ctx.fillStyle = '#333';
+            
+            // 行动号召文案
+            ctx.fillStyle = '#667eea';
             ctx.font = 'bold 20px sans-serif';
-            ctx.fillText(style.saving, (600-cardW*2-gap)/2+70, cardY+35);
+            ctx.fillText('你的谈判风格是什么？', 300, 590);
+            
+            ctx.fillStyle = '#666';
+            ctx.font = '14px sans-serif';
+            ctx.fillText('扫码测试，看看我们匹配度如何', 300, 620);
+            
+            // 社交证明
             ctx.fillStyle = '#999';
             ctx.font = '12px sans-serif';
-            ctx.fillText('年省潜力', (600-cardW*2-gap)/2+30, cardY+65);
+            ctx.fillText('已有 1,234 位采购参与测试', 300, 650);
             
-            ctx.fillStyle = 'rgba(255,255,255,0.95)';
+            // 二维码占位
+            ctx.fillStyle = '#f0f0f0';
             if (ctx.roundRect) {
-                ctx.roundRect((600-cardW*2-gap)/2+cardW+gap, cardY, cardW, cardH, 12);
+                ctx.roundRect(225, 670, 150, 150, 8);
             } else {
-                ctx.fillRect((600-cardW*2-gap)/2+cardW+gap, cardY, cardW, cardH);
-            }
-            ctx.fill();
-            ctx.fillStyle = '#f59e0b';
-            ctx.font = '24px sans-serif';
-            ctx.fillText('⭐', (600-cardW*2-gap)/2+cardW+gap+30, cardY+35);
-            ctx.fillStyle = '#333';
-            ctx.font = 'bold 20px sans-serif';
-            ctx.fillText(style.rarity, (600-cardW*2-gap)/2+cardW+gap+70, cardY+35);
-            ctx.fillStyle = '#999';
-            ctx.font = '12px sans-serif';
-            ctx.fillText('稀有度', (600-cardW*2-gap)/2+cardW+gap+30, cardY+65);
-            
-            ctx.fillStyle = 'rgba(255,255,255,0.95)';
-            if (ctx.roundRect) {
-                ctx.roundRect(50, 500, 500, 140, 12);
-            } else {
-                ctx.fillRect(50, 500, 500, 140);
+                ctx.fillRect(225, 670, 150, 150);
             }
             ctx.fill();
             ctx.fillStyle = '#667eea';
-            ctx.font = 'bold 14px sans-serif';
-            ctx.textAlign = 'left';
-            ctx.fillText('💬 谈判金句', 70, 530);
-            ctx.fillStyle = '#555';
-            ctx.font = '13px sans-serif';
-            for(var i=0; i<style.quotes.length; i++) {
-                ctx.fillText('"'+style.quotes[i].text+'"', 70, 555+i*25);
-            }
+            ctx.font = 'bold 40px sans-serif';
+            ctx.fillText('📱', 300, 755);
             
-            ctx.fillStyle = 'rgba(255,255,255,0.95)';
-            if (ctx.roundRect) {
-                ctx.roundRect(50, 655, 500, 70, 12);
-            } else {
-                ctx.fillRect(50, 655, 500, 70);
-            }
-            ctx.fill();
-            ctx.fillStyle = '#f59e0b';
-            ctx.font = 'bold 14px sans-serif';
-            ctx.fillText('⚠️ 最大软肋', 70, 680);
-            ctx.fillStyle = '#666';
-            ctx.font = '12px sans-serif';
-            wrapText(ctx, style.weaknesses[0], 70, 705, 460, 18);
-            
-            ctx.fillStyle = 'rgba(255,255,255,0.95)';
-            if (ctx.roundRect) {
-                ctx.roundRect(50, 740, 500, 55, 12);
-            } else {
-                ctx.fillRect(50, 740, 500, 55);
-            }
-            ctx.fill();
-            ctx.fillStyle = '#10b981';
-            ctx.font = 'bold 13px sans-serif';
-            ctx.fillText('🏆 击败了 '+style.beatPercent+'% 的采购同行', 70, 765);
+            // 品牌信息
             ctx.fillStyle = '#999';
             ctx.font = '11px sans-serif';
-            ctx.fillText('👤 全国排名 | 优链学堂 · 供应链首席训练导师', 70, 785);
+            ctx.fillText('优链学堂 · 供应链首席训练导师', 300, 785);
             
-            // 底部二维码区域（占位）
-            ctx.fillStyle = 'rgba(255,255,255,0.95)';
-            if (ctx.roundRect) {
-                ctx.roundRect(200, 810, 200, 70, 10);
-            } else {
-                ctx.fillRect(200, 810, 200, 70);
-            }
-            ctx.fill();
-            ctx.fillStyle = '#667eea';
-            ctx.font = 'bold 12px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('扫码测试你的谈判风格', 300, 835);
-            ctx.fillStyle = '#999';
-            ctx.font = '10px sans-serif';
-            ctx.fillText('优链学堂出品', 300, 860);
-            
-            // 触发下载
+            // 触发下载 + 分享文案
             try {
                 var link = document.createElement('a');
                 link.download = '我的谈判风格-' + code + '.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
-                alert('✅ 海报已生成！长按图片可以保存分享～');
+                
+                // 生成分享文案
+                var shareText = '我是 ' + code + ' ' + style.name + '，击败了 ' + beatEl.textContent + '% 的采购同行！\n\n' + style.role + '\n\n快来测测你的谈判风格，看看我们匹配度如何～';
+                
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(shareText).then(function() {
+                        alert('✅ 海报已保存！\n\n分享文案已复制，可直接粘贴发送：\n\n' + shareText);
+                    });
+                } else {
+                    alert('✅ 海报已保存！\n\n分享文案：\n\n' + shareText);
+                }
             } catch(e) {
                 alert('海报已生成，请截图保存');
             }
