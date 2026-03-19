@@ -558,7 +558,7 @@
 
     <script src="questions-v2.js"></script>
     <script src="styles-v2.js"></script>
-    <script src="personalized-interpretation.js"></script>
+    <script src="personalized-interpretation-v2.js"></script>
     <script src="celebrity-stories.js"></script>
     <script src="mystery-tags.js"></script>
     <script src="enhanced-weaknesses.js"></script>
@@ -1194,19 +1194,19 @@
                 var interpretation = generatePersonalizedInterpretation(dimensionScores, code);
                 var interpHtml = '<div style="font-size:13px;line-height:1.8;">' +
                     '<div style="margin-bottom:15px;padding:12px;background:#f0f4ff;border-radius:6px;">' +
-                    '<div style="font-size:12px;color:#667eea;margin-bottom:5px;"><strong>🎯 决策风格 · ' + (interpretation.decisionLabel || '') + '</strong></div>' +
+                    '<div style="font-size:12px;color:#667eea;margin-bottom:5px;"><strong>🎯 ' + (interpretation.decisionLabel || '') + '</strong> <span style="font-size:11px;">' + (interpretation.decisionStars || '') + '</span></div>' +
                     '<div style="color:#333;">' + interpretation.decision + '</div>' +
                     '</div>' +
                     '<div style="margin-bottom:15px;padding:12px;background:#f0fdf4;border-radius:6px;">' +
-                    '<div style="font-size:12px;color:#10b981;margin-bottom:5px;"><strong>🤝 关系导向 · ' + (interpretation.relationLabel || '') + '</strong></div>' +
+                    '<div style="font-size:12px;color:#10b981;margin-bottom:5px;"><strong>🤝 ' + (interpretation.relationLabel || '') + '</strong> <span style="font-size:11px;">' + (interpretation.relationStars || '') + '</span></div>' +
                     '<div style="color:#333;">' + interpretation.relation + '</div>' +
                     '</div>' +
                     '<div style="margin-bottom:15px;padding:12px;background:#fff7ed;border-radius:6px;">' +
-                    '<div style="font-size:12px;color:#f59e0b;margin-bottom:5px;"><strong>⚖️ 风险态度 · ' + (interpretation.riskLabel || '') + '</strong></div>' +
+                    '<div style="font-size:12px;color:#f59e0b;margin-bottom:5px;"><strong>⚖️ ' + (interpretation.riskLabel || '') + '</strong> <span style="font-size:11px;">' + (interpretation.riskStars || '') + '</span></div>' +
                     '<div style="color:#333;">' + interpretation.risk + '</div>' +
                     '</div>' +
                     '<div style="padding:12px;background:#faf5ff;border-radius:6px;">' +
-                    '<div style="font-size:12px;color:#8b5cf6;margin-bottom:5px;"><strong>💬 沟通方式 · ' + (interpretation.commLabel || '') + '</strong></div>' +
+                    '<div style="font-size:12px;color:#8b5cf6;margin-bottom:5px;"><strong>💬 ' + (interpretation.commLabel || '') + '</strong> <span style="font-size:11px;">' + (interpretation.commStars || '') + '</span></div>' +
                     '<div style="color:#333;">' + interpretation.comm + '</div>' +
                     '</div>' +
                     '</div>';
