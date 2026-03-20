@@ -13,15 +13,26 @@
         .container { max-width: 600px; margin: 0 auto; background: #000; min-height: 100vh; }
         .hidden { display: none !important; }
         
-        /* Logo 样式 - 握手 + 指纹 */
+        /* Logo 样式 - DNA 双螺旋 + 对话气泡 */
         .logo-container { width: 120px; height: 120px; margin: 0 auto 40px; position: relative; }
         .logo-circle { width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, #0071e3, #005bb5); display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 60px rgba(0,113,227,0.4); animation: pulse 2s ease-in-out infinite; overflow: hidden; position: relative; }
         @keyframes pulse { 0%, 100% { transform: scale(1); box-shadow: 0 20px 60px rgba(0,113,227,0.4); } 50% { transform: scale(1.05); box-shadow: 0 30px 80px rgba(0,113,227,0.6); } }
-        .logo-fingerprint { font-size: 64px; opacity: 0.9; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
-        .logo-handshake { position: absolute; font-size: 40px; bottom: -5px; right: -5px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4)); }
+        .logo-dna { position: relative; width: 60px; height: 80px; }
+        .logo-dna-strand { position: absolute; width: 8px; height: 100%; background: linear-gradient(180deg, #fff, #5ac8fa); border-radius: 4px; }
+        .logo-dna-strand.left { left: 10px; animation: wave-left 2s ease-in-out infinite; }
+        .logo-dna-strand.right { right: 10px; animation: wave-right 2s ease-in-out infinite; }
+        .logo-dna-connector { position: absolute; width: 100%; height: 4px; background: rgba(255,255,255,0.6); border-radius: 2px; top: 20%; animation: connect 2s ease-in-out infinite; }
+        .logo-dna-connector:nth-child(3) { top: 40%; animation-delay: 0.2s; }
+        .logo-dna-connector:nth-child(4) { top: 60%; animation-delay: 0.4s; }
+        .logo-dna-connector:nth-child(5) { top: 80%; animation-delay: 0.6s; }
+        @keyframes wave-left { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
+        @keyframes wave-right { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-3px); } }
+        @keyframes connect { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        .logo-bubble { position: absolute; width: 20px; height: 20px; border: 3px solid #fff; border-radius: 50%; top: 5px; right: 5px; animation: bubble 2s ease-in-out infinite; }
+        @keyframes bubble { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.2); opacity: 1; } }
         .logo-ring { position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; border: 2px solid rgba(0,113,227,0.3); border-radius: 50%; animation: rotate 3s linear infinite; }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .logo-glow { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle, rgba(0,113,227,0.2) 0%, transparent 70%); animation: glow 2s ease-in-out infinite; }
+        .logo-glow { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle, rgba(0,113,227,0.3) 0%, transparent 70%); animation: glow 2s ease-in-out infinite; }
         @keyframes glow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
         
         /* 首页 */
@@ -122,8 +133,15 @@
                     <div class="logo-ring"></div>
                     <div class="logo-circle">
                         <div class="logo-glow"></div>
-                        <div class="logo-fingerprint">👆</div>
-                        <div class="logo-handshake">🤝</div>
+                        <div class="logo-dna">
+                            <div class="logo-dna-strand left"></div>
+                            <div class="logo-dna-strand right"></div>
+                            <div class="logo-dna-connector"></div>
+                            <div class="logo-dna-connector"></div>
+                            <div class="logo-dna-connector"></div>
+                            <div class="logo-dna-connector"></div>
+                        </div>
+                        <div class="logo-bubble"></div>
                     </div>
                 </div>
                 <h1>采购谈判风格测试</h1>
