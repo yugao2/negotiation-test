@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>采购谈判风格测试 v2.1 - 发现你的谈判超能力</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background: linear-gradient(135deg, #667eea, #764ba2); min-height: 100vh; padding: 20px; }
         .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 16px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
         .hidden { display: none !important; }
@@ -20,6 +22,26 @@
         .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea, #764ba2); transition: width 0.3s; }
         .btn-nav { background: #f0f0f0; border: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; cursor: pointer; margin: 5px; }
         .btn-nav:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* 结果页样式 */
+        .result-header { text-align: center; padding: 30px 0 20px; border-bottom: 2px solid #f0f0f0; }
+        .result-animal { font-size: 80px; }
+        .result-code { font-size: 48px; font-weight: bold; color: #667eea; margin: 10px 0; }
+        .result-name { font-size: 24px; color: #333; margin: 10px 0; }
+        .result-role { color: #666; font-size: 14px; }
+        .section { margin: 20px 0; padding: 15px; background: #f8f9ff; border-radius: 8px; }
+        .section-title { font-size: 16px; font-weight: bold; color: #333; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .section-content { font-size: 14px; line-height: 1.7; color: #555; }
+        .mbti-insight { background: linear-gradient(135deg, #f0f4ff, #e8ecff); border-left: 4px solid #667eea; padding: 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; line-height: 1.7; color: #333; white-space: pre-line; }
+        .weakness-item { background: white; padding: 12px; margin: 10px 0; border-radius: 6px; border-left: 3px solid #f59e0b; }
+        .weakness-title { font-weight: bold; color: #333; margin-bottom: 8px; }
+        .weakness-scene { color: #666; font-size: 13px; margin: 5px 0; }
+        .weakness-improve { color: #667eea; font-size: 13px; margin: 5px 0; }
+        .weakness-positive { color: #22c55e; font-size: 13px; margin: 5px 0; }
+        .btn-action { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 15px 30px; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin: 10px 0; box-shadow: 0 4px 15px rgba(102,126,234,0.4); }
+        .btn-secondary { background: #f0f0f0; color: #666; }
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+        .tag { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -48,24 +70,74 @@
         
         <!-- 结果页 -->
         <div id="resultPage" class="hidden">
-            <div style="text-align: center; padding: 30px 0;">
-                <div id="resultAnimal" style="font-size: 80px;"></div>
-                <div id="resultCode" style="font-size: 48px; font-weight: bold; color: #667eea;"></div>
-                <div id="resultName" style="font-size: 24px; color: #333; margin: 10px 0;"></div>
-                <div id="resultRole" style="color: #666;"></div>
+            <div class="result-header">
+                <div class="result-animal" id="resultAnimal"></div>
+                <div class="result-code" id="resultCode"></div>
+                <div class="result-name" id="resultName"></div>
+                <div class="result-role" id="resultRole"></div>
             </div>
-            <div style="text-align: center; margin-top: 20px;">
-                <button class="btn-start" onclick="retakeTest()">🔄 重新测试</button>
+            
+            <!-- 快速版：默认显示 -->
+            <div id="quickVersion">
+                <div class="section">
+                    <div class="section-title">🔮 MBTI 内心洞察</div>
+                    <div class="mbti-insight" id="mbtiInsight"></div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">🏷️ 神秘标签</div>
+                    <div class="tags" id="mysteryTags"></div>
+                </div>
+                
+                <button class="btn-action" onclick="showFullReport()">📖 查看深度报告</button>
+                <div style="font-size: 12px; color: #999; text-align: center; margin-top: 10px;">包含核心优势、致命弱点、行动建议、名人对标等</div>
             </div>
+            
+            <!-- 完整版：默认隐藏 -->
+            <div id="fullVersion" class="hidden">
+                <button class="btn-action btn-secondary" onclick="showQuickVersion()" style="margin-bottom: 15px;">🔙 返回快速版</button>
+                
+                <div class="section">
+                    <div class="section-title">💪 核心优势</div>
+                    <div class="section-content" id="strengths"></div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">⚠️ 致命弱点</div>
+                    <div id="weaknesses"></div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">💡 行动建议</div>
+                    <div class="section-content" id="actions"></div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">🏆 名人对标</div>
+                    <div class="section-content" id="celebrityStory"></div>
+                </div>
+                
+                <button class="btn-action" onclick="generatePoster()">📸 生成海报分享</button>
+            </div>
+            
+            <button class="btn-action btn-secondary" onclick="retakeTest()" style="margin-top: 20px;">🔄 重新测试</button>
         </div>
     </div>
     
+    <canvas id="posterCanvas" style="display: none;"></canvas>
+    
+    <script src="poster-themes.js?v=20260320"></script>
     <script src="questions-v4.js?v=20260320"></script>
     <script src="styles-v2.js?v=20260320"></script>
+    <script src="personalized-interpretation-v4.js?v=20260320"></script>
+    <script src="enhanced-weaknesses-v2.js?v=20260320"></script>
+    <script src="celebrity-stories.js?v=20260320"></script>
+    <script src="mystery-tags.js?v=20260320"></script>
     <script>
         var currentIndex = 0;
         var answers = [];
         var dimensionScores = { A: 0, I: 0, R: 0, T: 0, C: 0, B: 0, D: 0, P: 0 };
+        var currentResult = null;
         
         function startTest() {
             document.getElementById('homePage').classList.add('hidden');
@@ -151,13 +223,143 @@
             code += dimensionScores.C >= dimensionScores.B ? 'C' : 'B';
             code += dimensionScores.D >= dimensionScores.P ? 'D' : 'P';
             
+            showResult(code);
+        }
+        
+        function showResult(code) {
             var style = styles[code];
-            document.getElementById('testPage').classList.add('hidden');
-            document.getElementById('resultPage').classList.remove('hidden');
+            var interpretation = generatePersonalizedInterpretation(dimensionScores, code);
+            var weaknesses = getEnhancedWeaknesses(code);
+            var tags = getMysteryTags(code);
+            var story = getCelebrityStory(code);
+            
+            currentResult = { code: code, style: style, interpretation: interpretation, weaknesses: weaknesses, tags: tags, story: story };
+            
+            // 基本信息
             document.getElementById('resultAnimal').textContent = style.animal;
             document.getElementById('resultCode').textContent = code;
             document.getElementById('resultName').textContent = style.name;
             document.getElementById('resultRole').textContent = style.role;
+            
+            // MBTI 洞察
+            document.getElementById('mbtiInsight').textContent = interpretation.mbti;
+            
+            // 神秘标签
+            var tagsHtml = '';
+            for (var i = 0; i < Math.min(3, tags.length); i++) {
+                tagsHtml += '<span class="tag">' + tags[i] + '</span>';
+            }
+            document.getElementById('mysteryTags').innerHTML = tagsHtml;
+            
+            // 核心优势
+            var strengthsHtml = '';
+            if (interpretation.decision) strengthsHtml += '<div><strong>决策风格：</strong>' + interpretation.decision + '</div>';
+            if (interpretation.relation) strengthsHtml += '<div style="margin-top:8px;"><strong>关系导向：</strong>' + interpretation.relation + '</div>';
+            if (interpretation.risk) strengthsHtml += '<div style="margin-top:8px;"><strong>风险态度：</strong>' + interpretation.risk + '</div>';
+            if (interpretation.comm) strengthsHtml += '<div style="margin-top:8px;"><strong>沟通方式：</strong>' + interpretation.comm + '</div>';
+            document.getElementById('strengths').innerHTML = strengthsHtml;
+            
+            // 致命弱点
+            var weaknessesHtml = '';
+            for (var i = 0; i < weaknesses.length; i++) {
+                var w = weaknesses[i];
+                weaknessesHtml += '<div class="weakness-item">';
+                weaknessesHtml += '<div class="weakness-title">' + w.weakness + '</div>';
+                if (w.scenario) weaknessesHtml += '<div class="weakness-scenario">📍 ' + w.scenario + '</div>';
+                if (w.improvement) weaknessesHtml += '<div class="weakness-improve">💡 ' + w.improvement + '</div>';
+                if (w.positive) weaknessesHtml += '<div class="weakness-positive">💎 ' + w.positive + '</div>';
+                weaknessesHtml += '</div>';
+            }
+            document.getElementById('weaknesses').innerHTML = weaknessesHtml;
+            
+            // 行动建议
+            var actionsHtml = '<div>基于你的风格，建议：</div>';
+            actionsHtml += '<div style="margin-top:10px;">1️⃣ 发挥你的 ' + (dimensionScores.A >= dimensionScores.I ? '数据分析' : '直觉判断') + ' 优势</div>';
+            actionsHtml += '<div style="margin-top:5px;">2️⃣ 在 ' + (dimensionScores.R >= dimensionScores.T ? '关系维护' : '任务执行') + ' 上继续保持</div>';
+            actionsHtml += '<div style="margin-top:5px;">3️⃣ 注意平衡 ' + (dimensionScores.C >= dimensionScores.B ? '谨慎' : '冒险') + ' 倾向</div>';
+            document.getElementById('actions').innerHTML = actionsHtml;
+            
+            // 名人对标
+            document.getElementById('celebrityStory').innerHTML = 
+                '<div style="font-size:18px;font-weight:bold;margin-bottom:10px;">' + story.name + ' - ' + story.title + '</div>' +
+                '<div style="line-height:1.7;">' + story.story + '</div>' +
+                '<div style="margin-top:15px;color:#667eea;"><strong>' + story.scene + '</strong></div>' +
+                '<div style="margin-top:10px;color:#22c55e;"><strong>' + story.aspiration + '</strong></div>';
+            
+            // 显示结果页
+            document.getElementById('testPage').classList.add('hidden');
+            document.getElementById('resultPage').classList.remove('hidden');
+        }
+        
+        function showFullReport() {
+            document.getElementById('quickVersion').classList.add('hidden');
+            document.getElementById('fullVersion').classList.remove('hidden');
+        }
+        
+        function showQuickVersion() {
+            document.getElementById('quickVersion').classList.remove('hidden');
+            document.getElementById('fullVersion').classList.add('hidden');
+        }
+        
+        function generatePoster() {
+            var code = currentResult.code;
+            var style = currentResult.style;
+            var theme = posterThemes[code] || posterThemes.ARCD;
+            var canvas = document.getElementById('posterCanvas');
+            var ctx = canvas.getContext('2d');
+            
+            canvas.width = 600;
+            canvas.height = 800;
+            
+            // 使用风格专属配色
+            var gradient = ctx.createLinearGradient(0, 0, 0, 800);
+            var c = theme.gradient[0].match(/#[0-9a-fA-F]{6}/g) || ['#667eea', '#764ba2'];
+            gradient.addColorStop(0, c[0]);
+            gradient.addColorStop(1, c[1] || c[0]);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 600, 800);
+            
+            // 标题
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 22px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('🎯 我的采购谈判风格', 300, 45);
+            
+            // 风格代码
+            ctx.font = 'bold 100px sans-serif';
+            var codeGrad = ctx.createLinearGradient(0,80,600,80);
+            codeGrad.addColorStop(0,'#ffffff');
+            codeGrad.addColorStop(1,'#f0f0ff');
+            ctx.fillStyle = codeGrad;
+            ctx.fillText(code, 300, 155);
+            
+            // 风格名
+            ctx.font = 'bold 38px sans-serif';
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(style.name, 300, 210);
+            
+            // 角色定位
+            ctx.font = '18px sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.9)';
+            ctx.fillText(style.role, 300, 245);
+            
+            // 动物图标
+            ctx.font = '80px sans-serif';
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(style.animal, 300, 340);
+            
+            // 底部信息
+            ctx.font = '14px sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.8)';
+            ctx.fillText('优链学堂 · 供应链首席训练导师', 300, 750);
+            
+            // 下载
+            var link = document.createElement('a');
+            link.download = '我的谈判风格-' + code + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            
+            alert('🎉 海报已生成并下载！');
         }
         
         function retakeTest() {
@@ -169,9 +371,7 @@
         }
         
         window.onload = function() {
-            console.log('✅ 采购谈判风格测试 v2.1 已加载');
-            console.log('Questions:', typeof questions, questions.length);
-            console.log('Styles:', typeof styles, Object.keys(styles).length);
+            console.log('✅ 采购谈判风格测试 v2.1 完整版已加载');
         };
     </script>
 </body>
