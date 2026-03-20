@@ -9,7 +9,7 @@ var posterThemes = {
         primary: '#1e3c72',
         secondary: '#FFD700',
         accent: '#ffffff',
-       气质：'睿智、高端、可信赖'
+        style: '睿智、高端、可信赖'
     },
     ARCP: {
         name: '关系建筑师',
@@ -17,7 +17,7 @@ var posterThemes = {
         primary: '#FF9966',
         secondary: '#FFB6C1',
         accent: '#ffffff',
-        气质：'温暖、亲和、治愈'
+        style: '温暖、亲和、治愈'
     },
     ARBD: {
         name: '远见守护者',
@@ -25,7 +25,7 @@ var posterThemes = {
         primary: '#667eea',
         secondary: '#C0C0C0',
         accent: '#ffffff',
-        气质：'神秘、远见、深邃'
+        style: '神秘、远见、深邃'
     },
     ARBP: {
         name: '和谐维系者',
@@ -33,7 +33,7 @@ var posterThemes = {
         primary: '#56ab2f',
         secondary: '#40E0D0',
         accent: '#ffffff',
-        气质：'温和、生长、治愈'
+        style: '温和、生长、治愈'
     },
     
     // === T 系（任务型）===
@@ -43,7 +43,7 @@ var posterThemes = {
         primary: '#434343',
         secondary: '#4682B4',
         accent: '#ffffff',
-        气质：'严谨、专业、可靠'
+        style: '严谨、专业、可靠'
     },
     ATCP: {
         name: '数据分析师',
@@ -51,7 +51,7 @@ var posterThemes = {
         primary: '#141E30',
         secondary: '#ffffff',
         accent: '#00d2ff',
-        气质：'精确、清晰、理性'
+        style: '精确、清晰、理性'
     },
     ATBD: {
         name: '目标执行者',
@@ -59,7 +59,7 @@ var posterThemes = {
         primary: '#cb2d3e',
         secondary: '#000000',
         accent: '#ffffff',
-        气质：'强势、果断、力量'
+        style: '强势、果断、力量'
     },
     ATBP: {
         name: '协作推进者',
@@ -67,7 +67,7 @@ var posterThemes = {
         primary: '#FF8008',
         secondary: '#808080',
         accent: '#ffffff',
-        气质：'可靠、务实、温暖'
+        style: '可靠、务实、温暖'
     },
     
     // === I 系（直觉型）===
@@ -77,7 +77,7 @@ var posterThemes = {
         primary: '#11998e',
         secondary: '#FFD700',
         accent: '#ffffff',
-        气质：'创新、突破、颠覆'
+        style: '创新、突破、颠覆'
     },
     IRCP: {
         name: '魅力连接者',
@@ -85,7 +85,7 @@ var posterThemes = {
         primary: '#ee9ca7',
         secondary: '#9370DB',
         accent: '#ffffff',
-        气质：'魅力、连接、优雅'
+        style: '魅力、连接、优雅'
     },
     IRBD: {
         name: '战略冒险家',
@@ -93,7 +93,7 @@ var posterThemes = {
         primary: '#FFD700',
         secondary: '#cb2d3e',
         accent: '#000000',
-        气质：'冒险、激情、远见'
+        style: '冒险、激情、远见'
     },
     IRBP: {
         name: '愿景影响者',
@@ -101,7 +101,7 @@ var posterThemes = {
         primary: '#667eea',
         secondary: '#764ba2',
         accent: '#ffffff',
-        气质：'影响、多元、魅力'
+        style: '影响、多元、魅力'
     },
     
     // === IT 系（直觉 + 任务）===
@@ -111,7 +111,7 @@ var posterThemes = {
         primary: '#0f2027',
         secondary: '#C0C0C0',
         accent: '#00d2ff',
-        气质：'洞察、深度、睿智'
+        style: '洞察、深度、睿智'
     },
     ITCP: {
         name: '敏捷应对者',
@@ -119,7 +119,7 @@ var posterThemes = {
         primary: '#4facfe',
         secondary: '#43e97b',
         accent: '#ffffff',
-        气质：'灵活、适应、活力'
+        style: '灵活、适应、活力'
     },
     ITBD: {
         name: '直觉开创者',
@@ -127,7 +127,7 @@ var posterThemes = {
         primary: '#FF8008',
         secondary: '#FFC837',
         accent: '#ffffff',
-        气质：'行动、活力、热情'
+        style: '行动、活力、热情'
     },
     ITBP: {
         name: '智慧平衡者',
@@ -135,7 +135,7 @@ var posterThemes = {
         primary: '#4facfe',
         secondary: '#43e97b',
         accent: '#ffffff',
-        气质：'平衡、和谐、智慧'
+        style: '平衡、和谐、智慧'
     }
 };
 
