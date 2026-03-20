@@ -6,94 +6,96 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>采购谈判风格测试 v2.1 - 发现你的谈判超能力</title>
+    <title>采购谈判风格测试 - 发现你的谈判基因</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; min-height: 100dvh; padding: 0; }
-        .container { max-width: 600px; margin: 0 auto; background: white; min-height: 100vh; box-shadow: 0 0 40px rgba(0,0,0,0.3); }
-        @media (min-width: 600px) { .container { min-height: 100vh; border-radius: 0; } }
-        @media (max-width: 600px) { .container { min-height: 100dvh; } }
+        body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Arial, sans-serif; background: #000; min-height: 100vh; padding: 0; }
+        .container { max-width: 600px; margin: 0 auto; background: #000; min-height: 100vh; }
         .hidden { display: none !important; }
         
-        /* 首页英雄区 */
-        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px 40px; text-align: center; }
-        .hero h1 { font-size: 32px; font-weight: 800; margin-bottom: 15px; line-height: 1.3; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .hero p { font-size: 16px; opacity: 0.95; margin-bottom: 10px; line-height: 1.6; }
-        .hero .highlight { font-size: 14px; opacity: 0.85; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); }
-        
-        /* 测试按钮 */
-        .btn-start { background: white; color: #667eea; border: none; padding: 20px 40px; border-radius: 50px; font-size: 20px; font-weight: 800; cursor: pointer; width: calc(100% - 40px); margin: 30px 20px; box-shadow: 0 8px 30px rgba(102,126,234,0.4); transition: all 0.3s; }
+        /* 首页 - 乔布斯美学 */
+        .hero { background: #000; color: #fff; padding: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .hero-logo { font-size: 120px; margin-bottom: 40px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .hero h1 { font-size: 42px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 15px; line-height: 1.2; }
+        .hero-subtitle { font-size: 21px; font-weight: 400; color: #86868b; margin-bottom: 60px; letter-spacing: 0.3px; }
+        .hero-stats { display: flex; gap: 40px; margin-bottom: 80px; }
+        .hero-stat { text-align: center; }
+        .hero-stat-num { font-size: 36px; font-weight: 700; color: #fff; display: block; }
+        .hero-stat-label { font-size: 13px; color: #86868b; margin-top: 8px; display: block; letter-spacing: 0.5px; }
+        .btn-start { background: #0071e3; color: #fff; border: none; padding: 22px 60px; border-radius: 980px; font-size: 17px; font-weight: 600; cursor: pointer; transition: all 0.3s; letter-spacing: 0.3px; }
+        .btn-start:hover { background: #0077ed; transform: scale(1.02); }
         .btn-start:active { transform: scale(0.98); }
         
         /* 测试页 */
-        .test-header { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 20px; }
-        .progress-bar { height: 6px; background: rgba(255,255,255,0.3); border-radius: 3px; margin: 15px 0 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: white; transition: width 0.3s; }
-        .progress-text { text-align: center; font-size: 13px; opacity: 0.9; }
-        .question-area { padding: 25px 20px; background: #f8f9ff; }
-        .question-text { font-size: 18px; font-weight: 700; color: #333; line-height: 1.6; margin-bottom: 20px; }
-        .question-scene { color: #667eea; font-size: 14px; margin-bottom: 15px; font-weight: 600; }
-        .options-container { padding: 0 20px 20px; }
-        .option { padding: 18px; margin: 12px 0; background: white; border-radius: 12px; cursor: pointer; border: 2px solid #e8ecff; transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .option:hover { border-color: #667eea; background: #f0f4ff; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(102,126,234,0.15); }
-        .option.selected { border-color: #667eea; background: linear-gradient(135deg, #667eea, #764ba2); color: white; box-shadow: 0 4px 20px rgba(102,126,234,0.3); }
-        .option-text { font-size: 15px; line-height: 1.5; }
-        .nav-buttons { padding: 20px; background: white; border-top: 1px solid #f0f0f0; display: flex; gap: 10px; justify-content: center; }
-        .btn-nav { background: #f0f0f0; color: #666; border: none; padding: 14px 28px; border-radius: 25px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; flex: 1; max-width: 150px; }
-        .btn-nav:disabled { opacity: 0.4; cursor: not-allowed; }
-        .btn-nav.primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; box-shadow: 0 4px 15px rgba(102,126,234,0.3); }
+        .test-header { background: #1c1c1e; padding: 20px; border-bottom: 1px solid #333; }
+        .progress-bar { height: 4px; background: #333; border-radius: 2px; margin: 15px 0 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #0071e3; transition: width 0.3s; }
+        .progress-text { text-align: center; font-size: 13px; color: #86868b; }
+        .question-area { padding: 40px 24px; background: #000; }
+        .question-scene { color: #0071e3; font-size: 13px; font-weight: 600; margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .question-text { font-size: 22px; font-weight: 600; color: #fff; line-height: 1.5; margin-bottom: 30px; }
+        .options-container { padding: 0 24px 30px; }
+        .option { padding: 22px; margin: 12px 0; background: #1c1c1e; border-radius: 14px; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; }
+        .option:hover { background: #2c2c2e; }
+        .option.selected { border-color: #0071e3; background: rgba(0,113,227,0.1); }
+        .option-text { font-size: 16px; color: #fff; line-height: 1.5; font-weight: 400; }
+        .nav-buttons { padding: 20px 24px; background: #1c1c1e; border-top: 1px solid #333; display: flex; gap: 12px; justify-content: center; position: fixed; bottom: 0; left: 0; right: 0; max-width: 600px; margin: 0 auto; }
+        .btn-nav { background: #2c2c2e; color: #fff; border: none; padding: 16px 32px; border-radius: 980px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; flex: 1; max-width: 140px; }
+        .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+        .btn-nav.primary { background: #0071e3; }
         
         /* 结果页 */
-        .result-header { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 40px 20px; text-align: center; }
-        .result-animal { font-size: 100px; margin-bottom: 10px; text-shadow: 0 4px 20px rgba(0,0,0,0.2); }
-        .result-code { font-size: 56px; font-weight: 900; margin: 10px 0; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .result-name { font-size: 26px; font-weight: 700; margin: 10px 0; }
-        .result-role { font-size: 15px; opacity: 0.9; margin-top: 10px; }
-        .result-content { padding: 25px 20px; }
-        .section { margin: 20px 0; padding: 20px; background: linear-gradient(135deg, #f8f9ff, #f0f4ff); border-radius: 16px; border: 1px solid #e8ecff; }
-        .section-title { font-size: 17px; font-weight: 800; color: #333; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-        .mbti-insight { background: white; border-left: 4px solid #667eea; padding: 18px; border-radius: 8px; margin: 15px 0; font-size: 15px; line-height: 1.8; color: #333; white-space: pre-line; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .weakness-item { background: white; padding: 16px; margin: 12px 0; border-radius: 10px; border-left: 4px solid #f59e0b; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .weakness-title { font-weight: 700; color: #333; margin-bottom: 10px; font-size: 15px; }
-        .weakness-scenario { color: #666; font-size: 13px; margin: 6px 0; line-height: 1.5; }
-        .weakness-improve { color: #667eea; font-size: 13px; margin: 6px 0; line-height: 1.5; font-weight: 600; }
-        .weakness-positive { color: #22c55e; font-size: 13px; margin: 6px 0; line-height: 1.5; font-weight: 600; }
-        .tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
-        .tag { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 8px 16px; border-radius: 25px; font-size: 13px; font-weight: 600; box-shadow: 0 2px 10px rgba(102,126,234,0.3); }
-        .btn-action { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 18px 30px; border-radius: 50px; font-size: 17px; font-weight: 800; cursor: pointer; width: 100%; margin: 15px 0; box-shadow: 0 6px 25px rgba(102,126,234,0.4); transition: all 0.3s; }
+        .result-header { background: linear-gradient(135deg, #0071e3, #005bb5); color: #fff; padding: 60px 20px 40px; text-align: center; }
+        .result-animal { font-size: 100px; margin-bottom: 15px; }
+        .result-code { font-size: 64px; font-weight: 800; margin: 15px 0; letter-spacing: 8px; }
+        .result-name { font-size: 28px; font-weight: 600; margin: 15px 0; }
+        .result-role { font-size: 15px; opacity: 0.8; margin-top: 12px; font-weight: 400; }
+        .result-content { padding: 30px 24px; background: #000; }
+        .section { margin: 24px 0; padding: 24px; background: #1c1c1e; border-radius: 16px; }
+        .section-title { font-size: 15px; font-weight: 600; color: #86868b; margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .mbti-insight { background: #2c2c2e; padding: 20px; border-radius: 12px; margin: 16px 0; font-size: 15px; line-height: 1.8; color: #fff; white-space: pre-line; font-weight: 400; border-left: 3px solid #0071e3; }
+        .weakness-item { background: #2c2c2e; padding: 20px; margin: 12px 0; border-radius: 12px; border-left: 3px solid #f5a623; }
+        .weakness-title { font-weight: 600; color: #fff; margin-bottom: 12px; font-size: 15px; }
+        .weakness-scenario { color: #86868b; font-size: 13px; margin: 8px 0; line-height: 1.5; }
+        .weakness-improve { color: #0071e3; font-size: 13px; margin: 8px 0; line-height: 1.5; font-weight: 600; }
+        .weakness-positive { color: #34c759; font-size: 13px; margin: 8px 0; line-height: 1.5; font-weight: 600; }
+        .tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+        .tag { background: #0071e3; color: #fff; padding: 8px 16px; border-radius: 980px; font-size: 12px; font-weight: 600; letter-spacing: 0.3px; }
+        .btn-action { background: #0071e3; color: #fff; border: none; padding: 20px 40px; border-radius: 980px; font-size: 17px; font-weight: 600; cursor: pointer; width: 100%; margin: 16px 0; transition: all 0.3s; letter-spacing: 0.3px; }
+        .btn-action:hover { background: #0077ed; }
         .btn-action:active { transform: scale(0.98); }
-        .btn-secondary { background: #f0f0f0; color: #666; }
-        .course-card { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 25px; border-radius: 16px; margin: 20px 0; box-shadow: 0 6px 25px rgba(102,126,234,0.3); }
-        .course-name { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
-        .course-teacher { font-size: 14px; opacity: 0.9; margin-bottom: 5px; }
-        .course-price { font-size: 24px; font-weight: 900; margin: 15px 0; }
-        .course-btn { background: white; color: #667eea; border: none; padding: 14px 30px; border-radius: 50px; font-size: 16px; font-weight: 800; cursor: pointer; display: inline-block; margin-top: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        
-        /* 团队功能 */
-        .team-section { background: linear-gradient(135deg, #f0f4ff, #e8ecff); padding: 25px 20px; margin: 20px 0; border-radius: 16px; }
-        .team-title { font-size: 18px; font-weight: 800; color: #333; margin-bottom: 15px; text-align: center; }
-        .team-btn { background: white; color: #667eea; border: 2px solid #667eea; padding: 14px 30px; border-radius: 50px; font-size: 15px; font-weight: 700; cursor: pointer; margin: 10px 0; width: 100%; box-shadow: 0 4px 15px rgba(102,126,234,0.2); }
+        .btn-secondary { background: #2c2c2e; color: #fff; }
+        .course-card { background: linear-gradient(135deg, #0071e3, #005bb5); color: #fff; padding: 30px; border-radius: 16px; margin: 24px 0; }
+        .course-name { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+        .course-teacher { font-size: 14px; opacity: 0.8; margin-bottom: 8px; }
+        .course-price { font-size: 28px; font-weight: 800; margin: 20px 0; }
+        .course-btn { background: #fff; color: #0071e3; border: none; padding: 16px 36px; border-radius: 980px; font-size: 15px; font-weight: 600; cursor: pointer; display: inline-block; margin-top: 12px; }
+        .team-section { background: #1c1c1e; padding: 30px 24px; margin: 24px 0; border-radius: 16px; text-align: center; }
+        .team-title { font-size: 17px; font-weight: 600; color: #fff; margin-bottom: 20px; }
+        .team-btn { background: #2c2c2e; color: #fff; border: 2px solid #333; padding: 16px 40px; border-radius: 980px; font-size: 15px; font-weight: 600; cursor: pointer; margin: 10px 0; width: 100%; }
         
         /* 弹窗 */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-        .modal-content { background: white; padding: 30px; border-radius: 20px; max-width: 400px; width: 90%; text-align: center; }
-        .modal-title { font-size: 22px; font-weight: 800; color: #333; margin-bottom: 15px; }
-        .modal-input { width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 18px; text-align: center; margin: 15px 0; letter-spacing: 3px; }
-        .modal-btn { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 15px 30px; border-radius: 50px; font-size: 16px; font-weight: 800; cursor: pointer; width: 100%; margin: 10px 0; box-shadow: 0 4px 15px rgba(102,126,234,0.3); }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(10px); }
+        .modal-content { background: #1c1c1e; padding: 40px; border-radius: 24px; max-width: 400px; width: 90%; text-align: center; }
+        .modal-title { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+        .modal-input { width: 100%; padding: 18px; background: #2c2c2e; border: 1px solid #333; border-radius: 12px; font-size: 20px; text-align: center; margin: 20px 0; letter-spacing: 4px; color: #fff; }
+        .modal-btn { background: #0071e3; color: #fff; border: none; padding: 18px 40px; border-radius: 980px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; margin: 10px 0; }
         
         /* 底部导航 */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #f0f0f0; padding: 10px 20px; display: flex; justify-content: space-around; }
-        .nav-item { text-align: center; color: #999; font-size: 12px; cursor: pointer; }
-        .nav-item.active { color: #667eea; font-weight: 700; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1c1c1e; border-top: 1px solid #333; padding: 12px 20px; display: flex; justify-content: space-around; }
+        .nav-item { text-align: center; color: #86868b; font-size: 11px; cursor: pointer; transition: color 0.3s; }
+        .nav-item.active { color: #0071e3; }
         .nav-icon { font-size: 24px; margin-bottom: 4px; }
         
         /* 移动端适配 */
         @media (max-width: 375px) {
-            .hero h1 { font-size: 26px; }
-            .hero p { font-size: 14px; }
-            .btn-start { font-size: 18px; padding: 18px 30px; }
-            .result-animal { font-size: 80px; }
-            .result-code { font-size: 42px; }
+            .hero-logo { font-size: 100px; }
+            .hero h1 { font-size: 36px; }
+            .hero-subtitle { font-size: 18px; }
+            .hero-stats { gap: 25px; }
+            .hero-stat-num { font-size: 28px; }
+            .hero-stat-label { font-size: 11px; }
         }
     </style>
 </head>
@@ -102,13 +104,25 @@
         <!-- 首页 -->
         <div id="homePage">
             <div class="hero">
-                <h1>🎯 采购谈判风格测试</h1>
-                <p style="font-size:18px;opacity:0.95;margin:25px 0;">发现你的谈判基因</p>
-                <div style="background:rgba(255,255,255,0.15);padding:20px;border-radius:12px;margin-top:30px;display:inline-block;">
-                    <p style="font-size:14px;opacity:0.9;">28 场景 · 16 风格 · 10000+ 已测试</p>
+                <div class="hero-logo">🎯</div>
+                <h1>采购谈判风格测试</h1>
+                <p class="hero-subtitle">发现你的谈判基因</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-num">28</span>
+                        <span class="hero-stat-label">场景题</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-num">16</span>
+                        <span class="hero-stat-label">种风格</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-num">10000+</span>
+                        <span class="hero-stat-label">已测试</span>
+                    </div>
                 </div>
+                <button class="btn-start" onclick="startTest()">开始测试</button>
             </div>
-            <button class="btn-start" onclick="startTest()">🚀 立即开始测试</button>
         </div>
         
         <!-- 测试页 -->
@@ -123,8 +137,8 @@
             </div>
             <div id="optionsContainer" class="options-container"></div>
             <div class="nav-buttons">
-                <button id="prevBtn" class="btn-nav" onclick="prevQuestion()" disabled>← 上一题</button>
-                <button id="nextBtn" class="btn-nav primary" onclick="nextQuestion()">下一题 →</button>
+                <button id="prevBtn" class="btn-nav" onclick="prevQuestion()" disabled>上一题</button>
+                <button id="nextBtn" class="btn-nav primary" onclick="nextQuestion()">下一题</button>
             </div>
         </div>
         
@@ -141,79 +155,79 @@
                 <!-- 快速版 -->
                 <div id="quickVersion">
                     <div class="section">
-                        <div class="section-title">🔮 MBTI 内心洞察</div>
+                        <div class="section-title">MBTI 内心洞察</div>
                         <div class="mbti-insight" id="mbtiInsight"></div>
                     </div>
                     
                     <div class="section">
-                        <div class="section-title">🏷️ 神秘标签</div>
+                        <div class="section-title">神秘标签</div>
                         <div class="tags" id="mysteryTags"></div>
                     </div>
                     
-                    <button class="btn-action" onclick="showFullReport()">📖 查看深度报告</button>
+                    <button class="btn-action" onclick="showFullReport()">查看深度报告</button>
                 </div>
                 
                 <!-- 完整版 -->
                 <div id="fullVersion" class="hidden">
-                    <button class="btn-action btn-secondary" onclick="showQuickVersion()" style="margin-bottom: 15px;">🔙 返回快速版</button>
+                    <button class="btn-action btn-secondary" onclick="showQuickVersion()" style="margin-bottom: 16px;">返回快速版</button>
                     
                     <div class="section">
-                        <div class="section-title">💪 核心优势</div>
+                        <div class="section-title">核心优势</div>
                         <div id="strengths"></div>
                     </div>
                     
                     <div class="section">
-                        <div class="section-title">⚠️ 致命弱点</div>
+                        <div class="section-title">致命弱点</div>
                         <div id="weaknesses"></div>
                     </div>
                     
                     <div class="section">
-                        <div class="section-title">💡 行动建议</div>
+                        <div class="section-title">行动建议</div>
                         <div id="actions"></div>
                     </div>
                     
                     <div class="section">
-                        <div class="section-title">🏆 名人对标</div>
+                        <div class="section-title">名人对标</div>
                         <div id="celebrityStory"></div>
                     </div>
                     
                     <!-- 课程推荐 -->
                     <div class="course-card">
-                        <div class="course-name">📚 《供应商管理与谈判实战》</div>
+                        <div class="course-name">《供应商管理与谈判实战》</div>
                         <div class="course-teacher">讲师：姜宏锋</div>
-                        <div class="course-price">💰 限时优惠：¥1,999</div>
-                        <button class="course-btn" onclick="enrollCourse()">立即报名 →</button>
+                        <div class="course-price">限时优惠：¥1,999</div>
+                        <button class="course-btn" onclick="enrollCourse()">立即报名</button>
                     </div>
                     
-                    <button class="btn-action" onclick="generatePoster()">📸 生成海报分享</button>
+                    <button class="btn-action" onclick="generatePoster()">生成海报分享</button>
                 </div>
                 
                 <!-- 团队功能 -->
                 <div class="team-section">
-                    <div class="team-title">👥 团队功能</div>
+                    <div class="team-title">团队功能</div>
                     <button class="team-btn" onclick="showJoinTeamModal()">加入团队</button>
                     <button class="team-btn" onclick="createTeamFromResult()">创建团队</button>
                 </div>
                 
-                <button class="btn-action btn-secondary" onclick="retakeTest()" style="margin-top: 20px;">🔄 重新测试</button>
+                <button class="btn-action btn-secondary" onclick="retakeTest()" style="margin-top: 24px;">重新测试</button>
             </div>
         </div>
         
         <!-- 我的页面 -->
         <div id="myPage" class="hidden">
-            <div class="hero">
-                <h1>👤 我的</h1>
+            <div class="hero" style="min-height: auto; padding: 60px 20px;">
+                <h1>我的</h1>
             </div>
             <div class="result-content">
                 <div class="section">
-                    <div class="section-title">📊 我的测试结果</div>
+                    <div class="section-title">我的测试结果</div>
                     <div id="myResult"></div>
                 </div>
                 <div class="section">
-                    <div class="section-title">👥 我的团队</div>
+                    <div class="section-title">我的团队</div>
                     <div id="myTeam"></div>
                 </div>
-                <button class="btn-action btn-secondary" onclick="clearAllData()">🗑️ 清除所有数据</button>
+                <button class="btn-action btn-secondary" onclick="clearAllData()">清除所有数据</button>
             </div>
         </div>
     </div>
@@ -233,23 +247,23 @@
     <!-- 加入团队弹窗 -->
     <div id="joinTeamModal" class="hidden modal">
         <div class="modal-content">
-            <div class="modal-title">👥 加入团队</div>
-            <p style="color:#666;margin-bottom:15px;">输入团队邀请码，和同事一起对比谈判风格</p>
+            <div class="modal-title">加入团队</div>
+            <p style="color:#86868b;margin-bottom:20px;font-size:14px;">输入团队邀请码，和同事一起对比谈判风格</p>
             <input type="text" id="inviteCodeInput" class="modal-input" placeholder="8 位邀请码" maxlength="8">
             <button class="modal-btn" onclick="joinTeam()">加入团队</button>
-            <button class="modal-btn btn-secondary" onclick="closeJoinTeamModal()" style="margin-top:10px;">取消</button>
+            <button class="modal-btn btn-secondary" onclick="closeJoinTeamModal()" style="margin-top:12px;">取消</button>
         </div>
     </div>
     
     <canvas id="posterCanvas" style="display: none;"></canvas>
     
-    <script src="poster-themes.js?v=202603201655"></script>
-    <script src="questions-v4.js?v=202603201655"></script>
-    <script src="styles-v2.js?v=202603201655"></script>
-    <script src="personalized-interpretation-v4.js?v=202603201655"></script>
-    <script src="enhanced-weaknesses-v2.js?v=202603201655"></script>
-    <script src="celebrity-stories.js?v=202603201655"></script>
-    <script src="mystery-tags.js?v=202603201655"></script>
+    <script src="poster-themes.js?v=202603201720"></script>
+    <script src="questions-v4.js?v=202603201720"></script>
+    <script src="styles-v2.js?v=202603201720"></script>
+    <script src="personalized-interpretation-v4.js?v=202603201720"></script>
+    <script src="enhanced-weaknesses-v2.js?v=202603201720"></script>
+    <script src="celebrity-stories.js?v=202603201720"></script>
+    <script src="mystery-tags.js?v=202603201720"></script>
     <script>
         var currentIndex = 0;
         var answers = [];
@@ -268,7 +282,7 @@
         
         function renderQuestion() {
             var q = questions[currentIndex];
-            document.getElementById('questionScene').textContent = '📍 ' + q.scene;
+            document.getElementById('questionScene').textContent = q.scene;
             document.getElementById('questionText').textContent = q.q;
             var container = document.getElementById('optionsContainer');
             container.innerHTML = '';
@@ -334,7 +348,7 @@
         
         function updateNav() {
             document.getElementById('prevBtn').disabled = currentIndex === 0;
-            document.getElementById('nextBtn').innerHTML = currentIndex === 27 ? '查看结果 →' : '下一题 →';
+            document.getElementById('nextBtn').innerHTML = currentIndex === 27 ? '查看结果' : '下一题';
         }
         
         function calculateResult() {
@@ -370,10 +384,10 @@
             document.getElementById('mysteryTags').innerHTML = tagsHtml;
             
             var strengthsHtml = '';
-            if (interpretation.decision) strengthsHtml += '<div style="margin-bottom:12px;"><strong>📊 决策风格：</strong>' + interpretation.decision + '</div>';
-            if (interpretation.relation) strengthsHtml += '<div style="margin-bottom:12px;"><strong>🤝 关系导向：</strong>' + interpretation.relation + '</div>';
-            if (interpretation.risk) strengthsHtml += '<div style="margin-bottom:12px;"><strong>⚖️ 风险态度：</strong>' + interpretation.risk + '</div>';
-            if (interpretation.comm) strengthsHtml += '<div><strong>💬 沟通方式：</strong>' + interpretation.comm + '</div>';
+            if (interpretation.decision) strengthsHtml += '<div style="margin-bottom:12px;line-height:1.7;"><strong>决策风格：</strong>' + interpretation.decision + '</div>';
+            if (interpretation.relation) strengthsHtml += '<div style="margin-bottom:12px;line-height:1.7;"><strong>关系导向：</strong>' + interpretation.relation + '</div>';
+            if (interpretation.risk) strengthsHtml += '<div style="margin-bottom:12px;line-height:1.7;"><strong>风险态度：</strong>' + interpretation.risk + '</div>';
+            if (interpretation.comm) strengthsHtml += '<div style="line-height:1.7;"><strong>沟通方式：</strong>' + interpretation.comm + '</div>';
             document.getElementById('strengths').innerHTML = strengthsHtml;
             
             var weaknessesHtml = '';
@@ -381,9 +395,9 @@
                 var w = weaknesses[i];
                 weaknessesHtml += '<div class="weakness-item">';
                 weaknessesHtml += '<div class="weakness-title">' + w.weakness + '</div>';
-                if (w.scenario) weaknessesHtml += '<div class="weakness-scenario">📍 ' + w.scenario + '</div>';
-                if (w.improvement) weaknessesHtml += '<div class="weakness-improve">💡 ' + w.improvement + '</div>';
-                if (w.positive) weaknessesHtml += '<div class="weakness-positive">💎 ' + w.positive + '</div>';
+                if (w.scenario) weaknessesHtml += '<div class="weakness-scenario">' + w.scenario + '</div>';
+                if (w.improvement) weaknessesHtml += '<div class="weakness-improve">' + w.improvement + '</div>';
+                if (w.positive) weaknessesHtml += '<div class="weakness-positive">' + w.positive + '</div>';
                 weaknessesHtml += '</div>';
             }
             document.getElementById('weaknesses').innerHTML = weaknessesHtml;
@@ -396,10 +410,10 @@
             document.getElementById('actions').innerHTML = actionsHtml;
             
             document.getElementById('celebrityStory').innerHTML = 
-                '<div style="font-size:20px;font-weight:800;margin-bottom:12px;">' + story.name + ' · ' + story.title + '</div>' +
-                '<div style="line-height:1.8;color:#555;">' + story.story + '</div>' +
-                '<div style="margin-top:15px;padding:12px;background:#f0f4ff;border-radius:8px;color:#667eea;"><strong>📍 ' + story.scene + '</strong></div>' +
-                '<div style="margin-top:10px;padding:12px;background:#f0fff4;border-radius:8px;color:#22c55e;"><strong>🌟 ' + story.aspiration + '</strong></div>';
+                '<div style="font-size:20px;font-weight:700;margin-bottom:12px;">' + story.name + ' · ' + story.title + '</div>' +
+                '<div style="line-height:1.8;color:#fff;">' + story.story + '</div>' +
+                '<div style="margin-top:15px;padding:12px;background:rgba(0,113,227,0.2);border-radius:8px;color:#0071e3;"><strong>' + story.scene + '</strong></div>' +
+                '<div style="margin-top:10px;padding:12px;background:rgba(52,199,89,0.2);border-radius:8px;color:#34c759;"><strong>' + story.aspiration + '</strong></div>';
             
             document.getElementById('testPage').classList.add('hidden');
             document.getElementById('resultPage').classList.remove('hidden');
@@ -418,14 +432,12 @@
         function generatePoster() {
             var code = currentResult.code;
             var style = currentResult.style;
-            var theme = posterThemes[code] || posterThemes.ARCD;
             var canvas = document.getElementById('posterCanvas');
             var ctx = canvas.getContext('2d');
             
             canvas.width = 600;
             canvas.height = 800;
             
-            var gradient = ctx.createLinearGradient(0, 0, 0, 800);
             var colors = {
                 ARCD: ['#1e3c72', '#2a5298'], ARCP: ['#FF9966', '#FF5E62'],
                 ARBD: ['#667eea', '#764ba2'], ARBP: ['#56ab2f', '#a8e063'],
@@ -436,59 +448,54 @@
                 ITCD: ['#0f2027', '#203a43'], ITCP: ['#4facfe', '#00f2fe'],
                 ITBD: ['#FF8008', '#FFC837'], ITBP: ['#4facfe', '#43e97b']
             };
-            var c = colors[code] || ['#667eea', '#764ba2'];
+            var c = colors[code] || ['#0071e3', '#005bb5'];
+            var gradient = ctx.createLinearGradient(0, 0, 0, 800);
             gradient.addColorStop(0, c[0]);
             gradient.addColorStop(1, c[1]);
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, 600, 800);
             
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 24px sans-serif';
+            ctx.font = 'bold 24px -apple-system, sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('🎯 我的采购谈判风格', 300, 50);
+            ctx.fillText('我的采购谈判风格', 300, 50);
             
-            ctx.font = 'bold 100px sans-serif';
-            var codeGrad = ctx.createLinearGradient(0,80,600,80);
-            codeGrad.addColorStop(0,'#ffffff');
-            codeGrad.addColorStop(1,'#f0f0ff');
-            ctx.fillStyle = codeGrad;
+            ctx.font = 'bold 100px -apple-system, sans-serif';
+            ctx.fillStyle = '#ffffff';
             ctx.fillText(code, 300, 170);
             
-            ctx.font = 'bold 40px sans-serif';
-            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 40px -apple-system, sans-serif';
             ctx.fillText(style.name, 300, 230);
             
-            ctx.font = '20px sans-serif';
-            ctx.fillStyle = 'rgba(255,255,255,0.9)';
+            ctx.font = '20px -apple-system, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.8)';
             ctx.fillText(style.role, 300, 265);
             
-            ctx.font = '90px sans-serif';
-            ctx.fillStyle = '#ffffff';
+            ctx.font = '90px -apple-system, sans-serif';
             ctx.fillText(style.animal, 300, 380);
             
-            ctx.font = '16px sans-serif';
-            ctx.fillStyle = 'rgba(255,255,255,0.8)';
-            ctx.fillText('优链学堂 · 供应链首席训练导师', 300, 760);
+            ctx.font = '16px -apple-system, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.6)';
+            ctx.fillText('优链学堂', 300, 760);
             
             try {
                 var dataUrl = canvas.toDataURL('image/png');
                 var link = document.createElement('a');
-                link.download = '我的谈判风格-' + code + '.png';
+                link.download = '谈判风格-' + code + '.png';
                 link.href = dataUrl;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                alert('🎉 海报已生成并下载！请检查下载文件夹');
+                alert('海报已生成并下载！');
             } catch(e) {
-                console.error('海报生成失败:', e);
                 var newWindow = window.open();
                 newWindow.document.write('<img src="' + canvas.toDataURL('image/png') + '" style="max-width:100%;">');
-                newWindow.document.write('<div style="text-align:center;padding:20px;"><button onclick="window.print()" style="padding:15px 30px;font-size:16px;">🖨️ 打印/保存</button></div>');
+                newWindow.document.write('<div style="text-align:center;padding:20px;"><button onclick="window.print()" style="padding:15px 30px;font-size:16px;">打印/保存</button></div>');
             }
         }
         
         function enrollCourse() {
-            alert('📚 感谢兴趣！\n\n请联系客服微信：yourkefu 或拨打热线：400-XXX-XXXX\n\n限时优惠：¥1,999（原价¥2,999）');
+            alert('感谢兴趣！\n\n请联系客服微信：yourkefu 或拨打热线：400-XXX-XXXX\n\n限时优惠：¥1,999（原价¥2,999）');
         }
         
         function showJoinTeamModal() {
@@ -509,7 +516,7 @@
             currentTeam = { name: '团队-' + code, inviteCode: code, members: [] };
             localStorage.setItem('currentTeam', JSON.stringify(currentTeam));
             closeJoinTeamModal();
-            alert('✅ 加入团队成功！');
+            alert('加入团队成功！');
             updateMyPage();
         }
         
@@ -519,7 +526,7 @@
             var inviteCode = code + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
             currentTeam = { name: name, inviteCode: inviteCode, members: [currentResult || {code: code, name: '用户'}] };
             localStorage.setItem('currentTeam', JSON.stringify(currentTeam));
-            alert('✅ 团队创建成功！\n\n团队名称：' + name + '\n邀请码：' + inviteCode);
+            alert('团队创建成功！\n\n团队名称：' + name + '\n邀请码：' + inviteCode);
             updateMyPage();
         }
         
@@ -552,34 +559,32 @@
             var savedResult = localStorage.getItem('myTestResult');
             if (savedResult) {
                 var r = JSON.parse(savedResult);
-                document.getElementById('myResult').innerHTML = '<div style="font-size:40px;text-align:center;margin:20px 0;">' + (styles[r.code] ? styles[r.code].animal : '') + '</div><div style="text-align:center;font-size:24px;font-weight:bold;color:#667eea;">' + r.code + '</div><div style="text-align:center;color:#666;">' + r.style.name + '</div>';
+                document.getElementById('myResult').innerHTML = '<div style="font-size:50px;text-align:center;margin:25px 0;">' + (styles[r.code] ? styles[r.code].animal : '') + '</div><div style="text-align:center;font-size:28px;font-weight:700;color:#fff;">' + r.code + '</div><div style="text-align:center;color:#86868b;font-size:16px;">' + r.style.name + '</div>';
             } else {
-                document.getElementById('myResult').innerHTML = '<div style="text-align:center;color:#999;padding:30px;">暂无测试结果，先去测试一下吧～</div>';
+                document.getElementById('myResult').innerHTML = '<div style="text-align:center;color:#86868b;padding:40px;">暂无测试结果</div>';
             }
             
             var savedTeam = localStorage.getItem('currentTeam');
             if (savedTeam) {
                 var t = JSON.parse(savedTeam);
-                document.getElementById('myTeam').innerHTML = '<div style="font-size:18px;font-weight:bold;margin-bottom:10px;">' + t.name + '</div><div style="color:#666;">邀请码：' + t.inviteCode + '</div>';
+                document.getElementById('myTeam').innerHTML = '<div style="font-size:18px;font-weight:600;margin-bottom:10px;color:#fff;">' + t.name + '</div><div style="color:#86868b;">邀请码：' + t.inviteCode + '</div>';
             } else {
-                document.getElementById('myTeam').innerHTML = '<div style="text-align:center;color:#999;padding:30px;">暂无团队，创建一个或加入团队吧～</div>';
+                document.getElementById('myTeam').innerHTML = '<div style="text-align:center;color:#86868b;padding:40px;">暂无团队</div>';
             }
         }
         
         function clearAllData() {
-            if (confirm('确定要清除所有数据吗？\n\n这将删除：\n- 测试结果\n- 团队信息\n- 所有历史记录')) {
+            if (confirm('确定要清除所有数据吗？')) {
                 localStorage.clear();
-                alert('✅ 数据已清除！');
+                alert('数据已清除！');
                 location.reload();
             }
         }
         
         window.onload = function() {
-            console.log('✅ 采购谈判风格测试 v2.1 完整版已加载');
+            console.log('测试已加载');
             var savedTeam = localStorage.getItem('currentTeam');
-            if (savedTeam) {
-                currentTeam = JSON.parse(savedTeam);
-            }
+            if (savedTeam) currentTeam = JSON.parse(savedTeam);
         };
     </script>
 </body>
