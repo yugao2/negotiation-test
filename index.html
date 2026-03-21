@@ -599,6 +599,11 @@
             
             document.getElementById('testPage').classList.add('hidden');
             document.getElementById('resultPage').classList.remove('hidden');
+            
+            // 确保 currentResult 在全局可访问（供 result-enhanced.js 使用）
+            window.currentResult = currentResult;
+            window.currentUserResult = currentUserResult;
+            console.log('currentResult 已设置到全局:', window.currentResult);
         }
         
         function generatePoster() {
@@ -718,6 +723,25 @@
             document.getElementById('myPage').classList.add('hidden');
             document.getElementById('bottomNav').classList.remove('hidden');
         }
+        
+        // 页面加载时恢复 currentResult（从 localStorage）
+        (function initFromStorage() {
+            var savedResult = localStorage.getItem('myTestResult');
+            if (savedResult) {
+                try {
+                    var r = JSON.parse(savedResult);
+                    if (r && r.code && r.style) {
+                        currentResult = r;
+                        currentUserResult = r;
+                        window.currentResult = r;
+                        window.currentUserResult = r;
+                        console.log('从 localStorage 恢复 currentResult:', r);
+                    }
+                } catch(e) {
+                    console.error('解析 myTestResult 失败:', e);
+                }
+            }
+        })();
         
         function goToMyPage() {
             document.getElementById('homePage').classList.add('hidden');
