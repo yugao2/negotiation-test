@@ -480,7 +480,7 @@
             answers[currentIndex] = dim;
             dimensionScores[dim]++;
             setTimeout(function() {
-                if (currentIndex < 27) {
+                if (currentIndex < 39) {
                     currentIndex++;
                     renderQuestion();
                     updateProgress();
@@ -502,7 +502,7 @@
         
         function nextQuestion() {
             if (answers[currentIndex]) {
-                if (currentIndex < 27) {
+                if (currentIndex < 39) {
                     currentIndex++;
                     renderQuestion();
                     updateProgress();
@@ -516,15 +516,15 @@
         }
         
         function updateProgress() {
-            var pct = ((currentIndex + 1) / 28) * 100;
+            var pct = ((currentIndex + 1) / 40) * 100;
             document.getElementById('progressBar').style.width = pct + '%';
-            var stage = Math.floor(currentIndex / 7) + 1;
-            document.getElementById('progressText').textContent = '第 ' + (currentIndex + 1) + ' / 28 题 · 第 ' + stage + ' 阶段';
+            var stage = Math.floor(currentIndex / 10) + 1;
+            document.getElementById('progressText').textContent = '第 ' + (currentIndex + 1) + ' / 40 题 · 第 ' + stage + ' 阶段';
         }
         
         function updateNav() {
             document.getElementById('prevBtn').disabled = currentIndex === 0;
-            document.getElementById('nextBtn').innerHTML = currentIndex === 27 ? '查看结果' : '下一题';
+            document.getElementById('nextBtn').innerHTML = currentIndex === 39 ? '查看结果' : '下一题';
         }
         
         function calculateResult() {
