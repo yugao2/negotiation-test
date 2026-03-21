@@ -236,11 +236,37 @@
                         <div class="card-title">🔍 合作说明书查询</div>
                     </div>
                     <div class="card-body">
-                        <p style="color:#86868b;font-size:14px;margin-bottom:16px;">想知道如何跟 XX 风格合作？输入对方的风格代码，生成专属合作指南</p>
+                        <p style="color:#86868b;font-size:14px;margin-bottom:16px;">想知道如何跟 XX 风格合作？选择或输入对方的风格代码，生成专属合作指南</p>
+                        
+                        <!-- 风格选择器 -->
+                        <div style="margin-bottom:16px;">
+                            <div style="font-size:13px;color:#86868b;margin-bottom:8px;">16 种风格：</div>
+                            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+                                <button class="btn-secondary" onclick="selectPartnerCode('ARCD')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">ARCD<br><span style="font-size:11px;color:#86868b;">战略架构师</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('ARCP')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">ARCP<br><span style="font-size:11px;color:#86868b;">战略协调者</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('ARBD')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">ARBD<br><span style="font-size:11px;color:#86868b;">谨慎守护者</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('ARBP')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">ARBP<br><span style="font-size:11px;color:#86868b;">和谐维系者</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('ATCD')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">ATCD<br><span style="font-size:11px;color:#86868b;">精算防御者</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('ATCP')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">ATCP<br><span style="font-size:11px;color:#86868b;">理性协商者</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('ATBD')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">ATBD<br><span style="font-size:11px;color:#86868b;">独立判断者</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('ATBP')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">ATBP<br><span style="font-size:11px;color:#86868b;">务实协调者</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('IRCD')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">IRCD<br><span style="font-size:11px;color:#86868b;">创新开拓者</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('IRCP')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">IRCP<br><span style="font-size:11px;color:#86868b;">愿景推动者</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('IRBD')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">IRBD<br><span style="font-size:11px;color:#86868b;">人脉冒险家</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('IRBP')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">IRBP<br><span style="font-size:11px;color:#86868b;">信任 builder</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('ITCD')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">ITCD<br><span style="font-size:11px;color:#86868b;">数据猎手</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('ITCP')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">ITCP<br><span style="font-size:11px;color:#86868b;">果断执行者</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('ITBD')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">ITBD<br><span style="font-size:11px;color:#86868b;">创新合伙人</span></button>
+                                <button class="btn-secondary" onclick="selectPartnerCode('ITBP')" style="padding:10px;font-size:13px;border-radius:8px;border:1px solid #333;background:#2c2c2e;color:#fff;cursor:pointer;">ITBP<br><span style="font-size:11px;color:#86868b;">愿景推动者</span></button>
+                            </div>
+                        </div>
+                        
+                        <!-- 手动输入 -->
                         <div style="display:flex;gap:10px;margin-bottom:16px;">
-                            <input type="text" id="partnerCodeInput" class="modal-input" placeholder="ARCD / ARBP / ..." style="flex:1;margin:0;padding:14px;font-size:16px;letter-spacing:2px;" maxlength="4">
+                            <input type="text" id="partnerCodeInput" class="modal-input" placeholder="或手动输入风格代码" style="flex:1;margin:0;padding:14px;font-size:16px;letter-spacing:2px;" maxlength="4">
                             <button class="btn-action" onclick="queryCooperation()" style="margin:0;padding:14px 28px;white-space:nowrap;">查询</button>
                         </div>
+                        
                         <div id="cooperationResult" class="hidden" style="margin-top:20px;"></div>
                         <p style="color:#86868b;font-size:13px;margin-top:12px;text-align:center;">
                             或者 <a href="#" onclick="shareTestLink()" style="color:#0071e3;">分享给朋友</a>，让他测出真实风格 →
@@ -523,27 +549,41 @@
             document.getElementById('resultRole').textContent = style.role;
             document.getElementById('mbtiInsight').textContent = interpretation.mbti;
             
-            // 最佳搭档
-            var bestMatches = {
-                ARCD: { code: 'ARBP', reason: '你的理性分析 + 他的温和协调，完美互补。你负责数据决策，他负责关系维护。' },
-                ARCP: { code: 'ATBD', reason: '你的关系导向 + 他的结果导向，刚柔并济。你维护关系，他推动执行。' },
-                ARBD: { code: 'ITCP', reason: '你的谨慎风控 + 他的灵活应变，稳中求进。你把控风险，他捕捉机会。' },
-                ARBP: { code: 'ARCD', reason: '你的温和协调 + 他的理性分析，天作之合。你化解冲突，他提供依据。' },
-                ATCD: { code: 'IRBP', reason: '你的流程规范 + 他的魅力影响，相得益彰。你建立体系，他推动落地。' },
-                ATCP: { code: 'IRCD', reason: '你的数据分析 + 他的创新思维，珠联璧合。你提供依据，他开拓方向。' },
-                ATBD: { code: 'ARCP', reason: '你的结果导向 + 他的关系导向，完美平衡。你冲锋陷阵，他稳固后方。' },
-                ATBP: { code: 'IRCD', reason: '你的执行落地 + 他的创新颠覆，相辅相成。你负责实现，他负责构想。' },
-                IRCD: { code: 'ATCP', reason: '你的创新颠覆 + 他的量化管控，虚实结合。你开拓方向，他确保落地。' },
-                IRCP: { code: 'ATCD', reason: '你的人脉连接 + 他的流程规范，优势互补。你拓展资源，他建立体系。' },
-                IRBD: { code: 'ITCP', reason: '你的冒险远见 + 他的灵活适应，强强联合。你把握方向，他应对变化。' },
-                IRBP: { code: 'ATCD', reason: '你的魅力影响 + 他的规范体系，相得益彰。你开拓局面，他稳固根基。' },
-                ITCD: { code: 'ARBP', reason: '你的深度洞察 + 他的温和协调，互补共赢。你看清方向，他协调资源。' },
-                ITCP: { code: 'ARBD', reason: '你的灵活适应 + 他的谨慎风控，动静结合。你应对变化，他把控风险。' },
-                ITBD: { code: 'ARCP', reason: '你的直觉行动 + 他的关系维护，完美搭配。你开拓前进，他稳固关系。' },
-                ITBP: { code: 'ARCD', reason: '你的平衡智慧 + 他的理性分析，相辅相成。你协调各方，他提供依据。' }
-            };
-            var match = bestMatches[code] || { code: 'Unknown', reason: '每个人都有独特的价值' };
-            document.getElementById('bestMatch').textContent = match.code + '\n\n' + match.reason;
+            // 最佳搭档 - 使用深度解读版本
+            var bestMatchData = getBestMatchDeep(code);
+            if (bestMatchData) {
+                var matchHtml = `
+                    <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:12px;">${bestMatchData.match} ${bestMatchData.matchName}</div>
+                    <div style="font-size:13px;color:#86868b;margin-bottom:16px;">角色：${bestMatchData.role}</div>
+                    
+                    <div style="margin-bottom:16px;">
+                        <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:8px;">【为什么是你们】</div>
+                        <div style="font-size:14px;color:#fff;line-height:1.8;">${bestMatchData.why}</div>
+                    </div>
+                    
+                    <div style="margin-bottom:16px;">
+                        <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:8px;">【合作场景】</div>
+                        <div style="font-size:14px;color:#fff;line-height:1.8;">${bestMatchData.scenarios}</div>
+                    </div>
+                    
+                    <div style="margin-bottom:16px;">
+                        <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:8px;">【小心踩坑】</div>
+                        <div style="font-size:14px;color:#f5a623;line-height:1.8;">${bestMatchData.pitfalls}</div>
+                    </div>
+                    
+                    <div style="margin-bottom:16px;">
+                        <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:8px;">【沟通秘籍】</div>
+                        <div style="font-size:14px;color:#0071e3;line-height:1.8;font-weight:600;">${bestMatchData.tips}</div>
+                    </div>
+                    
+                    <div style="text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.2);">
+                        <div style="font-size:16px;font-weight:700;color:#34c759;">"${bestMatchData.goldenQuote}"</div>
+                    </div>
+                `;
+                document.getElementById('bestMatch').innerHTML = matchHtml;
+            } else {
+                document.getElementById('bestMatch').innerHTML = '正在计算你的最佳搭档...';
+            }
             
             var tagsHtml = '';
             for (var i = 0; i < Math.min(3, tags.length); i++) {
@@ -729,6 +769,13 @@
             }
         }
         
+        // 选择风格代码
+        function selectPartnerCode(code) {
+            document.getElementById('partnerCodeInput').value = code;
+            // 自动查询
+            queryCooperationWithCode(code);
+        }
+        
         // 合作说明书查询功能
         function queryCooperation() {
             var partnerCode = document.getElementById('partnerCodeInput').value.trim().toUpperCase();
@@ -736,6 +783,10 @@
                 alert('请输入 4 位风格代码（如 ARCD）');
                 return;
             }
+            queryCooperationWithCode(partnerCode);
+        }
+        
+        function queryCooperationWithCode(partnerCode) {
             
             var myCode = currentResult ? currentResult.code : null;
             if (!myCode) {
@@ -846,13 +897,24 @@
         function updateTeamReportPreview() {
             var savedTeam = localStorage.getItem('currentTeam');
             if (!savedTeam) {
-                document.getElementById('teamPreviewContent').innerHTML = '请先创建或加入团队，然后来查看团队配置报告。';
+                // 提供示例团队供测试
+                document.getElementById('teamPreviewContent').innerHTML = `
+                    <div style="margin-bottom:16px;">暂无团队，你可以：</div>
+                    <button class="btn-action" onclick="createDemoTeam()" style="margin-bottom:12px;padding:12px 24px;font-size:14px;">📋 使用示例团队（快速测试）</button>
+                    <button class="btn-action btn-secondary" onclick="addTeamMember()" style="padding:12px 24px;font-size:14px;">+ 手动添加成员</button>
+                `;
                 return;
             }
             
             var team = JSON.parse(savedTeam);
             if (!team.members || team.members.length < 3) {
-                document.getElementById('teamPreviewContent').innerHTML = `当前团队有${team.members ? team.members.length : 0}人，请至少录入 3 位成员的风格代码才能生成报告。<br><br><button class="btn-action" onclick="addTeamMember()" style="margin-top:12px;padding:12px 24px;font-size:14px;">+ 添加成员</button>`;
+                document.getElementById('teamPreviewContent').innerHTML = `
+                    <div style="margin-bottom:16px;">当前团队有${team.members ? team.members.length : 0}人，请至少录入 3 位成员。</div>
+                    <button class="btn-action" onclick="addTeamMember()" style="margin-bottom:12px;padding:12px 24px;font-size:14px;">+ 添加成员</button>
+                    <div style="margin-top:12px;">
+                        <button class="btn-action btn-secondary" onclick="useDemoTeam()" style="padding:10px 20px;font-size:13px;">📋 快速填充示例</button>
+                    </div>
+                `;
                 return;
             }
             
@@ -883,6 +945,44 @@
             `;
             
             document.getElementById('teamPreviewContent').innerHTML = html;
+        }
+        
+        function createDemoTeam() {
+            // 创建示例团队
+            var demoTeam = {
+                name: '示例团队 - 采购部',
+                inviteCode: 'DEMO2026',
+                members: [
+                    { name: '张三', code: 'ARCD' },
+                    { name: '李四', code: 'ITCP' },
+                    { name: '王五', code: 'ARBP' },
+                    { name: '赵六', code: 'ATCD' },
+                    { name: '钱七', code: 'IRCD' }
+                ]
+            };
+            localStorage.setItem('currentTeam', JSON.stringify(demoTeam));
+            alert('已加载示例团队（5 人）！');
+            updateTeamReportPreview();
+        }
+        
+        function useDemoTeam() {
+            // 填充示例成员
+            var savedTeam = localStorage.getItem('currentTeam');
+            var team = savedTeam ? JSON.parse(savedTeam) : { name: '我的团队', members: [] };
+            
+            var demoMembers = [
+                { name: '张三', code: 'ARCD' },
+                { name: '李四', code: 'ITCP' },
+                { name: '王五', code: 'ARBP' }
+            ];
+            
+            demoMembers.forEach(function(m) {
+                team.members.push(m);
+            });
+            
+            localStorage.setItem('currentTeam', JSON.stringify(team));
+            alert('已添加 3 位示例成员！');
+            updateTeamReportPreview();
         }
         
         function addTeamMember() {
