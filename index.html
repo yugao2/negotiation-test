@@ -28,7 +28,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- 首页 -->
         <div id="homePage" class="page active">
             <div class="card">
                 <div class="animal">🦉🦅🦊🐺</div>
@@ -37,8 +36,6 @@
                 <button class="btn-primary" onclick="startTest()">开始测试</button>
             </div>
         </div>
-        
-        <!-- 测试页 -->
         <div id="testPage" class="page">
             <div class="progress-bar"><div class="progress-bar-fill" id="progressBar"></div></div>
             <div class="progress-text" id="progressText">第 1 / 28 题 · 第 1 阶段</div>
@@ -49,8 +46,6 @@
             </div>
             <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" style="display: none;">下一题</button>
         </div>
-        
-        <!-- 结果页 -->
         <div id="resultPage" class="page">
             <div class="animal" id="resultAnimal"></div>
             <h1 style="text-align: center; margin-bottom: 8px;"><span id="resultCode"></span> <span id="resultName"></span></h1>
@@ -95,118 +90,18 @@
             <button class="btn-primary" onclick="goHome()">返回首页</button>
         </div>
     </div>
-    
-    <!-- 所有逻辑合并到一个文件 -->
-    <script src="all-in-one-v2.js?t=202603212235"></script>
-    <script src="questions-v4.js?t=202603212235"></script>
-    
+    <script src="all-in-one-v2.js?t=202603212240"></script>
+    <script src="questions-v4.js?t=202603212240"></script>
     <script>
-        var currentIndex = 0;
-        var answers = [];
-        var dimensionScores = { A: 0, I: 0, R: 0, T: 0, C: 0, B: 0, D: 0, P: 0 };
-        var currentResult = null;
-        var currentUserResult = null;
-        
-        // 页面加载时恢复
-        (function initFromStorage() {
-            var savedResult = localStorage.getItem('myTestResult');
-            if (savedResult) {
-                try {
-                    var r = JSON.parse(savedResult);
-                    if (r && r.code && r.style) {
-                        currentResult = r;
-                        currentUserResult = r;
-                        window.currentResult = r;
-                        window.currentUserResult = r;
-                        console.log('从 localStorage 恢复 currentResult:', r);
-                    }
-                } catch(e) { console.error('解析失败:', e); }
-            }
-        })();
-        
-        function startTest() {
-            document.getElementById('homePage').classList.remove('active');
-            document.getElementById('testPage').classList.add('active');
-            currentIndex = 0;
-            answers = [];
-            dimensionScores = { A: 0, I: 0, R: 0, T: 0, C: 0, B: 0, D: 0, P: 0 };
-            renderQuestion();
-            updateProgress();
-        }
-        
-        function renderQuestion() {
-            var q = questions[currentIndex];
-            document.getElementById('scene').textContent = q.scene;
-            document.getElementById('question').textContent = q.q;
-            var html = '';
-            q.options.forEach(function(opt, i) {
-                html += '<div class="option" onclick="selectOption(this, \'' + opt.dim + '\')">' + opt.text + '</div>';
-            });
-            document.getElementById('options').innerHTML = html;
-            document.getElementById('nextBtn').style.display = 'none';
-        }
-        
-        function selectOption(el, dim) {
-            document.querySelectorAll('.option').forEach(function(o) { o.classList.remove('selected'); });
-            el.classList.add('selected');
-            answers[currentIndex] = dim;
-            dimensionScores[dim]++;
-            document.getElementById('nextBtn').style.display = 'block';
-        }
-        
-        function nextQuestion() {
-            if (answers[currentIndex]) {
-                if (currentIndex < 27) {
-                    currentIndex++;
-                    renderQuestion();
-                    updateProgress();
-                } else {
-                    calculateResult();
-                }
-            }
-        }
-        
-        function updateProgress() {
-            var pct = ((currentIndex + 1) / 28) * 100;
-            document.getElementById('progressBar').style.width = pct + '%';
-            var stage = Math.floor(currentIndex / 7) + 1;
-            document.getElementById('progressText').textContent = '第 ' + (currentIndex + 1) + ' / 28 题 · 第 ' + stage + ' 阶段';
-        }
-        
-        function calculateResult() {
-            // 计算维度对（>= 确保平局时选第一个，避免总是 I/T/B/P）
-            var type = '';
-            type += dimensionScores.A >= dimensionScores.I ? 'A' : 'I';
-            type += dimensionScores.R >= dimensionScores.T ? 'R' : 'T';
-            type += dimensionScores.C >= dimensionScores.B ? 'C' : 'B';
-            type += dimensionScores.D >= dimensionScores.P ? 'D' : 'P';
-            
-            currentResult = { code: type, style: styles[type] };
-            currentUserResult = { code: type, style: styles[type] };
-            window.currentResult = currentResult;
-            window.currentUserResult = currentUserResult;
-            localStorage.setItem('myTestResult', JSON.stringify(currentUserResult));
-            
-            document.getElementById('testPage').classList.remove('active');
-            document.getElementById('resultPage').classList.add('active');
-            
-            document.getElementById('resultAnimal').textContent = styles[type].animal;
-            document.getElementById('resultCode').textContent = type;
-            document.getElementById('resultName').textContent = styles[type].name;
-            document.getElementById('resultRole').textContent = styles[type].role;
-            
-            // 渲染最佳搭档
-            if (typeof renderBestMatchOptimized === 'function') {
-                renderBestMatchOptimized(type);
-            }
-            
-            window.scrollTo(0, 0);
-        }
-        
-        function goHome() {
-            document.getElementById('resultPage').classList.remove('active');
-            document.getElementById('homePage').classList.add('active');
-        }
+        var currentIndex = 0, answers = [], dimensionScores = { A: 0, I: 0, R: 0, T: 0, C: 0, B: 0, D: 0, P: 0 }, currentResult = null, currentUserResult = null;
+        (function initFromStorage() { var savedResult = localStorage.getItem('myTestResult'); if (savedResult) { try { var r = JSON.parse(savedResult); if (r && r.code && r.style) { currentResult = r; currentUserResult = r; window.currentResult = r; window.currentUserResult = r; console.log('从 localStorage 恢复 currentResult:', r); } } catch(e) { console.error('解析失败:', e); } } })();
+        function startTest() { document.getElementById('homePage').classList.remove('active'); document.getElementById('testPage').classList.add('active'); currentIndex = 0; answers = []; dimensionScores = { A: 0, I: 0, R: 0, T: 0, C: 0, B: 0, D: 0, P: 0 }; renderQuestion(); updateProgress(); }
+        function renderQuestion() { var q = questions[currentIndex]; document.getElementById('scene').textContent = q.scene; document.getElementById('question').textContent = q.q; var html = ''; q.options.forEach(function(opt, i) { html += '<div class="option" onclick="selectOption(this, \'' + opt.dim + '\')">' + opt.text + '</div>'; }); document.getElementById('options').innerHTML = html; document.getElementById('nextBtn').style.display = 'none'; }
+        function selectOption(el, dim) { document.querySelectorAll('.option').forEach(function(o) { o.classList.remove('selected'); }); el.classList.add('selected'); answers[currentIndex] = dim; dimensionScores[dim]++; document.getElementById('nextBtn').style.display = 'block'; }
+        function nextQuestion() { if (answers[currentIndex]) { if (currentIndex < 27) { currentIndex++; renderQuestion(); updateProgress(); } else { calculateResult(); } } }
+        function updateProgress() { var pct = ((currentIndex + 1) / 28) * 100; document.getElementById('progressBar').style.width = pct + '%'; var stage = Math.floor(currentIndex / 7) + 1; document.getElementById('progressText').textContent = '第 ' + (currentIndex + 1) + ' / 28 题 · 第 ' + stage + ' 阶段'; }
+        function calculateResult() { var type = ''; type += dimensionScores.A >= dimensionScores.I ? 'A' : 'I'; type += dimensionScores.R >= dimensionScores.T ? 'R' : 'T'; type += dimensionScores.C >= dimensionScores.B ? 'C' : 'B'; type += dimensionScores.D >= dimensionScores.P ? 'D' : 'P'; currentResult = { code: type, style: styles[type] }; currentUserResult = { code: type, style: styles[type] }; window.currentResult = currentResult; window.currentUserResult = currentUserResult; localStorage.setItem('myTestResult', JSON.stringify(currentUserResult)); document.getElementById('testPage').classList.remove('active'); document.getElementById('resultPage').classList.add('active'); document.getElementById('resultAnimal').textContent = styles[type].animal; document.getElementById('resultCode').textContent = type; document.getElementById('resultName').textContent = styles[type].name; document.getElementById('resultRole').textContent = styles[type].role; if (typeof renderBestMatchOptimized === 'function') { renderBestMatchOptimized(type); } window.scrollTo(0, 0); }
+        function goHome() { document.getElementById('resultPage').classList.remove('active'); document.getElementById('homePage').classList.add('active'); }
     </script>
 </body>
 </html>
