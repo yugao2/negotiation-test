@@ -149,12 +149,14 @@ function queryCooperationGuide(partnerCode) {
         var partnerStyleData = (window.styles && window.styles[partnerCode]) ? window.styles[partnerCode] : null;
         var myRoleText = myStyleData ? myStyleData.role : (guide.yourRole || '');
         var partnerRoleText = partnerStyleData ? partnerStyleData.role : (guide.theirRole || '');
+        var myStyleName = myStyleData ? myStyleData.name : myStyle.name;
+        var partnerStyleName = partnerStyleData ? partnerStyleData.name : partnerStyle.name;
         
         html += '<div style="margin-bottom:20px;">';
         html += '<div style="font-size:12px;font-weight:700;color:#666;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">角色分工</div>';
         html += '<div style="background:#1c1c1e;padding:14px;border-radius:10px;border:1px solid #333;">';
-        html += '<div style="margin-bottom:10px;"><span style="color:#0071e3;font-weight:600;">你</span> <span style="color:#86868b;font-size:12px;">（' + myCode + ' ' + myStyle.name + '）</span><div style="color:#e0e0e0;font-size:14px;line-height:1.7;margin-top:6px;">' + myRoleText + '</div></div>';
-        html += '<div><span style="color:#34c759;font-weight:600;">他</span> <span style="color:#86868b;font-size:12px;">（' + partnerCode + ' ' + partnerStyle.name + '）</span><div style="color:#e0e0e0;font-size:14px;line-height:1.7;margin-top:6px;">' + partnerRoleText + '</div></div>';
+        html += '<div style="margin-bottom:10px;"><span style="color:#0071e3;font-weight:600;">你</span> <span style="color:#86868b;font-size:12px;">（' + myCode + ' ' + myStyleName + '）</span><div style="color:#e0e0e0;font-size:14px;line-height:1.7;margin-top:6px;">' + myRoleText + '</div></div>';
+        html += '<div><span style="color:#34c759;font-weight:600;">他</span> <span style="color:#86868b;font-size:12px;">（' + partnerCode + ' ' + partnerStyleName + '）</span><div style="color:#e0e0e0;font-size:14px;line-height:1.7;margin-top:6px;">' + partnerRoleText + '</div></div>';
         html += '</div></div>';
         
         // 合作优势
@@ -298,3 +300,6 @@ window.queryCooperationGuide = queryCooperationGuide;
 window.selectPartnerCode = selectPartnerCode;
 window.shareCooperationGuide = shareCooperationGuide;
 window.shareTestLink = shareTestLink;
+
+// 确保函数可访问
+console.log('result-enhanced.js 已加载，selectPartnerCode:', typeof window.selectPartnerCode);
