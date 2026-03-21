@@ -98,6 +98,12 @@
         .content-list div { margin-bottom: 12px; }
         .content-list strong { color: #fff; }
         
+        /* 合作查询按钮 */
+        .partner-btn { padding:14px 10px;font-size:14px;font-weight:600;border-radius:10px;border:2px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s; }
+        .partner-btn:hover { border-color:#0071e3;background:#3a3a3c;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,113,227,0.3); }
+        .partner-btn:active { transform:translateY(0); }
+        .partner-btn span { font-size:10px;color:#86868b;font-weight:400;margin-top:6px;display:block; }
+        
         /* 按钮 */
         .btn-action { background: #0071e3; color: #fff; border: none; padding: 20px 40px; border-radius: 980px; font-size: 17px; font-weight: 600; cursor: pointer; width: 100%; margin: 16px 0; transition: all 0.3s; letter-spacing: 0.3px; }
         .btn-action:hover { background: #0077ed; }
@@ -236,42 +242,34 @@
                         <div class="card-title">🔍 合作说明书查询</div>
                     </div>
                     <div class="card-body">
-                        <p style="color:#86868b;font-size:14px;margin-bottom:16px;">想知道如何跟 XX 风格合作？点击风格按钮或输入代码</p>
+                        <p style="color:#86868b;font-size:14px;margin-bottom:16px;">想知道如何跟 XX 风格合作？点击下方风格按钮，立即查看合作指南</p>
                         
                         <!-- 风格选择器 -->
                         <div style="margin-bottom:20px;">
-                            <div style="font-size:12px;color:#666;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">16 种谈判风格</div>
+                            <div style="font-size:12px;color:#666;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;">选择对方的风格</div>
                             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('ARCD')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">ARCD<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">战略架构师</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('ARCP')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">ARCP<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">战略协调者</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('ARBD')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">ARBD<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">谨慎守护者</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('ARBP')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">ARBP<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">和谐维系者</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('ATCD')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">ATCD<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">精算防御者</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('ATCP')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">ATCP<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">理性协商者</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('ATBD')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">ATBD<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">独立判断者</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('ATBP')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">ATBP<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">务实协调者</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('IRCD')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">IRCD<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">创新开拓者</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('IRCP')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">IRCP<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">愿景推动者</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('IRBD')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">IRBD<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">人脉冒险家</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('IRBP')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">IRBP<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">信任 builder</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('ITCD')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">ITCD<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">数据猎手</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('ITCP')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">ITCP<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">果断执行者</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('ITBD')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">ITBD<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">创新合伙人</span></button>
-                                <button class="btn-secondary" onclick="window.selectPartnerCode('ITBP')" style="padding:12px 8px;font-size:13px;border-radius:10px;border:1px solid #3a3a3c;background:#2c2c2e;color:#fff;cursor:pointer;transition:all 0.2s;">ITBP<br><span style="font-size:10px;color:#86868b;margin-top:4px;display:block;">愿景推动者</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('ARCD')">ARCD<br><span>战略架构师</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('ARCP')">ARCP<br><span>战略协调者</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('ARBD')">ARBD<br><span>谨慎守护者</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('ARBP')">ARBP<br><span>和谐维系者</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('ATCD')">ATCD<br><span>精算防御者</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('ATCP')">ATCP<br><span>理性协商者</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('ATBD')">ATBD<br><span>独立判断者</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('ATBP')">ATBP<br><span>务实协调者</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('IRCD')">IRCD<br><span>创新开拓者</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('IRCP')">IRCP<br><span>愿景推动者</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('IRBD')">IRBD<br><span>人脉冒险家</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('IRBP')">IRBP<br><span>信任 builder</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('ITCD')">ITCD<br><span>数据猎手</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('ITCP')">ITCP<br><span>果断执行者</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('ITBD')">ITBD<br><span>创新合伙人</span></button>
+                                <button class="partner-btn" onclick="window.selectPartnerCode('ITBP')">ITBP<br><span>愿景推动者</span></button>
                             </div>
-                        </div>
-                        
-                        <!-- 手动输入（可选） -->
-                        <div style="display:flex;gap:10px;margin-bottom:20px;align-items:center;">
-                            <div style="flex:1;position:relative;">
-                                <input type="text" id="partnerCodeInput" placeholder="ARCD" style="width:100%;padding:14px 16px;background:#1c1c1e;border:1px solid #3a3a3c;border-radius:10px;font-size:16px;color:#fff;letter-spacing:2px;text-align:center;outline:none;" maxlength="4">
-                            </div>
-                            <button class="btn-action" onclick="queryCooperation()" style="margin:0;padding:14px 24px;white-space:nowrap;border-radius:10px;">🔍 查询</button>
                         </div>
                         
                         <div id="cooperationResult" class="hidden" style="margin-top:20px;"></div>
-                        <p style="color:#86868b;font-size:13px;margin-top:12px;text-align:center;">
-                            或者 <a href="#" onclick="shareTestLink()" style="color:#0071e3;">分享给朋友</a>，让他测出真实风格 →
+                        <p style="color:#86868b;font-size:13px;margin-top:20px;text-align:center;padding-top:16px;border-top:1px solid #333;">
+                            💡 提示：让对方也测一下，获取真实风格代码 → <a href="#" onclick="shareTestLink()" style="color:#0071e3;">分享测试</a>
                         </p>
                     </div>
                 </div>

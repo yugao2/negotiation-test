@@ -185,21 +185,25 @@ function queryCooperationGuide(partnerCode) {
     }
 }
 
-// 选择风格代码并查询
+// 选择风格代码并查询（简化版 - 直接查询）
 function selectPartnerCode(code) {
-    console.log('选择风格代码:', code);
-    document.getElementById('partnerCodeInput').value = code;
-    queryCooperationGuide(code);
-}
-
-// 手动查询
-function queryCooperation() {
-    var partnerCode = document.getElementById('partnerCodeInput').value.trim().toUpperCase();
-    if (!partnerCode || partnerCode.length !== 4) {
-        alert('请输入 4 位风格代码（如 ARCD）');
+    console.log('=== 选择风格代码 ===');
+    console.log('code:', code);
+    console.log('currentResult:', currentResult);
+    
+    // 检查是否已完成测试
+    if (!currentResult || !currentResult.code) {
+        alert('请先完成测试，查看您的风格类型后再查询合作指南');
+        // 滚动到页面顶部，提示用户
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
     }
-    queryCooperationGuide(partnerCode);
+    
+    console.log('myCode:', currentResult.code);
+    console.log('partnerCode:', code);
+    
+    // 直接查询
+    queryCooperationGuide(code);
 }
 
 // 暴露到全局
