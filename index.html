@@ -181,8 +181,8 @@
             type += dimensionScores.C >= dimensionScores.B ? 'C' : 'B';
             type += dimensionScores.D >= dimensionScores.P ? 'D' : 'P';
             
-            currentResult = { code: type, style: styles[type] };
-            currentUserResult = { code: type, style: styles[type] };
+            currentResult = { code: type, style: styles[type], scores: dimensionScores };
+            currentUserResult = { code: type, style: styles[type], scores: dimensionScores };
             window.currentResult = currentResult;
             window.currentUserResult = currentUserResult;
             localStorage.setItem('myTestResult', JSON.stringify(currentUserResult));
@@ -195,12 +195,104 @@
             document.getElementById('resultName').textContent = styles[type].name;
             document.getElementById('resultRole').textContent = styles[type].role;
             
+            // 渲染 MBTI 洞察
+            renderMbtiInsight(type, dimensionScores);
+            
+            // 渲染神秘标签
+            renderMysteryTags(type, dimensionScores);
+            
             // 渲染最佳搭档
             if (typeof renderBestMatchOptimized === 'function') {
                 renderBestMatchOptimized(type);
             }
             
             window.scrollTo(0, 0);
+        }
+        
+        function getStarCount(percent, threshold) {
+            var diff = Math.abs(percent - threshold);
+            if (diff >= 30) return 5;
+            if (diff >= 20) return 4;
+            if (diff >= 10) return 3;
+            if (diff >= 5) return 2;
+            return 1;
+        }
+        
+        function getStars(count) {
+            var stars = '';
+            for (var i = 0; i < count; i++) stars += '⭐';
+            return stars;
+        }
+        
+        function renderMbtiInsight(code, scores) {
+            var el = document.getElementById('mbtiInsight');
+            if (!el) return;
+            
+            var aPercent = Math.round((scores.A / (scores.A + scores.I)) * 100) || 50;
+            var rPercent = Math.round((scores.R / (scores.R + scores.T)) * 100) || 50;
+            var cPercent = Math.round((scores.C / (scores.C + scores.B)) * 100) || 50;
+            var dPercent = Math.round((scores.D / (scores.D + scores.P)) * 100) || 50;
+            
+            var decisionText = aPercent >= 60 ? '数据驱动' : (aPercent >= 40 ? '直觉与理性并存' : '直觉优先');
+            var relationText = rPercent >= 60 ? '关系导向' : (rPercent >= 40 ? '事与人兼顾' : '任务导向');
+            var riskText = cPercent >= 60 ? '谨慎保守' : (cPercent >= 40 ? '风险平衡' : '冒险创新');
+            var commText = dPercent >= 60 ? '稳健推进' : (dPercent >= 40 ? '灵活适应' : '快速迭代');
+            
+            var html = '<div style="background:#1c1c1e;padding:16px;border-radius:12px;margin-bottom:12px;">';
+            html += '<div style="font-size:13px;font-weight:700;color:#0071e3;margin-bottom:10px;">📊 你的决策风格</div>';
+            html += '<div style="font-size:14px;color:#e0e0e0;line-height:1.8;">' + decisionText + ' · ' + relationText + ' · ' + riskText + ' · ' + commText + '</div></div>';
+            
+            html += '<div style="background:rgba(0,113,227,0.08);padding:16px;border-radius:12px;border:1px solid rgba(0,113,227,0.2);">';
+            html += '<div style="font-size:13px;font-weight:700;color:#0071e3;margin-bottom:10px;">💡 核心特质</div>';
+            html += '<div style="font-size:14px;color:#e0e0e0;line-height:1.8;">';
+            html += '你的谈判风格是 <strong style="color:#34c759;">' + code + ' ' + styles[code].name + '</strong>。<br>';
+            html += styles[code].role + '。<br><br>';
+            html += '<strong>优势：</strong>你在谈判中善于 ' + (aPercent >= 50 ? '用数据支撑决策' : '凭直觉快速判断') + '，';
+            html += (rPercent >= 50 ? '重视关系维护' : '关注任务达成') + '，';
+            html += (cPercent >= 50 ? '谨慎评估风险' : '敢于尝试新机会') + '，';
+            html += (dPercent >= 50 ? '稳步推进执行' : '灵活适应变化') + '。<br><br>';
+            html += '<strong>注意：</strong>' + (aPercent < 50 ? '做重大决定前，多看看数据会更稳妥。' : '别太依赖数据，有时候直觉也很重要。') + ' ';
+            html += (rPercent < 50 ? '适当关心一下对方的感受，关系也是生产力。' : '关系重要，但也要坚守原则和底线。');
+            html += '</div></div>';
+            
+            el.innerHTML = html;
+        }
+        
+        function renderMysteryTags(code, scores) {
+            var el = document.getElementById('mysteryTags');
+            if (!el) return;
+            
+            var tags = [];
+            
+            // 根据主导维度生成标签
+            if (scores.A >= 7) tags.push({ text: '数据控', color: '#0071e3' });
+            if (scores.I >= 7) tags.push({ text: '直觉王', color: '#34c759' });
+            if (scores.R >= 7) tags.push({ text: '人心捕手', color: '#ff9500' });
+            if (scores.T >= 7) tags.push({ text: '任务终结者', color: '#ff2d55' });
+            if (scores.C >= 7) tags.push({ text: '风险守门员', color: '#5ac8fa' });
+            if (scores.B >= 7) tags.push({ text: '机会捕手', color: '#bf5af2' });
+            if (scores.D >= 7) tags.push({ text: '稳健派', color: '#30b35a' });
+            if (scores.P >= 7) tags.push({ text: '创新者', color: '#ff6482' });
+            
+            // 如果没有特别突出的，给一个平衡型标签
+            if (tags.length === 0) {
+                tags.push({ text: '全能平衡型', color: '#0071e3' });
+            }
+            
+            var html = '<div style="display:flex;flex-wrap:wrap;gap:8px;">';
+            tags.forEach(function(tag) {
+                html += '<span class="tag" style="background:rgba(' + hexToRgb(tag.color) + ',0.2);color:' + tag.color + ';padding:8px 14px;border-radius:980px;font-size:13px;font-weight:600;">' + tag.text + '</span>';
+            });
+            html += '</div>';
+            
+            el.innerHTML = html;
+        }
+        
+        function hexToRgb(hex) {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? 
+                parseInt(result[1], 16) + ',' + parseInt(result[2], 16) + ',' + parseInt(result[3], 16) : 
+                '0,113,227';
         }
         
         function goHome() {
