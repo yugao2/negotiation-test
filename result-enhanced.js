@@ -139,17 +139,20 @@ function queryCooperationGuide(partnerCode) {
         html += '<div class="card-body" style="padding:20px;">';
         
         // 标题
-        html += '<div style="background:linear-gradient(135deg, #0071e3, #005bb5);padding:16px;margin:-20px -20px 20px -20px;">';
-        html += '<div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:6px;">📋 ' + myCode + ' × ' + partnerCode + ' 合作说明书</div>';
+        html += '<div id="cooperationGuideTitle" style="background:linear-gradient(135deg, #0071e3, #005bb5);padding:16px;margin:-20px -20px 20px -20px;">';
+        html += '<div style="font-size:17px;font-weight:800;color:#fff;margin-bottom:6px;">📋 ' + myCode + ' × ' + partnerCode + ' 合作指南</div>';
         html += '<div style="display:inline-block;padding:4px 10px;background:rgba(255,255,255,0.2);border-radius:980px;font-size:11px;color:#fff;font-weight:600;">' + guide.type + ' · ' + guide.role + '</div>';
         html += '</div>';
         
         // 角色分工
+        var myRoleText = (window.styles && window.styles[myCode]) ? window.styles[myCode].role : guide.yourRole;
+        var partnerRoleText = (window.styles && window.styles[partnerCode]) ? window.styles[partnerCode].role : guide.theirRole;
+        
         html += '<div style="margin-bottom:20px;">';
         html += '<div style="font-size:12px;font-weight:700;color:#666;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">角色分工</div>';
         html += '<div style="background:#1c1c1e;padding:14px;border-radius:10px;border:1px solid #333;">';
-        html += '<div style="margin-bottom:10px;"><span style="color:#0071e3;font-weight:600;">你</span> <span style="color:#86868b;font-size:12px;">（' + myCode + ' ' + myStyle.name + '）</span><div style="color:#e0e0e0;font-size:14px;line-height:1.7;margin-top:6px;">' + guide.yourRole + '</div></div>';
-        html += '<div><span style="color:#34c759;font-weight:600;">他</span> <span style="color:#86868b;font-size:12px;">（' + partnerCode + ' ' + partnerStyle.name + '）</span><div style="color:#e0e0e0;font-size:14px;line-height:1.7;margin-top:6px;">' + guide.theirRole + '</div></div>';
+        html += '<div style="margin-bottom:10px;"><span style="color:#0071e3;font-weight:600;">你</span> <span style="color:#86868b;font-size:12px;">（' + myCode + ' ' + myStyle.name + '）</span><div style="color:#e0e0e0;font-size:14px;line-height:1.7;margin-top:6px;">' + myRoleText + '</div></div>';
+        html += '<div><span style="color:#34c759;font-weight:600;">他</span> <span style="color:#86868b;font-size:12px;">（' + partnerCode + ' ' + partnerStyle.name + '）</span><div style="color:#e0e0e0;font-size:14px;line-height:1.7;margin-top:6px;">' + partnerRoleText + '</div></div>';
         html += '</div></div>';
         
         // 合作优势
@@ -188,9 +191,12 @@ function queryCooperationGuide(partnerCode) {
         resultDiv.innerHTML = html;
         resultDiv.classList.remove('hidden');
         
-        // 滚动到结果
+        // 滚动到标题位置
         setTimeout(function() {
-            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            var titleEl = document.getElementById('cooperationGuideTitle');
+            if (titleEl) {
+                titleEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }, 100);
         
         console.log('=== 合作说明书渲染完成 ===');
