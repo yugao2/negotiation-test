@@ -1,5 +1,5 @@
 // 结果页显示优化脚本 v2.0
-// 用于修复最佳搭档和合作说明书的显示问题
+// 用于修复最佳搭档和合作指南的显示问题
 
 // 优化最佳搭档显示 - 栏目和明细区分
 function renderBestMatchOptimized(code) {
@@ -64,9 +64,9 @@ function renderBestMatchOptimized(code) {
     console.log('最佳搭档渲染完成');
 }
 
-// 合作说明书查询
+// 合作指南查询
 function queryCooperationGuide(partnerCode) {
-    console.log('=== 开始查询合作说明书 ===');
+    console.log('=== 开始查询合作指南 ===');
     console.log('partnerCode:', partnerCode);
     
     // 使用 window.currentResult 确保能访问到
@@ -197,9 +197,9 @@ function queryCooperationGuide(partnerCode) {
             if (titleEl) {
                 titleEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-        }, 100);
+        } else { resultDiv.scrollIntoView({ behavior: "smooth", block: "center" }); } }, 100);
         
-        console.log('=== 合作说明书渲染完成 ===');
+        console.log('=== 合作指南渲染完成 ===');
     } catch(e) {
         console.error('查询失败:', e);
         console.error('错误堆栈:', e.stack);
@@ -245,14 +245,14 @@ function selectPartnerCode(code) {
     queryCooperationGuide(code);
 }
 
-// 分享合作说明书
+// 分享合作指南
 function shareCooperationGuide(code1, code2) {
     var guide = getCooperationGuide(code1, code2);
-    var text = "我是" + code1 + " " + (styleDefinitions[code1] ? styleDefinitions[code1].name : "") + "，你是" + code2 + " " + (styleDefinitions[code2] ? styleDefinitions[code2].name : "") + "。\n\n我们的合作说明书：" + (guide ? guide.quote : "") + "\n\n快来测测你的谈判风格：https://yugao2.github.io/negotiation-test/";
+    var text = "我是" + code1 + " " + (styleDefinitions[code1] ? styleDefinitions[code1].name : "") + "，你是" + code2 + " " + (styleDefinitions[code2] ? styleDefinitions[code2].name : "") + "。\n\n我们的合作指南：" + (guide ? guide.quote : "") + "\n\n快来测测你的谈判风格：https://yugao2.github.io/negotiation-test/";
     
     if (navigator.share) {
         navigator.share({
-            title: '合作说明书',
+            title: '合作指南',
             text: text,
             url: 'https://yugao2.github.io/negotiation-test/'
         }).catch(console.error);
