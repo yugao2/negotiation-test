@@ -144,9 +144,11 @@ function queryCooperationGuide(partnerCode) {
         html += '<div style="display:inline-block;padding:4px 10px;background:rgba(255,255,255,0.2);border-radius:980px;font-size:11px;color:#fff;font-weight:600;">' + guide.type + ' · ' + guide.role + '</div>';
         html += '</div>';
         
-        // 角色分工
-        var myRoleText = (window.styles && window.styles[myCode]) ? window.styles[myCode].role : guide.yourRole;
-        var partnerRoleText = (window.styles && window.styles[partnerCode]) ? window.styles[partnerCode].role : guide.theirRole;
+        // 角色分工（统一从 styles 取数据）
+        var myStyleData = (window.styles && window.styles[myCode]) ? window.styles[myCode] : null;
+        var partnerStyleData = (window.styles && window.styles[partnerCode]) ? window.styles[partnerCode] : null;
+        var myRoleText = myStyleData ? myStyleData.role : (guide.yourRole || '');
+        var partnerRoleText = partnerStyleData ? partnerStyleData.role : (guide.theirRole || '');
         
         html += '<div style="margin-bottom:20px;">';
         html += '<div style="font-size:12px;font-weight:700;color:#666;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">角色分工</div>';
