@@ -772,51 +772,7 @@
             }
         }
         
-        // 选择风格代码
-        function selectPartnerCode(code) {
-            document.getElementById('partnerCodeInput').value = code;
-            // 自动查询
-            queryCooperationWithCode(code);
-        }
-        
-        // 合作说明书查询功能
-        function queryCooperation() {
-            var partnerCode = document.getElementById('partnerCodeInput').value.trim().toUpperCase();
-            if (!partnerCode || partnerCode.length !== 4) {
-                alert('请输入 4 位风格代码（如 ARCD）');
-                return;
-            }
-            queryCooperationWithCode(partnerCode);
-        }
-        
-        function queryCooperationWithCode(partnerCode) {
-            
-            var myCode = currentResult ? currentResult.code : null;
-            if (!myCode) {
-                alert('请先完成测试或查看测试结果');
-                return;
-            }
-            
-            var guide = getCooperationGuide(myCode, partnerCode);
-            if (!guide) {
-                alert('未找到该风格代码，请检查输入');
-                return;
-            }
-            
-            var resultDiv = document.getElementById('cooperationResult');
-            var html = `
-                <div class="card" style="background:linear-gradient(135deg, #2c2c2e, #1c1c1e);border:2px solid #0071e3;">
-                    <div class="card-body">
-                        <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:8px;">📋 ${myCode} × ${partnerCode} 合作说明书</div>
-                        <div style="font-size:13px;color:#86868b;margin-bottom:20px;">组合类型：${guide.type} · ${guide.role}</div>
-                        
-                        <div style="margin-bottom:20px;">
-                            <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:10px;">【角色分工】</div>
-                            <div style="font-size:14px;color:#fff;line-height:1.8;">
-                                你（${myCode} ${styleDefinitions[myCode].name}）：${guide.yourRole}<br>
-                                他（${partnerCode} ${styleDefinitions[partnerCode].name}）：${guide.theirRole}
-                            </div>
-                        </div>
+        <!-- 合作查询函数已移动到 result-enhanced.js -->
                         
                         <div style="margin-bottom:20px;">
                             <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:10px;">【合作优势】</div>
