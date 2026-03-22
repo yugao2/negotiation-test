@@ -110,7 +110,7 @@ var styles = {
         level: '专家级：超越 90% 的同行，已是行业专家'
     },
     ATBP: {
-        animal: '⚡',
+        animal: '🐆',
         name: '效率优化师',
         nickname: '效率狂人',
         role: '用分析提升效率，用合作优化结果',
