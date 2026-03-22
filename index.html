@@ -426,21 +426,22 @@
     
     <canvas id="posterCanvas" style="display: none;"></canvas>
     
-    <script src="poster-themes.js?v=202603220943"></script>
-    <script src="questions-v4.js?v=202603220943"></script>
-    <script src="styles-v3.js?t=202603220943"></script>
-    <script src="personalized-interpretation-v4.js?v=202603220943"></script>
-    <script src="enhanced-weaknesses-v2.js?v=202603220943"></script>
-    <script src="celebrity-stories.js?v=202603220943"></script>
-    <script src="mystery-tags.js?v=202603220943"></script>
-    <script src="best-match-deep.js?v=202603220943"></script>
-    <script src="cooperation-guides.js?v=202603220943"></script>
-    <script src="team-report.js?v=202603220943"></script>
-    <script src="result-enhanced.js?v=202603220943"></script>
+    <script src="poster-themes.js?v=202603220955"></script>
+    <script src="questions-v4.js?v=202603220955"></script>
+    <script src="styles-v3.js?t=202603220955"></script>
+    <script src="personalized-interpretation-v4.js?v=202603220955"></script>
+    <script src="enhanced-weaknesses-v2.js?v=202603220955"></script>
+    <script src="celebrity-stories.js?v=202603220955"></script>
+    <script src="mystery-tags.js?v=202603220955"></script>
+    <script src="best-match-deep.js?v=202603220955"></script>
+    <script src="cooperation-guides.js?v=202603220955"></script>
+    <script src="team-report.js?v=202603220955"></script>
+    <script src="result-enhanced.js?v=202603220955"></script>
     <script>
         var currentIndex = 0;
         var answers = [];
         var dimensionScores = { A: 0, I: 0, R: 0, T: 0, C: 0, B: 0, D: 0, P: 0 };
+        var isSubmitting = false;  // 防止重复提交
         var currentResult = null;
         var currentTeam = null;
         var currentUserResult = null;
@@ -450,6 +451,7 @@
             currentIndex = 0;
             answers = [];
             dimensionScores = { A: 0, I: 0, R: 0, T: 0, C: 0, B: 0, D: 0, P: 0 };
+            isSubmitting = false;
             document.getElementById('homePage').classList.add('hidden');
             document.getElementById('testPage').classList.remove('hidden');
             document.getElementById('bottomNav').classList.add('hidden');
@@ -476,6 +478,13 @@
         }
         
         function selectOption(el, dim) {
+            // 防止重复提交
+            if (isSubmitting) {
+                console.log('⚠️ 正在处理，忽略重复点击');
+                return;
+            }
+            isSubmitting = true;
+            
             console.log('--- 第', currentIndex + 1, '题 ---');
             console.log('选择维度:', dim);
             var options = document.querySelectorAll('.option');
@@ -491,6 +500,7 @@
             console.log('当前计分:', JSON.stringify(dimensionScores));
             console.log('总分:', Object.values(dimensionScores).reduce(function(a,b){return a+b}, 0));
             setTimeout(function() {
+                isSubmitting = false;
                 if (currentIndex < 27) {
                     currentIndex++;
                     renderQuestion();
