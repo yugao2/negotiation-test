@@ -994,7 +994,14 @@
                 var s2 = styles[code2];
                 var html = '<div style="line-height:1.8;color:#ffffff;">';
                 html += '<div style="font-size:16px;font-weight:700;margin-bottom:15px;color:#d4af37;">' + s1.nickname + ' × ' + s2.nickname + '</div>';
-                html += '<div>' + guide + '</div>';
+                // guide 是对象，需要显示 solution 字段
+                if (typeof guide === 'object' && guide.solution) {
+                    html += '<div style="white-space:pre-line;">' + guide.solution + '</div>';
+                } else if (typeof guide === 'string') {
+                    html += '<div>' + guide + '</div>';
+                } else {
+                    html += '<div style="color:#86868b;">暂无合作指南数据</div>';
+                }
                 html += '</div>';
                 // 关闭之前的弹窗
                 var modal = document.querySelector('.modal');
@@ -1013,27 +1020,25 @@
                 return;
             }
             var r = JSON.parse(savedResult);
+            var s = styles[r.code];
             
-            // 调用 16 风格矩阵（如果存在）
-            if (typeof window.selectPartnerCode === 'function') {
-                // 显示提示，引导用户使用矩阵
-                var html = '<div style="text-align:center;padding:20px;">';
-                html += '<div style="font-size:40px;margin-bottom:15px;">🔮</div>';
-                html += '<div style="color:#ffffff;font-size:15px;margin-bottom:20px;">点击 16 风格矩阵中的任意风格<br>查看与你的最佳搭档分析</div>';
-                html += '<button class="btn-action" onclick="document.querySelector(\'.modal\')?.remove();goHome();showResultPage();">前往结果页查看</button>';
+            // 直接显示最佳拍档信息（使用 best-match-deep.js）
+            if (typeof getBestMatchDeep === 'function') {
+                var match = getBestMatchDeep(r.code);
+                var matchStyle = styles[match.match];
+                var html = '<div style="text-align:center;padding:10px;">';
+                html += '<div style="font-size:60px;margin:15px 0;">' + s.animal + ' ❤️ ' + (matchStyle ? matchStyle.animal : '') + '</div>';
+                html += '<div style="font-size:18px;font-weight:700;color:#d4af37;margin-bottom:15px;">' + s.nickname + ' × ' + match.matchName + '</div>';
+                html += '<div style="line-height:1.8;color:#ffffff;text-align:left;white-space:pre-line;">' + match.why + '</div>';
+                html += '<div style="margin-top:20px;padding:15px;background:rgba(212,175,55,0.1);border-radius:8px;">';
+                html += '<div style="font-size:14px;color:#d4af37;margin-bottom:10px;">💡 合作建议</div>';
+                html += '<div style="font-size:13px;color:#cccccc;line-height:1.6;">' + match.how + '</div>';
                 html += '</div>';
-                showModal('🤝 最佳拍档', html);
+                html += '</div>';
+                showModal('🤝 你的最佳拍档', html);
             } else {
-                alert('最佳拍档功能加载中...');
+                alert('最佳拍档数据加载中...');
             }
-        }
-        
-        // 显示结果页（用于从我的页面跳转）
-        function showResultPage() {
-            document.getElementById('homePage').classList.add('hidden');
-            document.getElementById('testPage').classList.add('hidden');
-            document.getElementById('myPage').classList.add('hidden');
-            document.getElementById('resultPage').classList.remove('hidden');
         }
         
         // 分享海报
@@ -1044,12 +1049,21 @@
                 return;
             }
             
-            // 调用海报生成函数
-            if (typeof generatePoster === 'function') {
-                generatePoster();
-            } else {
-                alert('海报生成功能加载中...');
-            }
+            // 先跳转到结果页，然后生成海报
+            document.getElementById('myPage').classList.add('hidden');
+            document.getElementById('resultPage').classList.remove('hidden');
+            
+            // 延迟一下等待渲染
+            setTimeout(function() {
+                if (typeof generatePoster === 'function') {
+                    generatePoster();
+                } else {
+                    alert('海报生成功能加载中...');
+                    // 返回我的页面
+                    document.getElementById('resultPage').classList.add('hidden');
+                    document.getElementById('myPage').classList.remove('hidden');
+                }
+            }, 300);
         }
         
         // 通用弹窗函数
