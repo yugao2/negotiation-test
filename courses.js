@@ -147,37 +147,41 @@ function generateCourseHTML(courses, isTeamReport) {
 
 // 在结果页渲染课程
 function renderCourses(styleCode) {
-  console.log('renderCourses 开始执行，styleCode:', styleCode);
-  
-  var container = document.getElementById('courseRecommendation');
-  console.log('container:', container);
-  if (!container) {
-    console.log('未找到 courseRecommendation 容器');
-    return;
-  }
-  
-  var matched = getMatchedCourses(styleCode);
-  console.log('匹配的课程数量:', matched.length);
-  if (matched.length === 0) return;
-  
-  var topCourses = matched.slice(0, 2);
-  
-  var html = '<div style="background:linear-gradient(135deg,rgba(15,32,39,0.9),rgba(32,58,67,0.9));padding:20px;border-radius:12px;border:1px solid #d4af37;">';
-  html += '<div style="font-size:15px;font-weight:700;color:#d4af37;margin-bottom:16px;">🎓 推荐课程 · 针对性提升</div>';
-  
-  for (var i = 0; i < topCourses.length; i++) {
-    var course = topCourses[i].course;
-    html += '<div onclick="window.open(\'' + course.url + '\', \'_blank\')" style="background:rgba(44,83,100,0.3);padding:16px;border-radius:10px;margin-bottom:14px;cursor:pointer;border:1px solid rgba(212,175,55,0.3);transition:all 0.3s;" onmouseover="this.style.background=\'rgba(44,83,100,0.5)\'" onmouseout="this.style.background=\'rgba(44,83,100,0.3)\'">';
-    html += '<div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:6px;">' + course.name + '</div>';
-    html += '<div style="font-size:12px;color:#86868b;margin-bottom:8px;">👨‍🏫 ' + course.teacher + '</div>';
-    html += '<div style="font-size:12px;color:#cccccc;margin-bottom:10px;line-height:1.6;">✅ ' + course.matchReason + '</div>';
-    html += '<div style="font-size:13px;color:#d4af37;font-weight:600;">' + course.cta + ' ›</div>';
+  // 延迟执行，确保其他渲染已完成
+  setTimeout(function() {
+    console.log('renderCourses 开始执行，styleCode:', styleCode);
+    
+    var container = document.getElementById('courseRecommendation');
+    console.log('container:', container);
+    if (!container) {
+      console.log('未找到 courseRecommendation 容器');
+      return;
+    }
+    
+    var matched = getMatchedCourses(styleCode);
+    console.log('匹配的课程数量:', matched.length);
+    if (matched.length === 0) return;
+    
+    var topCourses = matched.slice(0, 2);
+    
+    var html = '<div style="background:linear-gradient(135deg,rgba(15,32,39,0.9),rgba(32,58,67,0.9));padding:20px;border-radius:12px;border:1px solid #d4af37;">';
+    html += '<div style="font-size:15px;font-weight:700;color:#d4af37;margin-bottom:16px;">🎓 推荐课程 · 针对性提升</div>';
+    
+    for (var i = 0; i < topCourses.length; i++) {
+      var course = topCourses[i].course;
+      html += '<div onclick="window.open(\'' + course.url + '\', \'_blank\')" style="background:rgba(44,83,100,0.3);padding:16px;border-radius:10px;margin-bottom:14px;cursor:pointer;border:1px solid rgba(212,175,55,0.3);transition:all 0.3s;" onmouseover="this.style.background=\'rgba(44,83,100,0.5)\'" onmouseout="this.style.background=\'rgba(44,83,100,0.3)\'">';
+      html += '<div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:6px;">' + course.name + '</div>';
+      html += '<div style="font-size:12px;color:#86868b;margin-bottom:8px;">👨‍🏫 ' + course.teacher + '</div>';
+      html += '<div style="font-size:12px;color:#cccccc;margin-bottom:10px;line-height:1.6;">✅ ' + course.matchReason + '</div>';
+      html += '<div style="font-size:13px;color:#d4af37;font-weight:600;">' + course.cta + ' ›</div>';
+      html += '</div>';
+    }
+    
     html += '</div>';
-  }
-  
-  html += '</div>';
-  container.innerHTML = html;
-  console.log('课程推荐已渲染到页面');
+    container.innerHTML = html;
+    console.log('课程推荐已渲染到页面');
+    console.log('container.innerHTML:', container.innerHTML.substring(0, 100));
+  }, 500);
 }
 
 // 暴露到全局
