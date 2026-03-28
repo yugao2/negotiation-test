@@ -146,15 +146,15 @@ function generateCourseHTML(courses, isTeamReport) {
 }
 
 // 在结果页渲染课程
-function renderCourses(styleCode) {
+function renderCourses(styleCode, containerId, cardId) {
   // 延迟执行，确保其他渲染已完成
   setTimeout(function() {
     console.log('renderCourses 开始执行，styleCode:', styleCode);
     
-    var container = document.getElementById('courseRecommendation');
+    var container = document.getElementById(containerId || 'courseRecommendation');
     console.log('container:', container);
     if (!container) {
-      console.log('未找到 courseRecommendation 容器');
+      console.log('未找到课程推荐容器');
       return;
     }
     
@@ -188,9 +188,10 @@ function renderCourses(styleCode) {
     container.style.opacity = '1';
     
     // 显示卡片
-    var courseCard = document.getElementById('courseCard');
+    var courseCard = document.getElementById(cardId || 'courseCard');
     if (courseCard) {
       courseCard.style.display = 'block';
+      courseCard.classList.remove('hidden');
       console.log('课程卡片已显示');
     }
     

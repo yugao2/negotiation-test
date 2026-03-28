@@ -332,12 +332,9 @@
                     </div>
                 </div>
                 
-                <!-- 课程推荐 -->
-                <div class="course-card">
-                    <div class="course-name">《供应商管理与谈判实战》</div>
-                    <div class="course-teacher">讲师：姜宏锋</div>
-                    <div class="course-price">限时优惠：¥1,999</div>
-                    <button class="course-btn" onclick="enrollCourse()">立即报名</button>
+                <!-- 课程推荐（动态渲染） -->
+                <div id="courseCard" class="hidden">
+                    <div id="courseRecommendation"></div>
                 </div>
                 
                 <!-- 团队功能 -->
@@ -417,15 +414,9 @@
                     </div>
                 </div>
                 
-                <!-- 课程推荐 -->
-                <div class="course-card">
-                    <div class="course-name">决胜供应链·谈判力</div>
-                    <div class="course-teacher">姜宏锋老师亲授</div>
-                    <div style="font-size: 14px; color: #cccccc; margin: 12px 0; line-height: 1.6;">
-                        从供应商选择到价格谈判，从合同管理到绩效评估，全面提升供应链谈判能力
-                    </div>
-                    <div class="course-price">¥ 1980</div>
-                    <button class="course-btn" onclick="window.open('https://youliantang.com', '_blank')">立即学习</button>
+                <!-- 课程推荐（动态渲染） -->
+                <div id="myPageCourseCard" class="hidden">
+                    <div id="myPageCourseRecommendation"></div>
                 </div>
                 
             </div>
@@ -705,9 +696,9 @@
             // 渲染团队功能按钮
             renderTeamButtons();
             
-            // 渲染推荐课程（已移除，使用硬编码）
-            // console.log('准备渲染课程推荐，code:', code);
-            // renderCourses(code);
+            // 渲染推荐课程（结果页）
+            console.log('准备渲染课程推荐，code:', code);
+            renderCourses(code, 'courseRecommendation', 'courseCard');
             
             // 最佳搭档 - 使用优化版本
             if (typeof renderBestMatchOptimized === 'function') {
@@ -999,6 +990,11 @@
                     
                     // 显示快速功能入口
                     document.getElementById('quickActions').style.display = 'block';
+                    
+                    // 渲染课程推荐（我的页面）
+                    if (typeof renderCourses === 'function') {
+                        renderCourses(r.code, 'myPageCourseRecommendation', 'myPageCourseCard');
+                    }
                 }
             } else {
                 document.getElementById('profileCard').style.display = 'none';
