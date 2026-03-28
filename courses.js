@@ -147,10 +147,17 @@ function generateCourseHTML(courses, isTeamReport) {
 
 // 在结果页渲染课程
 function renderCourses(styleCode) {
+  console.log('renderCourses 开始执行，styleCode:', styleCode);
+  
   var container = document.getElementById('courseRecommendation');
-  if (!container) return;
+  console.log('container:', container);
+  if (!container) {
+    console.log('未找到 courseRecommendation 容器');
+    return;
+  }
   
   var matched = getMatchedCourses(styleCode);
+  console.log('匹配的课程数量:', matched.length);
   if (matched.length === 0) return;
   
   var topCourses = matched.slice(0, 2);
@@ -170,6 +177,7 @@ function renderCourses(styleCode) {
   
   html += '</div>';
   container.innerHTML = html;
+  console.log('课程推荐已渲染到页面');
 }
 
 // 暴露到全局
