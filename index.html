@@ -987,6 +987,10 @@
         function showHistoryDetail(code) {
             // 关闭历史弹窗
             document.querySelectorAll('.modal').forEach(m => m.remove());
+            // 隐藏其他页面
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('myPage').classList.add('hidden');
+            document.getElementById('bottomNav').classList.add('hidden');
             // 直接调用 showResult 显示结果页
             showResult(code);
         }
