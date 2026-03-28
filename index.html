@@ -358,8 +358,10 @@
         
         <!-- 我的页面 -->
         <div id="myPage" class="hidden">
-            <div style="padding: 30px 20px 20px; text-align: center; background: linear-gradient(135deg, #0f2027, #203a43); border-bottom: 2px solid #d4af37;">
-                <h1 style="font-size: 32px; font-weight: 700; color: #ffffff; margin: 0;">我的</h1>
+            <div style="padding: 30px 20px 20px; background: linear-gradient(135deg, #0f2027, #203a43); border-bottom: 2px solid #d4af37; display: flex; align-items: center; gap: 12px;">
+                <button onclick="goHome()" id="myPageBackBtn" style="background:transparent;border:none;color:#d4af37;font-size:24px;cursor:pointer;padding:0;display:none;">←</button>
+                <h1 style="font-size: 32px; font-weight: 700; color: #ffffff; margin: 0; flex: 1; text-align: center;">我的</h1>
+                <div style="width: 24px;"></div>
             </div>
             <div class="result-content" style="padding-top: 0;">
                 <!-- 风格画像卡片 -->
@@ -948,6 +950,9 @@
             // 显示团队板块
             var teamSection = document.getElementById('teamSection');
             if (teamSection) teamSection.style.display = 'block';
+            // 显示返回按钮（如果从结果页过来）
+            var backBtn = document.getElementById('myPageBackBtn');
+            if (backBtn) backBtn.style.display = document.getElementById('resultPage').classList.contains('hidden') ? 'none' : 'block';
             updateMyPage();
         }
         
