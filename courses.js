@@ -9,45 +9,42 @@ const courseDatabase = [
     price: "¥5,800",
     priceUnit: "/ 人次",
     url: "https://www.ailianruyi.com/#/product/detail?id=5",
-    // 适合的风格类型
-    matchStyles: ["ARCD", "ARBP", "ATCD", "ATBD"], // 分析型优先
-    // 匹配原因
+    matchStyles: ["ARCD", "ARBP", "ATCD", "ATBD"],
     matchReason: "数据分析与谈判技巧融合，AI 赋能降本增效",
-    // 适合的场景
     scenarios: ["供应商谈判", "成本分析", "合同管理", "数字化建设"]
   },
   {
     id: 2,
-    name: "《供应商管理与实战》",
+    name: "《决胜供应链》",
     teacher: "优链学堂 · 线下课",
     price: "咨询价",
     priceUnit: "/ 人次",
-    url: "https://www.ailianruyi.com/#/product/detail?id=5",
-    matchStyles: ["ARCP", "ARBP", "IRCP", "IRBP"], // 关系型优先
-    matchReason: "关系维护与竞争平衡，战略供应商管理",
-    scenarios: ["供应商选择", "绩效管理", "关系维护", "战略合作"]
-  },
-  {
-    id: 3,
-    name: "《决胜供应链·谈判力》",
-    teacher: "优链学堂 · 线下课",
-    price: "咨询价",
-    priceUnit: "/ 人次",
-    url: "https://www.ailianruyi.com/#/product/detail?id=5",
-    matchStyles: ["ATCD", "ATCP", "ITCD", "ITCP"], // 竞争型优先
+    url: "https://www.ailianruyi.com/#/product/detail?id=4",
+    matchStyles: ["ATCD", "ATCP", "ITCD", "ITCP"],
     matchReason: "提升谈判博弈能力，争取最大利益",
     scenarios: ["价格谈判", "合同谈判", "冲突处理", "利益争取"]
   },
   {
-    id: 4,
-    name: "《供应链 AI 实战》",
+    id: 3,
+    name: "《供应商管理》",
     teacher: "优链学堂 · 线下课",
     price: "咨询价",
     priceUnit: "/ 人次",
-    url: "https://www.ailianruyi.com/#/product/detail?id=5",
-    matchStyles: ["ARCD", "ATCD", "IRCD", "ITCD"], // 分析型 + 防御型
-    matchReason: "AI 工具应用，数据分析，智能决策",
-    scenarios: ["数据分析", "需求预测", "智能决策", "流程优化"]
+    url: "https://www.ailianruyi.com/#/product/detail?id=8",
+    matchStyles: ["ARCP", "ARBP", "IRCP", "IRBP"],
+    matchReason: "关系维护与竞争平衡，战略供应商管理",
+    scenarios: ["供应商选择", "绩效管理", "关系维护", "战略合作"]
+  },
+  {
+    id: 4,
+    name: "《品类管理》",
+    teacher: "优链学堂 · 线下课",
+    price: "咨询价",
+    priceUnit: "/ 人次",
+    url: "https://www.ailianruyi.com/#/product/detail?id=12",
+    matchStyles: ["ARCD", "ATCD", "ARBD", "ATBD"],
+    matchReason: "系统化品类策略，数据分析驱动决策",
+    scenarios: ["品类规划", "采购策略", "市场分析", "资源配置"]
   }
 ];
 
