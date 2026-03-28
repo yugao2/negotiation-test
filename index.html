@@ -407,22 +407,13 @@
                         <div class="card-title">👥 我的团队</div>
                     </div>
                     <div class="card-body" id="myTeam">
-                        <div style="text-align: center; padding: 20px;">
-                            <div style="font-size: 48px; margin-bottom: 12px;">👥</div>
-                            <div style="font-size: 14px; color: #86868b; margin-bottom: 16px;">暂无团队信息</div>
-                            <button class="partner-btn" onclick="(function(){var t={name:'示例团队 - 采购精英队',inviteCode:'DEMO'+Math.floor(Math.random()*10000),members:[{name:'张三',code:'ARCD'},{name:'李四',code:'ITCP'},{name:'王五',code:'ARBP'},{name:'赵六',code:'ATCD'},{name:'钱七',code:'IRCD'}]};localStorage.setItem('currentTeam',JSON.stringify(t));alert('✅ 已生成 5 人示例团队！');if(typeof updateMyTeamInfo==='function')updateMyTeamInfo();})()" style="margin-bottom: 8px;">
-                                🎯 快速体验
-                                <span>生成 5 人示例团队</span>
-                            </button>
-                            <button class="partner-btn" onclick="alert('请先点击快速体验生成团队，然后刷新页面再点击此按钮');if(typeof goToTeamDashboard==='function')goToTeamDashboard();" style="margin-bottom: 8px;">
-                                📊 查看仪表盘
-                                <span>进入团队管理页面</span>
-                            </button>
-                            <button class="partner-btn" onclick="(function(){if(confirm('确定清除团队数据？')){localStorage.removeItem('currentTeam');alert('已清除');location.reload();}})" style="border-color: #ef4444; color: #ef4444;">
-                                🗑️ 清除数据
-                                <span>删除团队信息</span>
-                            </button>
-                        </div>
+                        <!-- 动态内容 -->
+                    </div>
+                    <!-- 固定按钮 -->
+                    <div style="padding: 0 20px 20px;">
+                        <button onclick="quickDemoTeam()" style="width:100%;background:linear-gradient(135deg,#2c5364,#d4af37);color:#0f2027;border:none;padding:16px;border-radius:980px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px;box-shadow:0 4px 15px rgba(212,175,55,0.4);">🎯 快速体验</button>
+                        <button onclick="goToTeamDashboard()" style="width:100%;background:rgba(44,83,100,0.8);color:#fff;border:2px solid #d4af37;padding:16px;border-radius:980px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:8px;">📊 进入仪表盘</button>
+                        <button onclick="clearTeamData()" style="width:100%;background:rgba(239,68,68,0.2);color:#ef4444;border:2px solid #ef4444;padding:16px;border-radius:980px;font-size:15px;font-weight:700;cursor:pointer;">🗑️ 清除数据</button>
                     </div>
                 </div>
                 
