@@ -147,43 +147,29 @@ function generateCourseHTML(courses, isTeamReport) {
 
 // 在结果页渲染课程
 function renderCourses(styleCode) {
-  // 延迟渲染，确保 DOM 已准备好
-  setTimeout(function() {
-    var container = document.getElementById('courseRecommendation');
-    if (!container) {
-      var mbtiBox = document.getElementById('mbtiInsight');
-      if (mbtiBox && mbtiBox.parentNode) {
-        var courseDiv = document.createElement('div');
-        courseDiv.id = 'courseRecommendation';
-        courseDiv.style.cssText = 'margin-top:20px;';
-        mbtiBox.parentNode.insertBefore(courseDiv, mbtiBox.nextSibling);
-        container = courseDiv;
-      }
-    }
-    
-    if (!container) return;
-    
-    var matched = getMatchedCourses(styleCode);
-    if (matched.length === 0) return;
-    
-    var topCourses = matched.slice(0, 2);
-    
-    var html = '<div style="background:linear-gradient(135deg,rgba(15,32,39,0.9),rgba(32,58,67,0.9));padding:20px;border-radius:12px;margin-top:20px;border:1px solid #d4af37;">';
-    html += '<div style="font-size:15px;font-weight:700;color:#d4af37;margin-bottom:16px;">🎓 推荐课程 · 针对性提升</div>';
-    
-    for (var i = 0; i < topCourses.length; i++) {
-      var course = topCourses[i].course;
-      html += '<div onclick="window.open(\'' + course.url + '\', \'_blank\')" style="background:rgba(44,83,100,0.3);padding:16px;border-radius:10px;margin-bottom:14px;cursor:pointer;border:1px solid rgba(212,175,55,0.3);transition:all 0.3s;" onmouseover="this.style.background=\'rgba(44,83,100,0.5)\'" onmouseout="this.style.background=\'rgba(44,83,100,0.3)\'">';
-      html += '<div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:6px;">' + course.name + '</div>';
-      html += '<div style="font-size:12px;color:#86868b;margin-bottom:8px;">👨‍🏫 ' + course.teacher + '</div>';
-      html += '<div style="font-size:12px;color:#cccccc;margin-bottom:10px;line-height:1.6;">✅ ' + course.matchReason + '</div>';
-      html += '<div style="font-size:13px;color:#d4af37;font-weight:600;">' + course.cta + ' ›</div>';
-      html += '</div>';
-    }
-    
+  var container = document.getElementById('courseRecommendation');
+  if (!container) return;
+  
+  var matched = getMatchedCourses(styleCode);
+  if (matched.length === 0) return;
+  
+  var topCourses = matched.slice(0, 2);
+  
+  var html = '<div style="background:linear-gradient(135deg,rgba(15,32,39,0.9),rgba(32,58,67,0.9));padding:20px;border-radius:12px;border:1px solid #d4af37;">';
+  html += '<div style="font-size:15px;font-weight:700;color:#d4af37;margin-bottom:16px;">🎓 推荐课程 · 针对性提升</div>';
+  
+  for (var i = 0; i < topCourses.length; i++) {
+    var course = topCourses[i].course;
+    html += '<div onclick="window.open(\'' + course.url + '\', \'_blank\')" style="background:rgba(44,83,100,0.3);padding:16px;border-radius:10px;margin-bottom:14px;cursor:pointer;border:1px solid rgba(212,175,55,0.3);transition:all 0.3s;" onmouseover="this.style.background=\'rgba(44,83,100,0.5)\'" onmouseout="this.style.background=\'rgba(44,83,100,0.3)\'">';
+    html += '<div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:6px;">' + course.name + '</div>';
+    html += '<div style="font-size:12px;color:#86868b;margin-bottom:8px;">👨‍🏫 ' + course.teacher + '</div>';
+    html += '<div style="font-size:12px;color:#cccccc;margin-bottom:10px;line-height:1.6;">✅ ' + course.matchReason + '</div>';
+    html += '<div style="font-size:13px;color:#d4af37;font-weight:600;">' + course.cta + ' ›</div>';
     html += '</div>';
-    container.innerHTML = html;
-  }, 100);
+  }
+  
+  html += '</div>';
+  container.innerHTML = html;
 }
 
 // 暴露到全局
