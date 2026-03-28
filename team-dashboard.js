@@ -12,33 +12,46 @@ function goToTeamDashboard() {
     }
     
     var team = JSON.parse(savedTeam);
-    renderTeamDashboard(team);
     
-    document.getElementById('homePage').classList.add('hidden');
-    document.getElementById('testPage').classList.add('hidden');
-    document.getElementById('resultPage').classList.add('hidden');
-    document.getElementById('myPage').classList.add('hidden');
-    document.getElementById('bottomNav').classList.add('hidden');
+    // 隐藏其他页面
+    var homePage = document.getElementById('homePage');
+    var testPage = document.getElementById('testPage');
+    var resultPage = document.getElementById('resultPage');
+    var myPage = document.getElementById('myPage');
+    var bottomNav = document.getElementById('bottomNav');
     
+    if (homePage) homePage.classList.add('hidden');
+    if (testPage) testPage.classList.add('hidden');
+    if (resultPage) resultPage.classList.add('hidden');
+    if (myPage) myPage.classList.add('hidden');
+    if (bottomNav) bottomNav.classList.add('hidden');
+    
+    // 创建或显示仪表盘容器
     var dashboardContainer = document.getElementById('teamDashboardContainer');
     if (!dashboardContainer) {
         dashboardContainer = document.createElement('div');
         dashboardContainer.id = 'teamDashboardContainer';
-        dashboardContainer.className = 'container hidden';
-        dashboardContainer.style.cssText = 'background: #1a3a4a; min-height: 100vh;';
+        dashboardContainer.className = 'container';
+        dashboardContainer.style.cssText = 'background: #1a3a4a; min-height: 100vh; padding: 0; display: block;';
         document.body.appendChild(dashboardContainer);
+    } else {
+        dashboardContainer.style.display = 'block';
     }
-    dashboardContainer.classList.remove('hidden');
+    
+    // 渲染内容
+    renderTeamDashboard(team);
 }
 
 // 关闭仪表盘
 function closeTeamDashboard() {
     var container = document.getElementById('teamDashboardContainer');
     if (container) {
-        container.classList.add('hidden');
+        container.style.display = 'none';
     }
-    document.getElementById('homePage').classList.remove('hidden');
-    document.getElementById('bottomNav').classList.remove('hidden');
+    var homePage = document.getElementById('homePage');
+    var bottomNav = document.getElementById('bottomNav');
+    if (homePage) homePage.classList.remove('hidden');
+    if (bottomNav) bottomNav.classList.remove('hidden');
 }
 
 // 渲染团队仪表盘
