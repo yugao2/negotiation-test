@@ -375,6 +375,7 @@
         var currentRoundIndex = 0;
         var answers = [];
         var dimensionScores = { A: 0, I: 0, R: 0, T: 0, C: 0, B: 0, D: 0, P: 0 };
+        var aggressionScore = 0; // 情绪值累计（强硬/温和）
 
         // 开始测试
         function startTest() {
@@ -428,6 +429,7 @@
         // 开始场景
         function startScene() {
             currentRoundIndex = 0;
+            aggressionScore = 0; // 每个场景重置情绪值
             document.getElementById('sceneInfoPage').classList.add('hidden');
             document.getElementById('dialoguePage').classList.remove('hidden');
             renderRound();
@@ -444,8 +446,23 @@
             document.getElementById('dialogueProgressBar').style.width = pct + '%';
             document.getElementById('dialogueProgressText').textContent = '第 ' + (totalRounds + 1) + ' / 28 轮';
 
-            // 渲染对方台词
-            document.getElementById('opponentSpeak').textContent = round.opponent;
+            // 渲染对方台词（支持情绪值系统）
+            var opponentText = '';
+            if (typeof round.opponent === 'object') {
+                // 有情绪值分支的台词
+                var threshold = Math.floor(currentRoundIndex / 2); // 每 2 轮调整一次阈值
+                if (aggressionScore >= threshold + 1) {
+                    opponentText = round.opponent.highAgg || round.opponent.default;
+                } else if (aggressionScore <= threshold - 1) {
+                    opponentText = round.opponent.lowAgg || round.opponent.default;
+                } else {
+                    opponentText = round.opponent.default;
+                }
+            } else {
+                // 老版本：字符串直接显示
+                opponentText = round.opponent;
+            }
+            document.getElementById('opponentSpeak').textContent = opponentText;
 
             // 渲染选项
             var container = document.getElementById('optionsContainer');
@@ -455,13 +472,13 @@
                 var div = document.createElement('div');
                 div.className = 'option';
                 div.innerHTML = '<span class="option-text">' + opt.text + '</span>';
-                div.onclick = function() { selectOption(this, opt.score); };
+                div.onclick = function() { selectOption(this, opt.score, opt.agg || 0); };
                 container.appendChild(div);
             });
         }
 
         // 选择选项
-        function selectOption(el, score) {
+        function selectOption(el, score, agg) {
             var options = document.querySelectorAll('.option');
             options.forEach(function(o) { o.classList.remove('selected'); });
             el.classList.add('selected');
@@ -469,6 +486,11 @@
             // 计分
             dimensionScores[score]++;
             answers.push(score);
+            
+            // 累计情绪值
+            if (agg === 1) {
+                aggressionScore++;
+            }
 
             // 延迟进入下一轮
             setTimeout(function() {
